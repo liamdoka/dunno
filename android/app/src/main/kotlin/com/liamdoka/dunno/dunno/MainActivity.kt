@@ -1,4 +1,4 @@
-package com.liamdoka.dunno.dunno
+package com.liamdoka.dunno
 
 import io.flutter.embedding.android.FlutterActivity
 
