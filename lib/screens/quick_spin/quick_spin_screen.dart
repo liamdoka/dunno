@@ -1,5 +1,10 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:collection/collection.dart';
+import 'package:dunno/constants/sizes.dart';
+import 'package:dunno/models/spinner_model.dart';
+import 'package:dunno/router.gr.dart';
+import 'package:dunno/utils/colors.dart';
+import 'package:dunno/utils/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -39,48 +44,88 @@ class _QuickSpinScreenState extends State<QuickSpinScreen> {
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: Column(
-        spacing: 8.0,
+        spacing: 24.0,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: TextField(
-              focusNode: focusNode,
-              textInputAction: TextInputAction.newline,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0)
-                ),
-                labelText: "Segments"
+          Row(
+            children: [
+              Text("Quick Spin",
+                style: Theme.of(context).textTheme.titleMedium
               ),
-              controller: textController,
-              onSubmitted: (String value) {
-                if (value.isEmpty) return;
-
-                final newSegment = SpinnerSegment(title: value);
-                setState(() {
-                  segments.add(newSegment);
-                });
-
-                textController.clear();
-                focusNode.requestFocus();
-              },
-            ),
+            ],
           ),
-          Expanded(
+          Row(
+            spacing: 8.0,
+            children: [
+              Expanded(
+                child: TextField(
+                  focusNode: focusNode,
+                  textInputAction: TextInputAction.newline,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: defaultBorderRadius
+                    ),
+                    hintText: "New segment",
+                  ),
+                  controller: textController,
+                  onSubmitted: (String value) {
+                    if (value.isEmpty) return;
+
+                    final newSegment = SpinnerSegment(title: value);
+                    setState(() {
+                      segments.add(newSegment);
+                    });
+
+                    textController.clear();
+                    focusNode.requestFocus();
+                  },
+                ),
+              ),
+              IconButton(
+                  onPressed: () => setState(() {
+                    segments.clear();
+                  }),
+                  icon: Icon(Icons.delete_forever_rounded,
+                    color: Colors.red,
+                    size: 32,
+                  ),
+              )
+            ],
+          ),
+          segments.isEmpty
+          ? Expanded(child: Center(child: Text("Add spinner segments above"),))
+          : Expanded(
             child: SingleChildScrollView(
               child: Column(
                 spacing: 8.0,
                 children: segments
-                    .mapIndexed((index, segment) => SegmentListTile(segment: segment, index: index))
+                    .mapIndexed((index, segment) => SegmentListTile(
+                    index: index, 
+                    segment: segment,
+                  onDismiss: (direction) {
+                    setState(() {
+                      segments.removeAt(index);
+                    });
+                  }
+                ))
                     .toList().reversed.toList()
               ),
             ),
           ),
-          // SizedBox(height: 64)
+
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              final spinner = SpinnerModel(
+                  title: "Quick Spin",
+                  color: Colors.primaries[0].toSimpleColor(),
+                  items: List.from(segments.map(
+                          (SpinnerSegment segment) => segment.title)
+                  )
+              );
+              
+              context.router.push(SpinnerRoute(spinner: spinner));
+            },
             style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(Colors.deepPurple.shade300),
+              backgroundColor: WidgetStatePropertyAll(Colors.deepPurple),
               textStyle: WidgetStatePropertyAll(
                 TextStyle(
                   color: Colors.white
@@ -98,6 +143,7 @@ class _QuickSpinScreenState extends State<QuickSpinScreen> {
               children: [
                 Text("Go",
                   style: TextStyle(
+                    fontWeight: FontWeight.bold,
                     color: Colors.white
                   ),
                 ),
@@ -112,47 +158,68 @@ class _QuickSpinScreenState extends State<QuickSpinScreen> {
 }
 
 class SegmentListTile extends StatelessWidget {
-  final SpinnerSegment segment;
   final int index;
+  final SpinnerSegment segment;
+  final DismissDirectionCallback? onDismiss;
+  final VoidCallback? onTapIncrease;
+  final VoidCallback? onTapDecrease;
 
-  const SegmentListTile({super.key, required this.segment, required this.index});
+  const SegmentListTile({
+    super.key,
+    required this.index,
+    required this.segment,
+    this.onDismiss,
+    this.onTapIncrease,
+    this.onTapDecrease
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.primaries[index % Colors.primaries.length],
-        borderRadius: BorderRadius.circular(12.0)
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Dismissible(
+      key: Key(segment.toString()),
+      onDismissed: onDismiss,
+      background: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Text(segment.title),
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.remove_circle),
-                padding: null,
-              ),
-              Text(segment.weight.toString(),
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.bold
-                ),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.add_circle),
-                padding: null,
-              )
-            ],
-          )
+          Icon(Icons.delete_forever_rounded, color: Colors.red,)
         ],
+      ),
+      direction: DismissDirection.startToEnd,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.primaries[index % Colors.primaries.length],
+          borderRadius: BorderRadius.circular(12.0)
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Text(segment.title),
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // TODO: Add weights to the segments
+                IconButton(
+                  onPressed: onTapDecrease,
+                  icon: Icon(Icons.remove_circle),
+                  padding: null,
+                ),
+                Text(segment.weight.toString(),
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+                IconButton(
+                  onPressed: onTapIncrease,
+                  icon: Icon(Icons.add_circle),
+                  padding: null,
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

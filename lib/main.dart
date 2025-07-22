@@ -1,8 +1,32 @@
+import 'package:dunno/hive/hive_adapters.dart';
+import 'package:dunno/hive/hive_registrar.g.dart';
+import 'package:dunno/models/spinner_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import './router.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Hive.initFlutter();
+  Hive.registerAdapters();
+
+  Hive.close();
+  await Hive.openBox<SpinnerModel>(HiveBox.spinners.name);
+
+  // try {
+  // await Hive.initFlutter();
+  //
+  // // Automatically registers generated adapters.
+  // Hive.registerAdapters();
+  //
+  //   await Hive.openBox<SpinnerModel>("spinners");
+  // } catch (e) {
+  //   Hive.deleteBoxFromDisk("spinners");
+  //   await Hive.openBox<SpinnerModel>("spinners");
+  // }
+
   runApp(MyApp());
 }
 
@@ -14,9 +38,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO INIT HIVE
-
-
     return ProviderScope(
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

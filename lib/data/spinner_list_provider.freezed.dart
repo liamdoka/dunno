@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SpinnerListModel {
 
- List<SpinnerModel> get spinners; int? get selectedSpinnerIndex;
+ List<SpinnerModel> get spinners;
 /// Create a copy of SpinnerListModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $SpinnerListModelCopyWith<SpinnerListModel> get copyWith => _$SpinnerListModelCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpinnerListModel&&const DeepCollectionEquality().equals(other.spinners, spinners)&&(identical(other.selectedSpinnerIndex, selectedSpinnerIndex) || other.selectedSpinnerIndex == selectedSpinnerIndex));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpinnerListModel&&const DeepCollectionEquality().equals(other.spinners, spinners));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(spinners),selectedSpinnerIndex);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(spinners));
 
 @override
 String toString() {
-  return 'SpinnerListModel(spinners: $spinners, selectedSpinnerIndex: $selectedSpinnerIndex)';
+  return 'SpinnerListModel(spinners: $spinners)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $SpinnerListModelCopyWith<$Res>  {
   factory $SpinnerListModelCopyWith(SpinnerListModel value, $Res Function(SpinnerListModel) _then) = _$SpinnerListModelCopyWithImpl;
 @useResult
 $Res call({
- List<SpinnerModel> spinners, int? selectedSpinnerIndex
+ List<SpinnerModel> spinners
 });
 
 
@@ -65,11 +65,10 @@ class _$SpinnerListModelCopyWithImpl<$Res>
 
 /// Create a copy of SpinnerListModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? spinners = null,Object? selectedSpinnerIndex = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? spinners = null,}) {
   return _then(_self.copyWith(
 spinners: null == spinners ? _self.spinners : spinners // ignore: cast_nullable_to_non_nullable
-as List<SpinnerModel>,selectedSpinnerIndex: freezed == selectedSpinnerIndex ? _self.selectedSpinnerIndex : selectedSpinnerIndex // ignore: cast_nullable_to_non_nullable
-as int?,
+as List<SpinnerModel>,
   ));
 }
 
@@ -151,10 +150,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<SpinnerModel> spinners,  int? selectedSpinnerIndex)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<SpinnerModel> spinners)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SpinnerListModel() when $default != null:
-return $default(_that.spinners,_that.selectedSpinnerIndex);case _:
+return $default(_that.spinners);case _:
   return orElse();
 
 }
@@ -172,10 +171,10 @@ return $default(_that.spinners,_that.selectedSpinnerIndex);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<SpinnerModel> spinners,  int? selectedSpinnerIndex)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<SpinnerModel> spinners)  $default,) {final _that = this;
 switch (_that) {
 case _SpinnerListModel():
-return $default(_that.spinners,_that.selectedSpinnerIndex);}
+return $default(_that.spinners);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -189,10 +188,10 @@ return $default(_that.spinners,_that.selectedSpinnerIndex);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<SpinnerModel> spinners,  int? selectedSpinnerIndex)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<SpinnerModel> spinners)?  $default,) {final _that = this;
 switch (_that) {
 case _SpinnerListModel() when $default != null:
-return $default(_that.spinners,_that.selectedSpinnerIndex);case _:
+return $default(_that.spinners);case _:
   return null;
 
 }
@@ -204,7 +203,7 @@ return $default(_that.spinners,_that.selectedSpinnerIndex);case _:
 @JsonSerializable()
 
 class _SpinnerListModel extends SpinnerListModel {
-  const _SpinnerListModel({final  List<SpinnerModel> spinners = const [], this.selectedSpinnerIndex}): _spinners = spinners,super._();
+  const _SpinnerListModel({final  List<SpinnerModel> spinners = const []}): _spinners = spinners,super._();
   factory _SpinnerListModel.fromJson(Map<String, dynamic> json) => _$SpinnerListModelFromJson(json);
 
  final  List<SpinnerModel> _spinners;
@@ -214,7 +213,6 @@ class _SpinnerListModel extends SpinnerListModel {
   return EqualUnmodifiableListView(_spinners);
 }
 
-@override final  int? selectedSpinnerIndex;
 
 /// Create a copy of SpinnerListModel
 /// with the given fields replaced by the non-null parameter values.
@@ -229,16 +227,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpinnerListModel&&const DeepCollectionEquality().equals(other._spinners, _spinners)&&(identical(other.selectedSpinnerIndex, selectedSpinnerIndex) || other.selectedSpinnerIndex == selectedSpinnerIndex));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpinnerListModel&&const DeepCollectionEquality().equals(other._spinners, _spinners));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_spinners),selectedSpinnerIndex);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_spinners));
 
 @override
 String toString() {
-  return 'SpinnerListModel(spinners: $spinners, selectedSpinnerIndex: $selectedSpinnerIndex)';
+  return 'SpinnerListModel(spinners: $spinners)';
 }
 
 
@@ -249,7 +247,7 @@ abstract mixin class _$SpinnerListModelCopyWith<$Res> implements $SpinnerListMod
   factory _$SpinnerListModelCopyWith(_SpinnerListModel value, $Res Function(_SpinnerListModel) _then) = __$SpinnerListModelCopyWithImpl;
 @override @useResult
 $Res call({
- List<SpinnerModel> spinners, int? selectedSpinnerIndex
+ List<SpinnerModel> spinners
 });
 
 
@@ -266,11 +264,10 @@ class __$SpinnerListModelCopyWithImpl<$Res>
 
 /// Create a copy of SpinnerListModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? spinners = null,Object? selectedSpinnerIndex = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? spinners = null,}) {
   return _then(_SpinnerListModel(
 spinners: null == spinners ? _self._spinners : spinners // ignore: cast_nullable_to_non_nullable
-as List<SpinnerModel>,selectedSpinnerIndex: freezed == selectedSpinnerIndex ? _self.selectedSpinnerIndex : selectedSpinnerIndex // ignore: cast_nullable_to_non_nullable
-as int?,
+as List<SpinnerModel>,
   ));
 }
 

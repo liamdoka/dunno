@@ -16,14 +16,23 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: SpinnerListRoute.page,
           path: 'spinners',
-          children: [
-
-          ]
         ),
-        AutoRoute(page: QuickSpinRoute.page),
+        AutoRoute(
+          page: QuickSpinRoute.page,
+          path: "quick-spin",
+          title: (_, _) => "Quick Spin"
+        ),
         AutoRoute(page: StatsRoute.page),
         AutoRoute(page: AccountRoute.page),
       ]
     ),
+    CustomRoute(
+      page: SpinnerRoute.page,
+      // fullscreenDialog: true,
+      transitionsBuilder: TransitionsBuilders.slideBottom,
+      duration: const Duration(milliseconds: 200),
+      reverseDuration: const Duration(milliseconds: 200),
+
+    )
   ];
 }

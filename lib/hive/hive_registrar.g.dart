@@ -7,12 +7,14 @@ import 'package:dunno/hive/hive_adapters.dart';
 
 extension HiveRegistrar on HiveInterface {
   void registerAdapters() {
+    registerAdapter(SimpleColorAdapter());
     registerAdapter(SpinnerModelAdapter());
   }
 }
 
 extension IsolatedHiveRegistrar on IsolatedHiveInterface {
   void registerAdapters() {
+    registerAdapter(SimpleColorAdapter());
     registerAdapter(SpinnerModelAdapter());
   }
 }

@@ -13,20 +13,55 @@ _SpinnerListModel _$SpinnerListModelFromJson(Map<String, dynamic> json) =>
               ?.map((e) => SpinnerModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      selectedSpinnerIndex: (json['selectedSpinnerIndex'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$SpinnerListModelToJson(_SpinnerListModel instance) =>
-    <String, dynamic>{
-      'spinners': instance.spinners,
-      'selectedSpinnerIndex': instance.selectedSpinnerIndex,
-    };
+    <String, dynamic>{'spinners': instance.spinners};
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$spinnerListHash() => r'1ce330c6b066019fa86d4dc1d07f6420af875b1f';
+String _$recentSpinnersHash() => r'99c3df8ae1f8351584437828c8c643f8e3011ba0';
+
+/// Returns the last four spinners interacted with
+///
+/// Copied from [recentSpinners].
+@ProviderFor(recentSpinners)
+final recentSpinnersProvider = AutoDisposeProvider<List<SpinnerModel>>.internal(
+  recentSpinners,
+  name: r'recentSpinnersProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$recentSpinnersHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef RecentSpinnersRef = AutoDisposeProviderRef<List<SpinnerModel>>;
+String _$favoriteSpinnersHash() => r'f5b40890d217730bb31473d6cec235188cd77282';
+
+/// Returns spinners that have been `favorited`
+///
+/// Copied from [favoriteSpinners].
+@ProviderFor(favoriteSpinners)
+final favoriteSpinnersProvider =
+    AutoDisposeProvider<List<SpinnerModel>>.internal(
+      favoriteSpinners,
+      name: r'favoriteSpinnersProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$favoriteSpinnersHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef FavoriteSpinnersRef = AutoDisposeProviderRef<List<SpinnerModel>>;
+String _$spinnerListHash() => r'e02d415bd22cfd5c6cb00792fd823150fc1ef782';
 
 /// See also [SpinnerList].
 @ProviderFor(SpinnerList)
