@@ -1,13 +1,15 @@
 import 'dart:math' as math;
 
 import 'package:auto_route/auto_route.dart';
+import 'package:dunno/data/spinner_edit_provider.dart';
 import 'package:dunno/data/spinner_list_provider.dart';
 import 'package:dunno/models/spinner_model.dart';
-import 'package:dunno/screens/spinner/save_spinner_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import './save_spinner_dialog.dart';
 
 final rand = math.Random();
 
@@ -19,6 +21,8 @@ class SpinnerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final spinnerState = ref.watch(spinnerEditProvider(spinner.id));
+
     final isSaved = ref
         .watch(spinnerListProvider)
         .spinners
@@ -45,44 +49,46 @@ class SpinnerScreen extends ConsumerWidget {
             ),
             Expanded(child: Spinner(items: spinner.items)),
 
-            Builder(
-              builder: (context) {
-                if (isSaved) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        // TODO launch modal
-                        onPressed: () => ref
-                            .read(spinnerListProvider.notifier)
-                            .deleteSpinner(spinner.id),
-                        child: Text(
-                          "Delete spinner",
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                      ElevatedButton(
-                        // TODO launch edit screen & provider
-                        onPressed: () => ref
-                            .read(spinnerListProvider.notifier)
-                            .setSelectedSpinner(spinner.id),
-                        child: Text("Edit spinner"),
-                      ),
-                    ],
+            if (isSaved)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      final notifier = ref.read(
+                        spinnerEditProvider(spinner.id).notifier,
+                      );
+                      notifier.toggleFavorite();
+                      notifier.save();
+                    },
+                    label: Text(
+                      spinnerState.isFavorite ? "Favorited" : "Favorite",
+                    ),
+                    icon: Icon(
+                      spinnerState.isFavorite
+                          ? Icons.star_rounded
+                          : Icons.star_border_rounded,
+                      color: Colors.amber,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      // TODO : Edit screen
+                    },
+                    child: Text("Edit spinner"),
+                  ),
+                ],
+              )
+            else
+              TextButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => SaveSpinnerDialog(spinner: spinner),
                   );
-                }
-
-                return ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => SaveSpinnerDialog(spinner: spinner),
-                    );
-                  },
-                  child: Text("Save Spinner"),
-                );
-              },
-            ),
+                },
+                child: Text("Save spinner"),
+              ),
           ],
         ),
       ),
@@ -162,7 +168,7 @@ class _SpinnerState extends State<Spinner> with SingleTickerProviderStateMixin {
               ),
             ),
             Positioned(
-              top: -8,
+              top: -4,
               child: Transform.scale(
                 scaleY: 2,
                 child: Icon(
@@ -172,8 +178,8 @@ class _SpinnerState extends State<Spinner> with SingleTickerProviderStateMixin {
                   shadows: [
                     Shadow(
                       color: Colors.black,
-                      offset: Offset.zero,
-                      blurRadius: 4,
+                      offset: Offset(0, 1),
+                      blurRadius: 1,
                     ),
                   ],
                 ),

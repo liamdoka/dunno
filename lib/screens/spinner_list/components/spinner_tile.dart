@@ -22,16 +22,16 @@ class SpinnerTile extends StatelessWidget {
         onDismissed: onDismiss,
         background: Row(
           children: [
-            Icon(Icons.delete_forever_rounded, color: Colors.red)
+            Icon(Icons.delete_rounded, color: Colors.red)
           ],
         ),
         child: GestureDetector(
           onTap: onTap,
           child: Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
+            padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.onSecondary,
+                color: Theme.of(context).colorScheme.primaryContainer,
                 borderRadius: defaultBorderRadius
             ),
             child: Column(

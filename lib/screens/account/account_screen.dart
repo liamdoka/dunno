@@ -17,32 +17,57 @@ class AccountScreen extends ConsumerWidget {
       padding: const EdgeInsets.all(24.0),
       child: Column(
         spacing: 12.0,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text("Account"),
-          ElevatedButton(
-            onPressed: (){},
-            child: Text("Log in"),
-          ),
-          ElevatedButton(
-            onPressed: (){},
-            child: Text("Create account"),
+          Row(
+            children: [
+              Text("Account",
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ],
           ),
 
-          ElevatedButton(
-            onPressed: () async {
-              final box = HiveBox.spinners.name;
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+              ElevatedButton(
+                onPressed: (){},
+                child: Text("Sign in"),
+              ),
+                Divider(
+                    thickness: 2,
+                    color: Theme.of(context).colorScheme.surfaceContainer
+                ),
+                ElevatedButton(
+                  onPressed: (){},
+                  child: Text("Color Schemes"),
+                ),
+              ElevatedButton(
+                onPressed: (){},
+                child: Text("Deleted spinners"),
+              ),
+              Spacer(),
+              ElevatedButton(
+                onPressed: () async {
+                  final box = HiveBox.spinners.name;
 
-              if (Hive.isBoxOpen(box)) {
-                await Hive.close();
-                await Hive.deleteBoxFromDisk(box);
-              }
+                  if (Hive.isBoxOpen(box)) {
+                    await Hive.close();
+                    await Hive.deleteBoxFromDisk(box);
+                  }
 
-              await Hive.openBox<SpinnerModel>(box);
-              ref.invalidate(spinnerListProvider);
-            },
-            child: Text("Nuke"),
-          ),
+                  await Hive.openBox<SpinnerModel>(box);
+                  ref.invalidate(spinnerListProvider);
+                },
+                child: Text("Nuke account",
+                  style: TextStyle(
+                    color: Colors.red
+                  ),
+                ),
+              ),
+            ],),
+          )
         ],
       ),
     );

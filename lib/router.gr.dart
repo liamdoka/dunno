@@ -9,25 +9,26 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i7;
-import 'package:dunno/models/spinner_model.dart' as _i9;
+import 'package:auto_route/auto_route.dart' as _i8;
+import 'package:dunno/models/spinner_model.dart' as _i10;
 import 'package:dunno/screens/account/account_screen.dart' as _i1;
-import 'package:dunno/screens/home/home_screen.dart' as _i2;
-import 'package:dunno/screens/quick_spin/quick_spin_screen.dart' as _i3;
-import 'package:dunno/screens/spinner/spinner_screen.dart' as _i5;
-import 'package:dunno/screens/spinner_list/spinner_list_screen.dart' as _i4;
-import 'package:dunno/screens/stats/stats_screen.dart' as _i6;
-import 'package:flutter/material.dart' as _i8;
+import 'package:dunno/screens/home/home_screen.dart' as _i3;
+import 'package:dunno/screens/quick_spin/quick_spin_screen.dart' as _i4;
+import 'package:dunno/screens/spinner/spinner_screen.dart' as _i6;
+import 'package:dunno/screens/spinner_list/all_spinners_screen.dart' as _i2;
+import 'package:dunno/screens/spinner_list/spinner_list_screen.dart' as _i5;
+import 'package:dunno/screens/stats/stats_screen.dart' as _i7;
+import 'package:flutter/material.dart' as _i9;
 
 /// generated route for
 /// [_i1.AccountScreen]
-class AccountRoute extends _i7.PageRouteInfo<void> {
-  const AccountRoute({List<_i7.PageRouteInfo>? children})
+class AccountRoute extends _i8.PageRouteInfo<void> {
+  const AccountRoute({List<_i8.PageRouteInfo>? children})
     : super(AccountRoute.name, initialChildren: children);
 
   static const String name = 'AccountRoute';
 
-  static _i7.PageInfo page = _i7.PageInfo(
+  static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
       return const _i1.AccountScreen();
@@ -36,60 +37,76 @@ class AccountRoute extends _i7.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.HomeScreen]
-class HomeRoute extends _i7.PageRouteInfo<void> {
-  const HomeRoute({List<_i7.PageRouteInfo>? children})
+/// [_i2.AllSpinnersScreen]
+class AllSpinnersRoute extends _i8.PageRouteInfo<void> {
+  const AllSpinnersRoute({List<_i8.PageRouteInfo>? children})
+    : super(AllSpinnersRoute.name, initialChildren: children);
+
+  static const String name = 'AllSpinnersRoute';
+
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      return const _i2.AllSpinnersScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [_i3.HomeScreen]
+class HomeRoute extends _i8.PageRouteInfo<void> {
+  const HomeRoute({List<_i8.PageRouteInfo>? children})
     : super(HomeRoute.name, initialChildren: children);
 
   static const String name = 'HomeRoute';
 
-  static _i7.PageInfo page = _i7.PageInfo(
+  static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      return const _i2.HomeScreen();
+      return const _i3.HomeScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i3.QuickSpinScreen]
-class QuickSpinRoute extends _i7.PageRouteInfo<void> {
-  const QuickSpinRoute({List<_i7.PageRouteInfo>? children})
+/// [_i4.QuickSpinScreen]
+class QuickSpinRoute extends _i8.PageRouteInfo<void> {
+  const QuickSpinRoute({List<_i8.PageRouteInfo>? children})
     : super(QuickSpinRoute.name, initialChildren: children);
 
   static const String name = 'QuickSpinRoute';
 
-  static _i7.PageInfo page = _i7.PageInfo(
+  static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      return const _i3.QuickSpinScreen();
+      return const _i4.QuickSpinScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i4.SpinnerListScreen]
-class SpinnerListRoute extends _i7.PageRouteInfo<void> {
-  const SpinnerListRoute({List<_i7.PageRouteInfo>? children})
+/// [_i5.SpinnerListScreen]
+class SpinnerListRoute extends _i8.PageRouteInfo<void> {
+  const SpinnerListRoute({List<_i8.PageRouteInfo>? children})
     : super(SpinnerListRoute.name, initialChildren: children);
 
   static const String name = 'SpinnerListRoute';
 
-  static _i7.PageInfo page = _i7.PageInfo(
+  static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      return const _i4.SpinnerListScreen();
+      return const _i5.SpinnerListScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i5.SpinnerScreen]
-class SpinnerRoute extends _i7.PageRouteInfo<SpinnerRouteArgs> {
+/// [_i6.SpinnerScreen]
+class SpinnerRoute extends _i8.PageRouteInfo<SpinnerRouteArgs> {
   SpinnerRoute({
-    _i8.Key? key,
-    required _i9.SpinnerModel spinner,
-    List<_i7.PageRouteInfo>? children,
+    _i9.Key? key,
+    required _i10.SpinnerModel spinner,
+    List<_i8.PageRouteInfo>? children,
   }) : super(
          SpinnerRoute.name,
          args: SpinnerRouteArgs(key: key, spinner: spinner),
@@ -98,11 +115,11 @@ class SpinnerRoute extends _i7.PageRouteInfo<SpinnerRouteArgs> {
 
   static const String name = 'SpinnerRoute';
 
-  static _i7.PageInfo page = _i7.PageInfo(
+  static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<SpinnerRouteArgs>();
-      return _i5.SpinnerScreen(key: args.key, spinner: args.spinner);
+      return _i6.SpinnerScreen(key: args.key, spinner: args.spinner);
     },
   );
 }
@@ -110,9 +127,9 @@ class SpinnerRoute extends _i7.PageRouteInfo<SpinnerRouteArgs> {
 class SpinnerRouteArgs {
   const SpinnerRouteArgs({this.key, required this.spinner});
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
-  final _i9.SpinnerModel spinner;
+  final _i10.SpinnerModel spinner;
 
   @override
   String toString() {
@@ -131,17 +148,17 @@ class SpinnerRouteArgs {
 }
 
 /// generated route for
-/// [_i6.StatsScreen]
-class StatsRoute extends _i7.PageRouteInfo<void> {
-  const StatsRoute({List<_i7.PageRouteInfo>? children})
+/// [_i7.StatsScreen]
+class StatsRoute extends _i8.PageRouteInfo<void> {
+  const StatsRoute({List<_i8.PageRouteInfo>? children})
     : super(StatsRoute.name, initialChildren: children);
 
   static const String name = 'StatsRoute';
 
-  static _i7.PageInfo page = _i7.PageInfo(
+  static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      return const _i6.StatsScreen();
+      return const _i7.StatsScreen();
     },
   );
 }

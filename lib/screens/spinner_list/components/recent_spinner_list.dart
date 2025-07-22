@@ -58,6 +58,7 @@ class RecentSpinnerList extends ConsumerWidget {
           TextButton(
               onPressed: () {
                 // TODO navigate to all spinners list
+                context.router.push(AllSpinnersRoute());
               },
               child: Row(
                 spacing: 8.0,

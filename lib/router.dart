@@ -32,7 +32,12 @@ class AppRouter extends RootStackRouter {
       transitionsBuilder: TransitionsBuilders.slideBottom,
       duration: const Duration(milliseconds: 200),
       reverseDuration: const Duration(milliseconds: 200),
-
+    ),
+    CustomRoute(page: AllSpinnersRoute.page,
+      transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+      duration: const Duration(milliseconds: 200),
+      reverseDuration: const Duration(milliseconds: 200),
     )
+
   ];
 }

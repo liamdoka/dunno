@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:dunno/data/spinner_list_provider.dart';
+import 'package:dunno/router.gr.dart';
 import 'package:dunno/screens/spinner_list/components/favorite_spinner_list.dart';
 import 'package:dunno/screens/spinner_list/components/recent_spinner_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,8 +24,10 @@ class SpinnerListScreen extends ConsumerWidget {
             bottom: 0,
             right: 0,
             child: FloatingActionButton.extended(
+                elevation: 2,
                 onPressed: () {
-                  // TODO TEST
+                  // TODO nav to edit spinner route
+                  context.router.replace(QuickSpinRoute());
                 },
                 icon: Icon(Icons.add),
                 label: Text("New Spinner")

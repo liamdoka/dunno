@@ -20,6 +20,7 @@ class HomeScreen extends StatelessWidget {
       builder: (context, child) {
         return Scaffold(
           appBar: AppBar(
+            forceMaterialTransparency: true,
             centerTitle: true,
             title: Text("Dunno",
               style: Theme.of(context).textTheme.headlineSmall,

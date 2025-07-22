@@ -6,7 +6,7 @@ part of 'spinner_edit_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$spinnerEditHash() => r'1b1ca8072304e7dfbfdc6d44057cffe15aca993b';
+String _$spinnerEditHash() => r'0b03c2d5b98ea05cb4ca597f6582a414554e611a';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,10 +30,10 @@ class _SystemHash {
 }
 
 abstract class _$SpinnerEdit
-    extends BuildlessAutoDisposeNotifier<SpinnerModel?> {
+    extends BuildlessAutoDisposeNotifier<SpinnerModel> {
   late final String id;
 
-  SpinnerModel? build(String id);
+  SpinnerModel build(String id);
 }
 
 /// See also [SpinnerEdit].
@@ -41,7 +41,7 @@ abstract class _$SpinnerEdit
 const spinnerEditProvider = SpinnerEditFamily();
 
 /// See also [SpinnerEdit].
-class SpinnerEditFamily extends Family<SpinnerModel?> {
+class SpinnerEditFamily extends Family<SpinnerModel> {
   /// See also [SpinnerEdit].
   const SpinnerEditFamily();
 
@@ -74,7 +74,7 @@ class SpinnerEditFamily extends Family<SpinnerModel?> {
 
 /// See also [SpinnerEdit].
 class SpinnerEditProvider
-    extends AutoDisposeNotifierProviderImpl<SpinnerEdit, SpinnerModel?> {
+    extends AutoDisposeNotifierProviderImpl<SpinnerEdit, SpinnerModel> {
   /// See also [SpinnerEdit].
   SpinnerEditProvider(String id)
     : this._internal(
@@ -102,7 +102,7 @@ class SpinnerEditProvider
   final String id;
 
   @override
-  SpinnerModel? runNotifierBuild(covariant SpinnerEdit notifier) {
+  SpinnerModel runNotifierBuild(covariant SpinnerEdit notifier) {
     return notifier.build(id);
   }
 
@@ -123,7 +123,7 @@ class SpinnerEditProvider
   }
 
   @override
-  AutoDisposeNotifierProviderElement<SpinnerEdit, SpinnerModel?>
+  AutoDisposeNotifierProviderElement<SpinnerEdit, SpinnerModel>
   createElement() {
     return _SpinnerEditProviderElement(this);
   }
@@ -144,13 +144,13 @@ class SpinnerEditProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin SpinnerEditRef on AutoDisposeNotifierProviderRef<SpinnerModel?> {
+mixin SpinnerEditRef on AutoDisposeNotifierProviderRef<SpinnerModel> {
   /// The parameter `id` of this provider.
   String get id;
 }
 
 class _SpinnerEditProviderElement
-    extends AutoDisposeNotifierProviderElement<SpinnerEdit, SpinnerModel?>
+    extends AutoDisposeNotifierProviderElement<SpinnerEdit, SpinnerModel>
     with SpinnerEditRef {
   _SpinnerEditProviderElement(super.provider);
 

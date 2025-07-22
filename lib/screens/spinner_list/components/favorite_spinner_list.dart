@@ -1,7 +1,9 @@
 
+import 'package:auto_route/auto_route.dart';
 import 'package:dunno/constants/sizes.dart';
 import 'package:dunno/data/spinner_list_provider.dart';
 import 'package:dunno/models/spinner_model.dart';
+import 'package:dunno/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -44,9 +46,11 @@ class FavoriteSpinnerList extends ConsumerWidget {
                       onDismiss: (direction) => ref
                           .read(spinnerListProvider.notifier)
                           .toggleFavorite(spinner.id),
-                      onTap: () => ref
-                          .read(spinnerListProvider.notifier)
-                          .setSelectedSpinner(spinner.id)
+                      onTap: () {
+                        ref.read(spinnerListProvider.notifier)
+                          .setSelectedSpinner(spinner.id);
+                        context.pushRoute(SpinnerRoute(spinner: spinner));
+                      }
                   ),
                 );
               }
@@ -73,34 +77,39 @@ class FavoriteSpinnerTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key(spinner.id),
-      direction: DismissDirection.startToEnd,
-      onDismissed: onDismiss,
-      child: ListTile(
-          leading: Icon(
-              Icons.star,
-              color: Colors.amber,
-              shadows: [
-                Shadow(blurRadius: 2)
-              ]
-          ),
-          title: Text(
-            spinner.title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold
+        key: Key(spinner.id),
+        direction: DismissDirection.startToEnd,
+        onDismissed: onDismiss,
+        background: Row(
+          children: [
+            Icon(Icons.star_border_rounded, color: Colors.amber.shade700)
+          ],
+        ),
+        child: GestureDetector(
+          onTap: onTap,
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+                color: Colors.deepOrange.shade800,
+                borderRadius: defaultBorderRadius
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  spinner.title,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+
+                if (spinner.description != null)
+                  Text(spinner.description!)
+              ],
             ),
           ),
-          subtitle: spinner.description == null
-              ? null
-              : Text(
-            spinner.description!,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          shape: const RoundedRectangleBorder(
-              borderRadius: defaultBorderRadius
-          ),
-          onTap: onTap
-      ),
+        )
     );
   }
 }
