@@ -46,7 +46,7 @@ class FavoriteSpinnerList extends ConsumerWidget {
                       onDismiss: (direction) => ref
                           .read(spinnerListProvider.notifier)
                           .toggleFavorite(spinner.id),
-                      onTap: () => context.pushRoute(SpinnerRoute(spinner: spinner)),
+                      onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
                   ),
                 );
               }

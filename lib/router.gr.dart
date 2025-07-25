@@ -199,16 +199,44 @@ class SpinnerRouteArgs {
 
 /// generated route for
 /// [_i8.StatsScreen]
-class StatsRoute extends _i9.PageRouteInfo<void> {
-  const StatsRoute({List<_i9.PageRouteInfo>? children})
-    : super(StatsRoute.name, initialChildren: children);
+class StatsRoute extends _i9.PageRouteInfo<StatsRouteArgs> {
+  StatsRoute({_i10.Key? key, List<_i9.PageRouteInfo>? children})
+    : super(
+        StatsRoute.name,
+        args: StatsRouteArgs(key: key),
+        initialChildren: children,
+      );
 
   static const String name = 'StatsRoute';
 
   static _i9.PageInfo page = _i9.PageInfo(
     name,
     builder: (data) {
-      return const _i8.StatsScreen();
+      final args = data.argsAs<StatsRouteArgs>(
+        orElse: () => const StatsRouteArgs(),
+      );
+      return _i8.StatsScreen(key: args.key);
     },
   );
+}
+
+class StatsRouteArgs {
+  const StatsRouteArgs({this.key});
+
+  final _i10.Key? key;
+
+  @override
+  String toString() {
+    return 'StatsRouteArgs{key: $key}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! StatsRouteArgs) return false;
+    return key == other.key;
+  }
+
+  @override
+  int get hashCode => key.hashCode;
 }

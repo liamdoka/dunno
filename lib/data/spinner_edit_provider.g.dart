@@ -6,7 +6,7 @@ part of 'spinner_edit_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$spinnerEditHash() => r'77d8bf4b99086d266d4524c75ec2a7bd67aff5a1';
+String _$spinnerEditHash() => r'bed521566f6bbf873e08e4503f7ae97ade76fe30';
 
 /// Copied from Dart SDK
 class _SystemHash {

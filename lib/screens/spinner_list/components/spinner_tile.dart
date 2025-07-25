@@ -16,17 +16,17 @@ class SpinnerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-        key: Key(spinner.id),
-        direction: DismissDirection.startToEnd,
-        onDismissed: onDismiss,
-        background: Row(
-          children: [
-            Icon(Icons.delete_rounded, color: Colors.red)
-          ],
-        ),
-        child: GestureDetector(
-          onTap: onTap,
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      child: Dismissible(
+          key: key ?? ObjectKey(spinner),
+          direction: DismissDirection.startToEnd,
+          onDismissed: onDismiss,
+          background: Row(
+            children: [
+              Icon(Icons.delete_rounded, color: Colors.red)
+            ],
+          ),
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.all(12),
@@ -38,25 +38,28 @@ class SpinnerTile extends StatelessWidget {
                     Colors.deepPurple.shade700,
                     Colors.deepPurple.shade500
                   ]),
-                // color: Theme.of(context).colorScheme.primaryContainer,
                 borderRadius: defaultBorderRadius
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  spinner.title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold
+            child: InkWell(
+              // TODO: Make this work
+              onTap: onTap,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    spinner.title,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold
+                    ),
                   ),
-                ),
-
-                if (spinner.description != null)
-                  Text(spinner.description!)
-              ],
+      
+                  if (spinner.description != null)
+                    Text(spinner.description!)
+                ],
+              ),
             ),
-          ),
-        )
+          )
+      ),
     );
   }
 }

@@ -31,22 +31,21 @@ class RecentSpinnerList extends ConsumerWidget {
         recentSpinners.isEmpty
             ? Text("No recent spinners")
             : Flexible(
-          child: ListView.builder(
+          child: ListView.separated(
               shrinkWrap: true,
+              separatorBuilder: (_, _,) => SizedBox(height: 8),
               itemCount: recentSpinners.length,
               itemBuilder: (context, index) {
                 final spinner = recentSpinners[index];
-                return Container(
-                  margin: EdgeInsets.symmetric(vertical: 4),
-                  child: SpinnerTile(
-                    spinner: spinner,
-                    onDismiss: (direction) => ref
-                        .read(spinnerListProvider.notifier)
-                        .deleteSpinner(spinner.id),
-                    onTap: () => context.pushRoute(SpinnerRoute(spinner: spinner)),
-                  ),
+                return SpinnerTile(
+                  key: ValueKey(spinner.id),
+                  spinner: spinner,
+                  onDismiss: (direction) => ref
+                      .read(spinnerListProvider.notifier)
+                      .deleteSpinner(spinner.id),
+                  onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
                 );
-              }
+              },
           ),
         ),
 

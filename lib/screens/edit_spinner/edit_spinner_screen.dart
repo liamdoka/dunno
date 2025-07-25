@@ -100,32 +100,30 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
                 children: [
                   // TITLE
                   TextField(
-                    controller: titleController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: defaultBorderRadius
-                        ),
-                        hintText: "Title"
-                    ),
-                    onChanged: ref.read(editProvider.notifier).setTitle
+                      controller: titleController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: defaultBorderRadius
+                          ),
+                          hintText: "Title"
+                      ),
+                      onChanged: ref.read(editProvider.notifier).setTitle
                   ),
 
                   // DESCRIPTION
                   TextField(
-                    controller: descriptionController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: defaultBorderRadius
-                        ),
-                        hintText: "Description"
-                    ),
-                    minLines: 2,
-                    maxLines: 2,
-                    style: Theme.of(context).textTheme.bodySmall,
-                    onChanged: ref.read(editProvider.notifier).setDescription
+                      controller: descriptionController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: defaultBorderRadius
+                          ),
+                          hintText: "Description"
+                      ),
+                      minLines: 2,
+                      maxLines: 2,
+                      style: Theme.of(context).textTheme.bodySmall,
+                      onChanged: ref.read(editProvider.notifier).setDescription
                   ),
-
-                  // TODO: COLOR PALETTE
 
                   // SEGMENTS
                   Row(
@@ -154,24 +152,25 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
                             }),
                       ),
                       IconButton(
-                        onPressed: ref.read(editProvider.notifier).clearSegments,
+                        onPressed: editState.segments.isNotEmpty
+                            ? ref.read(editProvider.notifier).clearSegments
+                            : null,
                         icon: Icon(
                           Icons.delete_forever_rounded,
-                          color: editState.segments.isNotEmpty
-                              ? Colors.red
-                              : Theme.of(context).colorScheme.secondaryContainer,
                           size: 32,
                         ),
                       ),
                     ],
                   ),
                   DunnoScrollView(
-                    overlayHeight: 0,
+                      overlayHeight: 0,
                       children: editState.segments
                           .mapIndexed((index, segment) {
                         return SegmentListTile(
                           color: palette.forIndex(index),
                           segment: segment,
+                          onTapIncrease: () => ref.read(editProvider.notifier).increaseSegmentWeight(index),
+                          onTapDecrease: () => ref.read(editProvider.notifier).decreaseSegmentWeight(index),
                           onDismiss: (direction) {
                             ref.read(editProvider.notifier)
                                 .deleteSegment(index);

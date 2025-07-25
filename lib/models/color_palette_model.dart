@@ -1,5 +1,5 @@
 
-import 'package:dunno/utils/colors.dart';
+import 'package:dunno/models/simple_color.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

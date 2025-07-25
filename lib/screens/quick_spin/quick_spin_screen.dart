@@ -3,11 +3,10 @@ import 'package:collection/collection.dart';
 import 'package:dunno/components/dunno_scroll_view.dart';
 import 'package:dunno/constants/sizes.dart';
 import 'package:dunno/data/user_preferences_provider.dart';
+import 'package:dunno/models/simple_color.dart';
 import 'package:dunno/models/spinner_model.dart';
 import 'package:dunno/models/spinner_segment.dart';
 import 'package:dunno/router.gr.dart';
-import 'package:dunno/screens/spinner/spinner_screen.dart';
-import 'package:dunno/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -70,11 +69,12 @@ class _QuickSpinScreenState extends ConsumerState<QuickSpinScreen> {
                     if (value.isEmpty) return;
 
                     final newSegment = SpinnerSegmentModel(
-                        title: value,
-                        color: palette.forIndexSimple(segments.length)
+                      title: value,
+                      // We don't care about the color because it gets set on save.
+                      color: SimpleColor.red,
                     );
                     setState(() {
-                      segments = [newSegment, ...segments];
+                      segments = [...segments, newSegment];
                     });
 
                     textController.clear();
@@ -83,56 +83,58 @@ class _QuickSpinScreenState extends ConsumerState<QuickSpinScreen> {
                 ),
               ),
               IconButton(
-                onPressed: () => setState(() {
-                  segments = [];
-                }),
-                icon: Icon(
-                  Icons.delete_forever_rounded,
-                  color: segments.isNotEmpty
-                      ? Colors.red
-                      : Theme.of(context).colorScheme.secondaryContainer,
-                  size: 32,
-                ),
+                onPressed: segments.isEmpty
+                    ? null
+                    : () => setState(segments.clear),
+                icon: Icon(Icons.delete_forever_rounded, size: 32),
               ),
             ],
           ),
           segments.isEmpty
               ? Expanded(
-            child: Center(child: Text("Add spinner segments above")),
-          )
+                  child: Center(child: Text("Add spinner segments above")),
+                )
               : Expanded(
-            child: DunnoScrollView(
-              overlayHeight: 16,
-              children: segments
-                  .mapIndexed(
-                    (index, segment) => SegmentListTile(
-                  color: palette.forIndex(index),
-                  segment: segment,
-                  onDismiss: (direction) {
-                    setState(() {
-                      final newSegments = List<SpinnerSegmentModel>.from(segments);
-                      newSegments.removeAt(index);
-                      segments = newSegments;
-                    });
-                  },
+                  child: DunnoScrollView(
+                    autoScroll: true,
+                    overlayHeight: 16,
+                    children: segments
+                        .mapIndexed(
+                          (index, segment) => SegmentListTile(
+                            key: ObjectKey(segment),
+                            color: palette.forIndex(index),
+                            segment: segment,
+                            onDismiss: (direction) {
+                              setState(() {
+                                final newSegments =
+                                    List<SpinnerSegmentModel>.from(segments);
+                                newSegments.removeAt(index);
+                                segments = newSegments;
+                              });
+                            },
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
-              ).toList(),
-            ),
-          ),
 
           FilledButton.icon(
             onPressed: segments.length < 2
                 ? null
                 : () {
-              final spinner = SpinnerModel(
-                title: "Quick Spin",
-                color: SimpleColor.red,
-                segments: segments,
-              );
-
-              print("SPINNER ID: ${spinner.id}");
-              context.router.push(SpinnerRoute(spinner: spinner));
-            },
+                    final spinner = SpinnerModel(
+                      title: "Quick Spin",
+                      color: SimpleColor.red,
+                      segments: segments
+                          .mapIndexed(
+                            (index, segment) => segment.copyWith(
+                              color: palette.forIndexSimple(index),
+                            ),
+                          )
+                          .toList(),
+                    );
+                    context.router.push(SpinnerRoute(spinner: spinner));
+                  },
             label: Text("Go"),
             iconAlignment: IconAlignment.end,
             icon: Icon(Icons.arrow_right_alt_rounded),

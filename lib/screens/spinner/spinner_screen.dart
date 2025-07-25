@@ -1,26 +1,25 @@
 import 'dart:math' as math;
 
 import 'package:auto_route/auto_route.dart';
+import 'package:dunno/components/animation/emoji_emitter.dart';
 import 'package:dunno/data/spinner_edit_provider.dart';
 import 'package:dunno/data/spinner_list_provider.dart';
 import 'package:dunno/models/spinner_model.dart';
-import 'package:dunno/models/spinner_segment.dart';
 import 'package:dunno/router.gr.dart';
-import 'package:dunno/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import './save_spinner_dialog.dart';
+import 'components/spinner.dart';
 
 final rand = math.Random();
 
 @RoutePage()
 class SpinnerScreen extends ConsumerWidget {
   final SpinnerModel spinner;
+  final GlobalKey<EmojiEmitterState> emitterKey = GlobalKey<EmojiEmitterState>();
 
-  const SpinnerScreen({super.key, required this.spinner});
+  SpinnerScreen({super.key, required this.spinner});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,6 +29,11 @@ class SpinnerScreen extends ConsumerWidget {
         .watch(spinnerListProvider)
         .any((anySpinner) => anySpinner.id == spinner.id);
 
+    final emitterOffset = Offset(
+        MediaQuery.of(context).size.width / 2,
+        MediaQuery.of(context).size.width / 3
+    );
+
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 80,
@@ -38,240 +42,70 @@ class SpinnerScreen extends ConsumerWidget {
           child: Text("Close"),
         ),
       ),
-      body: Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          spacing: 24,
-          children: [
-            Text(
-              spinner.title,
-              style: Theme.of(context).textTheme.headlineLarge,
-            ),
-            Expanded(
-                child: ClipRect(
-                    child: Spinner(segments: spinner.segments)
-                )
-            ),
+      body: EmojiEmitter(
+        key: emitterKey,
+        child: Container(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              spacing: 24,
+              children: [
+                Text(
+                  spinner.title,
+                  style: Theme.of(context).textTheme.headlineLarge,
+                ),
+                Expanded(
+                    child: Spinner(
+                        segments: spinner.segments,
+                        onComplete: () {
+                          emitterKey.currentState?.emitBurst('⭐️', position: emitterOffset);
+                        }
+                    )
+                ),
 
-            if (isSaved)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      final notifier = ref.read(
-                        spinnerEditProvider(spinner.id).notifier,
-                      );
-                      notifier.toggleFavorite();
-                      notifier.save();
-                    },
-                    label: Text(
-                      spinnerState.isFavorite ? "Favorited" : "Favorite",
-                    ),
-                    icon: Icon(
-                      spinnerState.isFavorite
-                          ? Icons.star_rounded
-                          : Icons.star_border_rounded,
-                      color: Colors.amber,
-                    ),
-                  ),
+                if (isSaved)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          final notifier = ref.read(
+                            spinnerEditProvider(spinner.id).notifier,
+                          );
+                          notifier.toggleFavorite();
+                          notifier.save();
+                        },
+                        label: Text(
+                          spinnerState.isFavorite ? "Favorited" : "Favorite",
+                        ),
+                        icon: Icon(
+                          spinnerState.isFavorite
+                              ? Icons.star_rounded
+                              : Icons.star_border_rounded,
+                          color: Colors.amber,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context.router.replace(EditSpinnerRoute(id: spinner.id));
+                        },
+                        child: Text("Edit spinner"),
+                      ),
+                    ],
+                  )
+                else
                   TextButton(
                     onPressed: () {
-                      context.router.replace(EditSpinnerRoute(id: spinner.id));
+                      showDialog(
+                        context: context,
+                        builder: (context) => SaveSpinnerDialog(spinner: spinner),
+                      );
                     },
-                    child: Text("Edit spinner"),
+                    child: Text("Save spinner"),
                   ),
-                ],
-              )
-            else
-              TextButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => SaveSpinnerDialog(spinner: spinner),
-                  );
-                },
-                child: Text("Save spinner"),
-              ),
-          ],
-        ),
+              ],
+            ),
+          ),
       ),
     );
   }
-}
-
-class Spinner extends StatefulWidget {
-  final List<SpinnerSegmentModel> segments;
-
-  const Spinner({super.key, required this.segments});
-
-  @override
-  State<Spinner> createState() => _SpinnerState();
-}
-
-class _SpinnerState extends State<Spinner> with SingleTickerProviderStateMixin {
-  late Ticker ticker;
-  late FrictionSimulation simulation;
-  double angle = 0;
-  bool isSpinning = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    ticker = createTicker((elapsed) {
-      if (!isSpinning) return;
-
-      final t = elapsed.inMilliseconds / 1000;
-      final newAngle = simulation.x(t);
-
-      if (simulation.isDone(t)) {
-        isSpinning = false;
-      }
-
-      setState(() {
-        angle = newAngle % (2 * math.pi);
-      });
-    });
-  }
-
-  void spin() {
-    if (ticker.isActive) {
-      ticker.stop(canceled: true);
-    }
-
-    final velocity = 32 + (rand.nextDouble() * 32);
-
-    simulation = FrictionSimulation(0.5, angle, velocity);
-    isSpinning = true;
-    ticker.start();
-  }
-
-  @override
-  void dispose() {
-    ticker.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    return Column(
-      spacing: 24,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            Transform.rotate(
-              angle: angle,
-              child: CustomPaint(
-                size: Size.square(screenWidth),
-                painter: SpinnerPainter(segments: widget.segments),
-              ),
-            ),
-            Positioned(
-              top: -4,
-              child: Transform.scale(
-                scaleY: 2,
-                child: Icon(
-                  Icons.arrow_drop_down_rounded,
-                  size: 48,
-                  color: Colors.red,
-                  shadows: [
-                    Shadow(
-                      color: Colors.black,
-                      offset: Offset(0, 1),
-                      blurRadius: 1,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-        FilledButton(onPressed: spin, child: Text("Spin!")),
-      ],
-    );
-  }
-}
-
-class SpinnerPainter extends CustomPainter {
-  final List<SpinnerSegmentModel> segments;
-
-  const SpinnerPainter({required this.segments});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width / 2;
-    final segmentWeights = segments.fold(0, (acc, next) => acc + next.weight);
-    final sliceAngle = 2 * math.pi / segmentWeights;
-    final textPainter = TextPainter(
-      textAlign: TextAlign.center,
-      textDirection: TextDirection.ltr,
-    );
-
-    for (int i = 0; i < segments.length; i++) {
-      final segment = segments[i];
-
-      final color = segment.color.toColor();
-      final paint = Paint()
-        ..style = PaintingStyle.fill
-        ..color = segment.color.toColor();
-
-      final startAngle = i * sliceAngle * segment.weight;
-
-      // Draw the arc slice
-      canvas.drawArc(
-        Rect.fromCircle(center: center, radius: radius),
-        startAngle,
-        sliceAngle,
-        true,
-        paint,
-      );
-
-      final textColor = color.isBright
-          ? Colors.blueGrey.shade900
-          : Colors.blueGrey.shade50;
-
-      // Draw label (rotated so it faces outward)
-      final labelAngle = startAngle + sliceAngle / 2;
-      final textSpan = TextSpan(
-        text: segment.title,
-        style: TextStyle(
-          color: textColor,
-          fontWeight: FontWeight.bold,
-          fontSize: 14,
-        ),
-      );
-      textPainter.text = textSpan;
-      textPainter.layout();
-
-      final labelX = center.dx + (radius * 0.6) * math.cos(labelAngle);
-      final labelY = center.dy + (radius * 0.6) * math.sin(labelAngle);
-
-      canvas.save();
-      canvas.translate(labelX, labelY);
-      canvas.rotate(labelAngle + math.pi / 2);
-      textPainter.paint(
-        canvas,
-        Offset(-textPainter.width / 2, -textPainter.height / 2),
-      );
-      canvas.restore();
-    }
-
-    canvas.save();
-    final x = Paint()
-      ..style = PaintingStyle.fill
-      ..color = Colors.black;
-
-    canvas.drawCircle(center, 8, x);
-    canvas.restore();
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter _) => true;
 }

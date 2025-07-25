@@ -1,7 +1,7 @@
 import 'dart:math';
 
+import 'package:dunno/models/simple_color.dart';
 import 'package:dunno/models/spinner_segment.dart';
-import 'package:dunno/utils/colors.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 

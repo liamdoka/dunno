@@ -1,4 +1,4 @@
-import 'package:dunno/utils/colors.dart';
+import 'package:dunno/models/simple_color.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'spinner_segment.freezed.dart';
