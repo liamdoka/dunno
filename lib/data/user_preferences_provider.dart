@@ -1,3 +1,4 @@
+import 'package:dunno/models/color_palette_model.dart';
 import 'package:dunno/models/user_preferences.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -8,6 +9,8 @@ class UserPreferences extends _$UserPreferences {
 
   @override
   UserPreferencesModel build() {
-    return const UserPreferencesModel();
+    return UserPreferencesModel(
+      defaultColorPalette: DunnoColorPalettes.material
+    );
   }
 }

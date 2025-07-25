@@ -160,6 +160,7 @@ class SpinnerPainter extends CustomPainter {
       final textSpan = TextSpan(
         text: segment.title,
         style: TextStyle(
+          overflow: TextOverflow.ellipsis,
           color: textColor,
           fontWeight: FontWeight.bold,
           fontSize: 14,

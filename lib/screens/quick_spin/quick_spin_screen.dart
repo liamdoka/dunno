@@ -47,6 +47,7 @@ class _QuickSpinScreenState extends ConsumerState<QuickSpinScreen> {
               Text(
                 "Quick Spin",
                 style: Theme.of(context).textTheme.titleMedium,
+                textAlign: TextAlign.center,
               ),
             ],
           ),
@@ -70,7 +71,7 @@ class _QuickSpinScreenState extends ConsumerState<QuickSpinScreen> {
 
                     final newSegment = SpinnerSegmentModel(
                       title: value,
-                      // We don't care about the color because it gets set on save.
+                      // We don't care about the color because it's set on save.
                       color: SimpleColor.red,
                     );
                     setState(() {

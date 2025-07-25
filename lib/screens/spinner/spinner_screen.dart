@@ -9,7 +9,7 @@ import 'package:dunno/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import './save_spinner_dialog.dart';
+import 'components/save_spinner_dialog.dart';
 import 'components/spinner.dart';
 
 final rand = math.Random();
@@ -52,6 +52,7 @@ class SpinnerScreen extends ConsumerWidget {
                 Text(
                   spinner.title,
                   style: Theme.of(context).textTheme.headlineLarge,
+                  textAlign: TextAlign.center,
                 ),
                 Expanded(
                     child: Spinner(
