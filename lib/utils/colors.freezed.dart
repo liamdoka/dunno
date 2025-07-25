@@ -205,7 +205,7 @@ return $default(_that.r,_that.g,_that.b);case _:
 @JsonSerializable()
 
 class _SimpleColor extends SimpleColor {
-  const _SimpleColor({required this.r, required this.g, required this.b}): super._();
+  const _SimpleColor(this.r, this.g, this.b): super._();
   factory _SimpleColor.fromJson(Map<String, dynamic> json) => _$SimpleColorFromJson(json);
 
 @override final  int r;
@@ -264,9 +264,9 @@ class __$SimpleColorCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? r = null,Object? g = null,Object? b = null,}) {
   return _then(_SimpleColor(
-r: null == r ? _self.r : r // ignore: cast_nullable_to_non_nullable
-as int,g: null == g ? _self.g : g // ignore: cast_nullable_to_non_nullable
-as int,b: null == b ? _self.b : b // ignore: cast_nullable_to_non_nullable
+null == r ? _self.r : r // ignore: cast_nullable_to_non_nullable
+as int,null == g ? _self.g : g // ignore: cast_nullable_to_non_nullable
+as int,null == b ? _self.b : b // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }

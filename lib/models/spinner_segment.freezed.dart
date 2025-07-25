@@ -11,70 +11,83 @@ part of 'spinner_segment.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-/// @nodoc
-mixin _$SpinnerSegment {
 
- String get title; int get weight;
-/// Create a copy of SpinnerSegment
+/// @nodoc
+mixin _$SpinnerSegmentModel {
+
+ String get title; SimpleColor get color; int get weight;
+/// Create a copy of SpinnerSegmentModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$SpinnerSegmentCopyWith<SpinnerSegment> get copyWith => _$SpinnerSegmentCopyWithImpl<SpinnerSegment>(this as SpinnerSegment, _$identity);
+$SpinnerSegmentModelCopyWith<SpinnerSegmentModel> get copyWith => _$SpinnerSegmentModelCopyWithImpl<SpinnerSegmentModel>(this as SpinnerSegmentModel, _$identity);
 
+  /// Serializes this SpinnerSegmentModel to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpinnerSegment&&(identical(other.title, title) || other.title == title)&&(identical(other.weight, weight) || other.weight == weight));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpinnerSegmentModel&&(identical(other.title, title) || other.title == title)&&(identical(other.color, color) || other.color == color)&&(identical(other.weight, weight) || other.weight == weight));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,weight);
+int get hashCode => Object.hash(runtimeType,title,color,weight);
 
 @override
 String toString() {
-  return 'SpinnerSegment(title: $title, weight: $weight)';
+  return 'SpinnerSegmentModel(title: $title, color: $color, weight: $weight)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $SpinnerSegmentCopyWith<$Res>  {
-  factory $SpinnerSegmentCopyWith(SpinnerSegment value, $Res Function(SpinnerSegment) _then) = _$SpinnerSegmentCopyWithImpl;
+abstract mixin class $SpinnerSegmentModelCopyWith<$Res>  {
+  factory $SpinnerSegmentModelCopyWith(SpinnerSegmentModel value, $Res Function(SpinnerSegmentModel) _then) = _$SpinnerSegmentModelCopyWithImpl;
 @useResult
 $Res call({
- String title, int weight
+ String title, SimpleColor color, int weight
 });
 
 
-
+$SimpleColorCopyWith<$Res> get color;
 
 }
 /// @nodoc
-class _$SpinnerSegmentCopyWithImpl<$Res>
-    implements $SpinnerSegmentCopyWith<$Res> {
-  _$SpinnerSegmentCopyWithImpl(this._self, this._then);
+class _$SpinnerSegmentModelCopyWithImpl<$Res>
+    implements $SpinnerSegmentModelCopyWith<$Res> {
+  _$SpinnerSegmentModelCopyWithImpl(this._self, this._then);
 
-  final SpinnerSegment _self;
-  final $Res Function(SpinnerSegment) _then;
+  final SpinnerSegmentModel _self;
+  final $Res Function(SpinnerSegmentModel) _then;
 
-/// Create a copy of SpinnerSegment
+/// Create a copy of SpinnerSegmentModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? weight = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? color = null,Object? weight = null,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
+as String,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
+as SimpleColor,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
-
+/// Create a copy of SpinnerSegmentModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SimpleColorCopyWith<$Res> get color {
+  
+  return $SimpleColorCopyWith<$Res>(_self.color, (value) {
+    return _then(_self.copyWith(color: value));
+  });
+}
 }
 
 
-/// Adds pattern-matching-related methods to [SpinnerSegment].
-extension SpinnerSegmentPatterns on SpinnerSegment {
+/// Adds pattern-matching-related methods to [SpinnerSegmentModel].
+extension SpinnerSegmentModelPatterns on SpinnerSegmentModel {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -87,10 +100,10 @@ extension SpinnerSegmentPatterns on SpinnerSegment {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SpinnerSegment value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SpinnerSegmentModel value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _SpinnerSegment() when $default != null:
+case _SpinnerSegmentModel() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -109,10 +122,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SpinnerSegment value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SpinnerSegmentModel value)  $default,){
 final _that = this;
 switch (_that) {
-case _SpinnerSegment():
+case _SpinnerSegmentModel():
 return $default(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -127,10 +140,10 @@ return $default(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SpinnerSegment value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SpinnerSegmentModel value)?  $default,){
 final _that = this;
 switch (_that) {
-case _SpinnerSegment() when $default != null:
+case _SpinnerSegmentModel() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -148,10 +161,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  int weight)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  SimpleColor color,  int weight)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _SpinnerSegment() when $default != null:
-return $default(_that.title,_that.weight);case _:
+case _SpinnerSegmentModel() when $default != null:
+return $default(_that.title,_that.color,_that.weight);case _:
   return orElse();
 
 }
@@ -169,10 +182,10 @@ return $default(_that.title,_that.weight);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  int weight)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  SimpleColor color,  int weight)  $default,) {final _that = this;
 switch (_that) {
-case _SpinnerSegment():
-return $default(_that.title,_that.weight);}
+case _SpinnerSegmentModel():
+return $default(_that.title,_that.color,_that.weight);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -186,10 +199,10 @@ return $default(_that.title,_that.weight);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  int weight)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  SimpleColor color,  int weight)?  $default,) {final _that = this;
 switch (_that) {
-case _SpinnerSegment() when $default != null:
-return $default(_that.title,_that.weight);case _:
+case _SpinnerSegmentModel() when $default != null:
+return $default(_that.title,_that.color,_that.weight);case _:
   return null;
 
 }
@@ -198,71 +211,85 @@ return $default(_that.title,_that.weight);case _:
 }
 
 /// @nodoc
+@JsonSerializable()
 
-
-class _SpinnerSegment implements SpinnerSegment {
-  const _SpinnerSegment({required this.title, this.weight = 1});
-  
+class _SpinnerSegmentModel implements SpinnerSegmentModel {
+  const _SpinnerSegmentModel({required this.title, this.color = SimpleColor.green, this.weight = 1});
+  factory _SpinnerSegmentModel.fromJson(Map<String, dynamic> json) => _$SpinnerSegmentModelFromJson(json);
 
 @override final  String title;
+@override@JsonKey() final  SimpleColor color;
 @override@JsonKey() final  int weight;
 
-/// Create a copy of SpinnerSegment
+/// Create a copy of SpinnerSegmentModel
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$SpinnerSegmentCopyWith<_SpinnerSegment> get copyWith => __$SpinnerSegmentCopyWithImpl<_SpinnerSegment>(this, _$identity);
+_$SpinnerSegmentModelCopyWith<_SpinnerSegmentModel> get copyWith => __$SpinnerSegmentModelCopyWithImpl<_SpinnerSegmentModel>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$SpinnerSegmentModelToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpinnerSegment&&(identical(other.title, title) || other.title == title)&&(identical(other.weight, weight) || other.weight == weight));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpinnerSegmentModel&&(identical(other.title, title) || other.title == title)&&(identical(other.color, color) || other.color == color)&&(identical(other.weight, weight) || other.weight == weight));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,weight);
+int get hashCode => Object.hash(runtimeType,title,color,weight);
 
 @override
 String toString() {
-  return 'SpinnerSegment(title: $title, weight: $weight)';
+  return 'SpinnerSegmentModel(title: $title, color: $color, weight: $weight)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SpinnerSegmentCopyWith<$Res> implements $SpinnerSegmentCopyWith<$Res> {
-  factory _$SpinnerSegmentCopyWith(_SpinnerSegment value, $Res Function(_SpinnerSegment) _then) = __$SpinnerSegmentCopyWithImpl;
+abstract mixin class _$SpinnerSegmentModelCopyWith<$Res> implements $SpinnerSegmentModelCopyWith<$Res> {
+  factory _$SpinnerSegmentModelCopyWith(_SpinnerSegmentModel value, $Res Function(_SpinnerSegmentModel) _then) = __$SpinnerSegmentModelCopyWithImpl;
 @override @useResult
 $Res call({
- String title, int weight
+ String title, SimpleColor color, int weight
 });
 
 
-
+@override $SimpleColorCopyWith<$Res> get color;
 
 }
 /// @nodoc
-class __$SpinnerSegmentCopyWithImpl<$Res>
-    implements _$SpinnerSegmentCopyWith<$Res> {
-  __$SpinnerSegmentCopyWithImpl(this._self, this._then);
+class __$SpinnerSegmentModelCopyWithImpl<$Res>
+    implements _$SpinnerSegmentModelCopyWith<$Res> {
+  __$SpinnerSegmentModelCopyWithImpl(this._self, this._then);
 
-  final _SpinnerSegment _self;
-  final $Res Function(_SpinnerSegment) _then;
+  final _SpinnerSegmentModel _self;
+  final $Res Function(_SpinnerSegmentModel) _then;
 
-/// Create a copy of SpinnerSegment
+/// Create a copy of SpinnerSegmentModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? weight = null,}) {
-  return _then(_SpinnerSegment(
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? color = null,Object? weight = null,}) {
+  return _then(_SpinnerSegmentModel(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
+as String,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
+as SimpleColor,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
 
-
+/// Create a copy of SpinnerSegmentModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SimpleColorCopyWith<$Res> get color {
+  
+  return $SimpleColorCopyWith<$Res>(_self.color, (value) {
+    return _then(_self.copyWith(color: value));
+  });
+}
 }
 
 // dart format on

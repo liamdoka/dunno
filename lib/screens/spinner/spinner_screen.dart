@@ -4,6 +4,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dunno/data/spinner_edit_provider.dart';
 import 'package:dunno/data/spinner_list_provider.dart';
 import 'package:dunno/models/spinner_model.dart';
+import 'package:dunno/models/spinner_segment.dart';
+import 'package:dunno/router.gr.dart';
+import 'package:dunno/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter/scheduler.dart';
@@ -25,9 +28,7 @@ class SpinnerScreen extends ConsumerWidget {
 
     final isSaved = ref
         .watch(spinnerListProvider)
-        .spinners
-        .map((model) => model.id)
-        .contains(spinner.id);
+        .any((anySpinner) => anySpinner.id == spinner.id);
 
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +48,11 @@ class SpinnerScreen extends ConsumerWidget {
               spinner.title,
               style: Theme.of(context).textTheme.headlineLarge,
             ),
-            Expanded(child: Spinner(items: spinner.items)),
+            Expanded(
+                child: ClipRect(
+                    child: Spinner(segments: spinner.segments)
+                )
+            ),
 
             if (isSaved)
               Row(
@@ -73,7 +78,7 @@ class SpinnerScreen extends ConsumerWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      // TODO : Edit screen
+                      context.router.replace(EditSpinnerRoute(id: spinner.id));
                     },
                     child: Text("Edit spinner"),
                   ),
@@ -97,9 +102,9 @@ class SpinnerScreen extends ConsumerWidget {
 }
 
 class Spinner extends StatefulWidget {
-  final List<String> items;
+  final List<SpinnerSegmentModel> segments;
 
-  const Spinner({super.key, required this.items});
+  const Spinner({super.key, required this.segments});
 
   @override
   State<Spinner> createState() => _SpinnerState();
@@ -164,7 +169,7 @@ class _SpinnerState extends State<Spinner> with SingleTickerProviderStateMixin {
               angle: angle,
               child: CustomPaint(
                 size: Size.square(screenWidth),
-                painter: SpinnerPainter(items: widget.items),
+                painter: SpinnerPainter(segments: widget.segments),
               ),
             ),
             Positioned(
@@ -194,26 +199,30 @@ class _SpinnerState extends State<Spinner> with SingleTickerProviderStateMixin {
 }
 
 class SpinnerPainter extends CustomPainter {
-  final List<String> items;
+  final List<SpinnerSegmentModel> segments;
 
-  const SpinnerPainter({required this.items});
+  const SpinnerPainter({required this.segments});
 
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = size.width / 2;
-    final sliceAngle = 2 * math.pi / items.length;
+    final segmentWeights = segments.fold(0, (acc, next) => acc + next.weight);
+    final sliceAngle = 2 * math.pi / segmentWeights;
     final textPainter = TextPainter(
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
     );
 
-    for (int i = 0; i < items.length; i++) {
+    for (int i = 0; i < segments.length; i++) {
+      final segment = segments[i];
+
+      final color = segment.color.toColor();
       final paint = Paint()
         ..style = PaintingStyle.fill
-        ..color = Colors.primaries[i % Colors.accents.length];
+        ..color = segment.color.toColor();
 
-      final startAngle = i * sliceAngle;
+      final startAngle = i * sliceAngle * segment.weight;
 
       // Draw the arc slice
       canvas.drawArc(
@@ -224,12 +233,16 @@ class SpinnerPainter extends CustomPainter {
         paint,
       );
 
+      final textColor = color.isBright
+          ? Colors.blueGrey.shade900
+          : Colors.blueGrey.shade50;
+
       // Draw label (rotated so it faces outward)
       final labelAngle = startAngle + sliceAngle / 2;
       final textSpan = TextSpan(
-        text: items[i],
-        style: const TextStyle(
-          color: Colors.white,
+        text: segment.title,
+        style: TextStyle(
+          color: textColor,
           fontWeight: FontWeight.bold,
           fontSize: 14,
         ),

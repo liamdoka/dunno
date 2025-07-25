@@ -14,7 +14,7 @@ class AllSpinnersScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final allSpinners = ref.watch(spinnerListProvider).spinners;
+    final allSpinners = ref.watch(spinnerListProvider);
 
     return DunnoScaffold(
       child: Column(
@@ -41,11 +41,7 @@ class AllSpinnersScreen extends ConsumerWidget {
                         onDismiss: (direction) => ref
                             .read(spinnerListProvider.notifier)
                             .deleteSpinner(spinner.id),
-                        onTap: () {
-                          ref.read(spinnerListProvider.notifier)
-                              .setSelectedSpinner(spinner.id);
-                          context.router.push(SpinnerRoute(spinner: spinner));
-                        }
+                        onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
                     ),
                   );
                 }

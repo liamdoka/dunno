@@ -13,7 +13,7 @@ class RecentSpinnerList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final recentSpinners = ref.watch(recentSpinnersProvider);
-    final totalSpinnerCount = ref.watch(spinnerListProvider).spinners.length;
+    final totalSpinnerCount = ref.watch(spinnerListProvider).length;
 
     return Column(
       spacing: 16.0,
@@ -29,8 +29,8 @@ class RecentSpinnerList extends ConsumerWidget {
         ),
 
         recentSpinners.isEmpty
-        ? Text("No recent spinners")
-        : Flexible(
+            ? Text("No recent spinners")
+            : Flexible(
           child: ListView.builder(
               shrinkWrap: true,
               itemCount: recentSpinners.length,
@@ -39,15 +39,11 @@ class RecentSpinnerList extends ConsumerWidget {
                 return Container(
                   margin: EdgeInsets.symmetric(vertical: 4),
                   child: SpinnerTile(
-                      spinner: spinner,
-                      onDismiss: (direction) => ref
-                          .read(spinnerListProvider.notifier)
-                          .deleteSpinner(spinner.id),
-                      onTap: () {
-                        ref.read(spinnerListProvider.notifier)
-                            .setSelectedSpinner(spinner.id);
-                        context.pushRoute(SpinnerRoute(spinner: spinner));
-                      }
+                    spinner: spinner,
+                    onDismiss: (direction) => ref
+                        .read(spinnerListProvider.notifier)
+                        .deleteSpinner(spinner.id),
+                    onTap: () => context.pushRoute(SpinnerRoute(spinner: spinner)),
                   ),
                 );
               }
@@ -55,19 +51,11 @@ class RecentSpinnerList extends ConsumerWidget {
         ),
 
         if (totalSpinnerCount > recentSpinners.length)
-          TextButton(
-              onPressed: () {
-                // TODO navigate to all spinners list
-                context.router.push(AllSpinnersRoute());
-              },
-              child: Row(
-                spacing: 8.0,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text("All spinners"),
-                  Icon(Icons.arrow_right_alt_rounded)
-                ],
-              )
+          TextButton.icon(
+              onPressed: () => context.router.push(AllSpinnersRoute()),
+              label: Text("All spinners"),
+              iconAlignment: IconAlignment.end,
+              icon: Icon(Icons.arrow_right_alt_rounded)
           )
       ],
     );

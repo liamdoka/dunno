@@ -7,9 +7,9 @@ part of 'colors.dart';
 // **************************************************************************
 
 _SimpleColor _$SimpleColorFromJson(Map<String, dynamic> json) => _SimpleColor(
-  r: (json['r'] as num).toInt(),
-  g: (json['g'] as num).toInt(),
-  b: (json['b'] as num).toInt(),
+  (json['r'] as num).toInt(),
+  (json['g'] as num).toInt(),
+  (json['b'] as num).toInt(),
 );
 
 Map<String, dynamic> _$SimpleColorToJson(_SimpleColor instance) =>

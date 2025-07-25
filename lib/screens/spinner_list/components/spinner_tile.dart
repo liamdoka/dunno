@@ -31,7 +31,14 @@ class SpinnerTile extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primaryContainer,
+              gradient: LinearGradient(
+                  end: Alignment.topCenter,
+                  begin: Alignment.bottomCenter,
+                  colors: [
+                    Colors.deepPurple.shade700,
+                    Colors.deepPurple.shade500
+                  ]),
+                // color: Theme.of(context).colorScheme.primaryContainer,
                 borderRadius: defaultBorderRadius
             ),
             child: Column(

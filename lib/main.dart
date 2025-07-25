@@ -12,20 +12,8 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapters();
 
-  Hive.close();
+  await Hive.close();
   await Hive.openBox<SpinnerModel>(HiveBox.spinners.name);
-
-  // try {
-  // await Hive.initFlutter();
-  //
-  // // Automatically registers generated adapters.
-  // Hive.registerAdapters();
-  //
-  //   await Hive.openBox<SpinnerModel>("spinners");
-  // } catch (e) {
-  //   Hive.deleteBoxFromDisk("spinners");
-  //   await Hive.openBox<SpinnerModel>("spinners");
-  // }
 
   runApp(MyApp());
 }

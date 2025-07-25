@@ -46,11 +46,7 @@ class FavoriteSpinnerList extends ConsumerWidget {
                       onDismiss: (direction) => ref
                           .read(spinnerListProvider.notifier)
                           .toggleFavorite(spinner.id),
-                      onTap: () {
-                        ref.read(spinnerListProvider.notifier)
-                          .setSelectedSpinner(spinner.id);
-                        context.pushRoute(SpinnerRoute(spinner: spinner));
-                      }
+                      onTap: () => context.pushRoute(SpinnerRoute(spinner: spinner)),
                   ),
                 );
               }
@@ -91,7 +87,14 @@ class FavoriteSpinnerTile extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-                color: Colors.deepOrange.shade800,
+                gradient: LinearGradient(
+                    end: Alignment.topCenter,
+                    begin: Alignment.bottomCenter,
+                    colors: [
+                      Colors.deepOrange.shade900,
+                      Colors.deepOrange.shade600
+                    ]),
+                // color: Theme.of(context).colorScheme.primaryContainer,
                 borderRadius: defaultBorderRadius
             ),
             child: Column(

@@ -2,26 +2,29 @@ import 'package:auto_route/auto_route.dart';
 import 'package:collection/collection.dart';
 import 'package:dunno/components/dunno_scroll_view.dart';
 import 'package:dunno/constants/sizes.dart';
+import 'package:dunno/data/user_preferences_provider.dart';
 import 'package:dunno/models/spinner_model.dart';
 import 'package:dunno/models/spinner_segment.dart';
 import 'package:dunno/router.gr.dart';
+import 'package:dunno/screens/spinner/spinner_screen.dart';
 import 'package:dunno/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'components/segment_list_tile.dart';
 
 @RoutePage()
-class QuickSpinScreen extends StatefulWidget {
+class QuickSpinScreen extends ConsumerStatefulWidget {
   const QuickSpinScreen({super.key});
 
   @override
-  State<QuickSpinScreen> createState() => _QuickSpinScreenState();
+  ConsumerState<QuickSpinScreen> createState() => _QuickSpinScreenState();
 }
 
-class _QuickSpinScreenState extends State<QuickSpinScreen> {
+class _QuickSpinScreenState extends ConsumerState<QuickSpinScreen> {
   final textController = TextEditingController();
   final focusNode = FocusNode();
-  final List<SpinnerSegment> segments = [];
+  List<SpinnerSegmentModel> segments = [];
 
   @override
   void dispose() {
@@ -32,10 +35,13 @@ class _QuickSpinScreenState extends State<QuickSpinScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final palette = ref.watch(userPreferencesProvider).defaultColorPalette;
+
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: Column(
         spacing: 12.0,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
@@ -63,9 +69,12 @@ class _QuickSpinScreenState extends State<QuickSpinScreen> {
                     final value = textController.text;
                     if (value.isEmpty) return;
 
-                    final newSegment = SpinnerSegment(title: value);
+                    final newSegment = SpinnerSegmentModel(
+                        title: value,
+                        color: palette.forIndexSimple(segments.length)
+                    );
                     setState(() {
-                      segments.add(newSegment);
+                      segments = [newSegment, ...segments];
                     });
 
                     textController.clear();
@@ -75,13 +84,13 @@ class _QuickSpinScreenState extends State<QuickSpinScreen> {
               ),
               IconButton(
                 onPressed: () => setState(() {
-                    segments.clear();
+                  segments = [];
                 }),
                 icon: Icon(
                   Icons.delete_forever_rounded,
                   color: segments.isNotEmpty
-                    ? Colors.red
-                    : Theme.of(context).colorScheme.secondaryContainer,
+                      ? Colors.red
+                      : Theme.of(context).colorScheme.secondaryContainer,
                   size: 32,
                 ),
               ),
@@ -89,62 +98,44 @@ class _QuickSpinScreenState extends State<QuickSpinScreen> {
           ),
           segments.isEmpty
               ? Expanded(
-                  child: Center(child: Text("Add spinner segments above")),
-                )
-              : DunnoScrollView(
-                  overlayHeight: 16,
-                  children: segments
-                      .mapIndexed(
-                        (index, segment) => SegmentListTile(
-                          index: index,
-                          segment: segment,
-                          onDismiss: (direction) {
-                            setState(() {
-                              segments.removeAt(index);
-                            });
-                          },
-                        ),
-                      )
-                      .toList()
-                      .reversed
-                      .toList(),
+            child: Center(child: Text("Add spinner segments above")),
+          )
+              : Expanded(
+            child: DunnoScrollView(
+              overlayHeight: 16,
+              children: segments
+                  .mapIndexed(
+                    (index, segment) => SegmentListTile(
+                  color: palette.forIndex(index),
+                  segment: segment,
+                  onDismiss: (direction) {
+                    setState(() {
+                      final newSegments = List<SpinnerSegmentModel>.from(segments);
+                      newSegments.removeAt(index);
+                      segments = newSegments;
+                    });
+                  },
                 ),
+              ).toList(),
+            ),
+          ),
 
-          TextButton(
-            onPressed: () {
+          FilledButton.icon(
+            onPressed: segments.length < 2
+                ? null
+                : () {
               final spinner = SpinnerModel(
                 title: "Quick Spin",
-                color: Colors.primaries[0].toSimpleColor(),
-                items: List.from(
-                  segments.map((SpinnerSegment segment) => segment.title),
-                ),
+                color: SimpleColor.red,
+                segments: segments,
               );
 
+              print("SPINNER ID: ${spinner.id}");
               context.router.push(SpinnerRoute(spinner: spinner));
             },
-            style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(Colors.deepPurple),
-              textStyle: WidgetStatePropertyAll(TextStyle(color: Colors.white)),
-              shape: WidgetStatePropertyAll(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-              ),
-            ),
-            child: Row(
-              spacing: 8.0,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Go",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                Icon(Icons.arrow_right_alt_rounded),
-              ],
-            ),
+            label: Text("Go"),
+            iconAlignment: IconAlignment.end,
+            icon: Icon(Icons.arrow_right_alt_rounded),
           ),
         ],
       ),

@@ -37,7 +37,7 @@ class AppRouter extends RootStackRouter {
       transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
       duration: const Duration(milliseconds: 200),
       reverseDuration: const Duration(milliseconds: 200),
-    )
-
+    ),
+    AutoRoute(page: EditSpinnerRoute.page)
   ];
 }
