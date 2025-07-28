@@ -2,7 +2,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:collection/collection.dart';
 import 'package:dunno/components/dunno_scaffold.dart';
-import 'package:dunno/components/dunno_scroll_view.dart';
+import 'package:dunno/constants/numbers.dart';
 import 'package:dunno/constants/sizes.dart';
 import 'package:dunno/data/spinner_edit_provider.dart';
 import 'package:dunno/data/user_preferences_provider.dart';
@@ -61,6 +61,22 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
     descriptionController.dispose();
     segmentsController.dispose();
     super.dispose();
+  }
+
+  void addSegment() {
+    final value = segmentsController.text;
+    if (value.isEmpty) return;
+
+    final segmentCount = ref.read(editProvider).segments.length;
+    final palette = ref.read(userPreferencesProvider).defaultColorPalette;
+
+    final segment = SpinnerSegmentModel(
+        title: value,
+        color: palette.forIndexSimple(segmentCount)
+    );
+
+    ref.read(editProvider.notifier).addSegment(segment);
+    segmentsController.clear();
   }
 
   @override
@@ -134,7 +150,6 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
 
                   // SEGMENTS
                   Row(
-                    spacing: 8.0,
                     children: [
                       Expanded(
                         child: TextField(
@@ -144,29 +159,24 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
                                 border: OutlineInputBorder(
                                     borderRadius: defaultBorderRadius
                                 ),
-                                hintText: "Add segments"
+                                hintText: "Add segments",
+                                suffixIcon: Container(
+                                  margin: const EdgeInsets.only(right: 3),
+                                  child: IconButton(
+                                      style: ButtonStyle(
+                                        shape: WidgetStatePropertyAll(
+                                            RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(8)
+                                            )
+                                        ),
+                                      ),
+                                      onPressed: addSegment,
+                                      icon: Icon(Icons.add)),
+                                )
                             ),
-                            onEditingComplete: () {
-                              final value = segmentsController.text;
-                              if (value.isEmpty) return;
-
-                              final segment = SpinnerSegmentModel(
-                                  title: value,
-                                  color: palette.forIndexSimple(editState.segments.length)
-                              );
-                              ref.read(editProvider.notifier).addSegment(segment);
-                              segmentsController.clear();
-                            }),
-                      ),
-                      IconButton(
-                        onPressed: editState.segments.isNotEmpty
-                            ? ref.read(editProvider.notifier).clearSegments
-                            : null,
-                        icon: Icon(
-                          Icons.delete_forever_rounded,
-                          size: 32,
+                            onEditingComplete: addSegment,
                         ),
-                      ),
+                      )
                     ],
                   ),
                   Column(
@@ -179,10 +189,9 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
                           segment: segment,
                           onTapIncrease: () => ref.read(editProvider.notifier).increaseSegmentWeight(index),
                           onTapDecrease: () => ref.read(editProvider.notifier).decreaseSegmentWeight(index),
-                          onDismiss: (direction) {
+                          onDismiss: () =>
                             ref.read(editProvider.notifier)
-                                .deleteSegment(index);
-                          },
+                                .deleteSegment(index)
                         );
                       }).toList()
                   ),
@@ -263,7 +272,7 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
                       )
                   ),
                   controller: emojiController,
-                  maxLength: 3,
+                  maxLength: AppNumbers.maxConfettiStringLength,
                   maxLengthEnforcement: MaxLengthEnforcement.enforced,
                   onChanged: ref.read(editProvider.notifier).setEmojis,
                 ),

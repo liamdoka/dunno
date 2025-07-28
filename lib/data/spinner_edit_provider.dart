@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:dunno/data/user_preferences_provider.dart';
 import 'package:dunno/hive/hive_adapters.dart';
-import 'package:dunno/models/simple_color_model.dart';
 import 'package:dunno/models/spinner_model.dart';
 import 'package:dunno/models/spinner_segment_model.dart';
 import 'package:dunno/utils/colors.dart';
@@ -90,7 +89,7 @@ class SpinnerEdit extends _$SpinnerEdit {
     if (index < 0 || index >= state.segments.length) return;
 
     final segment = state.segments[index];
-    if (segment.weight == 0) return;
+    if (segment.weight == 1) return deleteSegment(index);
 
     var newList = List<SpinnerSegmentModel>.from(state.segments);
     newList[index] = segment.copyWith(weight: segment.weight - 1);
@@ -115,7 +114,10 @@ class SpinnerEdit extends _$SpinnerEdit {
         lastEditTime: DateTime.now().millisecondsSinceEpoch
     );
 
-    box.put(state.id, state.copyWith(segments: newSegments, stats: newStats));
+    box.put(state.id, state.copyWith(
+        segments: newSegments,
+        stats: newStats
+    ));
     ref.invalidateSelf();
   }
 }

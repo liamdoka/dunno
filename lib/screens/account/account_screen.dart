@@ -1,13 +1,8 @@
 
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:dunno/data/spinner_list_provider.dart';
-import 'package:dunno/hive/hive_adapters.dart';
-import 'package:dunno/models/spinner_model.dart';
 import 'package:dunno/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_ce/hive.dart';
 
 @RoutePage()
 class AccountScreen extends ConsumerWidget {

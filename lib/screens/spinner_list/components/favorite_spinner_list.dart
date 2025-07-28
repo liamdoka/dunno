@@ -1,9 +1,7 @@
 
 import 'package:auto_route/auto_route.dart';
-import 'package:dunno/constants/sizes.dart';
 import 'package:dunno/data/spinner_list_provider.dart';
 import 'package:dunno/data/user_preferences_provider.dart';
-import 'package:dunno/models/spinner_model.dart';
 import 'package:dunno/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

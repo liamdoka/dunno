@@ -12,6 +12,9 @@ _UserPreferencesModel _$UserPreferencesModelFromJson(
   appTheme:
       $enumDecodeNullable(_$ThemeModeEnumMap, json['appTheme']) ??
       ThemeMode.system,
+  appTint: json['appTint'] == null
+      ? const SimpleColor(103, 58, 183)
+      : SimpleColor.fromJson(json['appTint'] as Map<String, dynamic>),
   defaultColorPalette: json['defaultColorPalette'] == null
       ? DunnoColorPalettes.bubblegum
       : ColorPaletteModel.fromJson(
@@ -24,6 +27,7 @@ Map<String, dynamic> _$UserPreferencesModelToJson(
   _UserPreferencesModel instance,
 ) => <String, dynamic>{
   'appTheme': _$ThemeModeEnumMap[instance.appTheme]!,
+  'appTint': instance.appTint,
   'defaultColorPalette': instance.defaultColorPalette,
   'defaultEmojis': instance.defaultEmojis,
 };

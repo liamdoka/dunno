@@ -1,6 +1,8 @@
+import 'package:dunno/constants/numbers.dart';
 import 'package:dunno/hive/hive_adapters.dart';
 import 'package:dunno/models/color_palette_model.dart';
 import 'package:dunno/models/user_preferences_model.dart';
+import 'package:dunno/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -24,12 +26,10 @@ class UserPreferences extends _$UserPreferences {
 
     return box.values.firstOrNull ?? UserPreferencesModel(
       defaultColorPalette: DunnoColorPalettes.material,
-      defaultEmojis: "🎉"
     );
   }
 
   void setThemeMode(Set<ThemeMode> themes) {
-
     final theme = themes.firstOrNull;
     if (theme == null) return;
 
@@ -40,9 +40,17 @@ class UserPreferences extends _$UserPreferences {
   }
 
   void setDefaultEmojis(String emojis) {
-    if (emojis.characters.length > 3) return;
+    if (emojis.characters.length > AppNumbers.maxConfettiStringLength) return;
     state = state.copyWith(
       defaultEmojis: emojis
+    );
+    save();
+  }
+
+  void setTint(Color color) {
+    final simpleColor = color.toSimpleColor();
+    state = state.copyWith(
+      appTint: simpleColor
     );
     save();
   }

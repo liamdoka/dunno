@@ -32,6 +32,25 @@ class _QuickSpinScreenState extends ConsumerState<QuickSpinScreen> {
     super.dispose();
   }
 
+
+  void addSegment() {
+    final value = textController.text;
+    if (value.isEmpty) return;
+
+    final newSegment = SpinnerSegmentModel(
+      title: value,
+      // We don't care about the color because it's set on save.
+      color: SimpleColor.red,
+    );
+    setState(() {
+      segments = [...segments, newSegment];
+    });
+
+    textController.clear();
+    focusNode.requestFocus();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final palette = ref.watch(userPreferencesProvider).defaultColorPalette;
@@ -43,100 +62,86 @@ class _QuickSpinScreenState extends ConsumerState<QuickSpinScreen> {
         spacing: 12.0,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              Text(
-                "Quick Spin",
-                style: Theme.of(context).textTheme.titleMedium,
-                textAlign: TextAlign.center,
-              ),
-            ],
+          Text(
+            "Quick Spin",
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           Row(
             spacing: 8.0,
             children: [
               Expanded(
                 child: TextField(
-                  focusNode: focusNode,
-                  textInputAction: TextInputAction.newline,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: defaultBorderRadius,
+                    focusNode: focusNode,
+                    textInputAction: TextInputAction.newline,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: defaultBorderRadius,
+                        ),
+                        hintText: "New segment",
+                        suffixIcon: Container(
+                          margin: const EdgeInsets.only(right: 3),
+                          child: IconButton(
+                              style: ButtonStyle(
+                                shape: WidgetStatePropertyAll(
+                                    RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8)
+                                    )
+                                ),
+                              ),
+                              onPressed: addSegment,
+                              icon: Icon(Icons.add)),
+                        )
                     ),
-                    hintText: "New segment",
-                  ),
-                  controller: textController,
-                  onEditingComplete: () {
-                    final value = textController.text;
-                    if (value.isEmpty) return;
-
-                    final newSegment = SpinnerSegmentModel(
-                      title: value,
-                      // We don't care about the color because it's set on save.
-                      color: SimpleColor.red,
-                    );
-                    setState(() {
-                      segments = [...segments, newSegment];
-                    });
-
-                    textController.clear();
-                    focusNode.requestFocus();
-                  },
+                    controller: textController,
+                    onEditingComplete: addSegment
                 ),
-              ),
-              IconButton(
-                onPressed: segments.isEmpty
-                    ? null
-                    : () => setState(segments.clear),
-                icon: Icon(Icons.delete_forever_rounded, size: 32),
               ),
             ],
           ),
           segments.isEmpty
               ? Expanded(
-                  child: Center(child: Text("Add spinner segments above")),
-                )
+            child: Center(child: Text("Add spinner segments above")),
+          )
               : Expanded(
-                  child: DunnoScrollView(
-                    autoScroll: true,
-                    overlayHeight: 16,
-                    children: segments
-                        .mapIndexed(
-                          (index, segment) => SegmentListTile(
-                            key: ObjectKey(segment),
-                            color: palette.forIndex(index),
-                            segment: segment,
-                            onDismiss: (direction) {
-                              setState(() {
-                                final newSegments =
-                                    List<SpinnerSegmentModel>.from(segments);
-                                newSegments.removeAt(index);
-                                segments = newSegments;
-                              });
-                            },
-                          ),
-                        )
-                        .toList(),
-                  ),
+            child: DunnoScrollView(
+              autoScroll: true,
+              overlayHeight: 16,
+              children: segments
+                  .mapIndexed(
+                    (index, segment) => SegmentListTile(
+                  key: ObjectKey(segment),
+                  color: palette.forIndex(index),
+                  segment: segment,
+                  onDismiss: () =>
+                      setState(() {
+                        final newSegments =
+                        List<SpinnerSegmentModel>.from(segments);
+                        newSegments.removeAt(index);
+                        segments = newSegments;
+                      }),
                 ),
+              )
+              .toList(),
+            ),
+          ),
 
           FilledButton.icon(
             onPressed: segments.length < 2
                 ? null
                 : () {
-                    final spinner = SpinnerModel(
-                      title: "Quick Spin",
-                      color: SimpleColor.red,
-                      segments: segments
-                          .mapIndexed(
-                            (index, segment) => segment.copyWith(
-                              color: palette.forIndexSimple(index),
-                            ),
-                          )
-                          .toList(),
-                    );
-                    context.router.push(SpinnerRoute(spinner: spinner));
-                  },
+              final spinner = SpinnerModel(
+                title: "Quick Spin",
+                color: SimpleColor.red,
+                segments: segments
+                    .mapIndexed(
+                      (index, segment) => segment.copyWith(
+                    color: palette.forIndexSimple(index),
+                  ),
+                )
+                    .toList(),
+              );
+              context.router.push(SpinnerRoute(spinner: spinner));
+            },
             label: Text("Go"),
             iconAlignment: IconAlignment.end,
             icon: Icon(Icons.arrow_right_alt_rounded),

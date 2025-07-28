@@ -71,9 +71,9 @@ title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nulla
 as String,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
 as SimpleColor,segments: null == segments ? _self.segments : segments // ignore: cast_nullable_to_non_nullable
 as List<SpinnerSegmentModel>,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String?,id: freezed == id ? _self.id! : id // ignore: cast_nullable_to_non_nullable
+as String?,id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,emojis: freezed == emojis ? _self.emojis : emojis // ignore: cast_nullable_to_non_nullable
-as String?,stats: freezed == stats ? _self.stats! : stats // ignore: cast_nullable_to_non_nullable
+as String?,stats: freezed == stats ? _self.stats : stats // ignore: cast_nullable_to_non_nullable
 as SpinnerStatsModel?,palette: freezed == palette ? _self.palette : palette // ignore: cast_nullable_to_non_nullable
 as ColorPaletteModel?,isFavorite: null == isFavorite ? _self.isFavorite : isFavorite // ignore: cast_nullable_to_non_nullable
 as bool,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
@@ -94,11 +94,7 @@ $SimpleColorCopyWith<$Res> get color {
 @override
 @pragma('vm:prefer-inline')
 $SpinnerStatsModelCopyWith<$Res>? get stats {
-    if (_self.stats == null) {
-    return null;
-  }
-
-  return $SpinnerStatsModelCopyWith<$Res>(_self.stats!, (value) {
+    return $SpinnerStatsModelCopyWith<$Res>(_self.stats, (value) {
     return _then(_self.copyWith(stats: value));
   });
 }/// Create a copy of SpinnerModel
@@ -349,11 +345,7 @@ $SimpleColorCopyWith<$Res> get color {
 @override
 @pragma('vm:prefer-inline')
 $SpinnerStatsModelCopyWith<$Res>? get stats {
-    if (_self.stats == null) {
-    return null;
-  }
-
-  return $SpinnerStatsModelCopyWith<$Res>(_self.stats!, (value) {
+    return $SpinnerStatsModelCopyWith<$Res>(_self.stats, (value) {
     return _then(_self.copyWith(stats: value));
   });
 }/// Create a copy of SpinnerModel
@@ -427,7 +419,7 @@ class _$SpinnerStatsModelCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? createdTime = freezed,Object? lastEditTime = freezed,Object? lastSpinTime = freezed,Object? deletedTime = freezed,Object? spinCount = null,Object? editCount = null,}) {
   return _then(_self.copyWith(
-createdTime: freezed == createdTime ? _self.createdTime! : createdTime // ignore: cast_nullable_to_non_nullable
+createdTime: freezed == createdTime ? _self.createdTime : createdTime // ignore: cast_nullable_to_non_nullable
 as int?,lastEditTime: freezed == lastEditTime ? _self.lastEditTime : lastEditTime // ignore: cast_nullable_to_non_nullable
 as int?,lastSpinTime: freezed == lastSpinTime ? _self.lastSpinTime : lastSpinTime // ignore: cast_nullable_to_non_nullable
 as int?,deletedTime: freezed == deletedTime ? _self.deletedTime : deletedTime // ignore: cast_nullable_to_non_nullable

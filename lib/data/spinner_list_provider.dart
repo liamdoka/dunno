@@ -67,11 +67,6 @@ List<SpinnerModel> mostEdits(Ref ref) {
 }
 
 
-
-
-
-
-
 @riverpod
 class SpinnerList extends _$SpinnerList {
   final box = Hive.box<SpinnerModel>(HiveBox.spinners.name);

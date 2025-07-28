@@ -4,6 +4,6 @@ abstract class AppTextStyles {
 
 }
 
-abstract class BoxStyles {
+abstract class AppBoxStyles {
 
 }

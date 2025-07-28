@@ -75,7 +75,7 @@ types:
         index: 2
   UserPreferencesModel:
     typeId: 5
-    nextIndex: 3
+    nextIndex: 4
     fields:
       appTheme:
         index: 0
@@ -83,6 +83,8 @@ types:
         index: 1
       defaultEmojis:
         index: 2
+      appTint:
+        index: 3
   ThemeMode:
     typeId: 6
     nextIndex: 3

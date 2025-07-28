@@ -248,6 +248,9 @@ class UserPreferencesModelAdapter extends TypeAdapter<UserPreferencesModel> {
     };
     return UserPreferencesModel(
       appTheme: fields[0] == null ? ThemeMode.system : fields[0] as ThemeMode,
+      appTint: fields[3] == null
+          ? const SimpleColor(103, 58, 183)
+          : fields[3] as SimpleColor,
       defaultColorPalette: fields[1] == null
           ? DunnoColorPalettes.bubblegum
           : fields[1] as ColorPaletteModel,
@@ -258,13 +261,15 @@ class UserPreferencesModelAdapter extends TypeAdapter<UserPreferencesModel> {
   @override
   void write(BinaryWriter writer, UserPreferencesModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.appTheme)
       ..writeByte(1)
       ..write(obj.defaultColorPalette)
       ..writeByte(2)
-      ..write(obj.defaultEmojis);
+      ..write(obj.defaultEmojis)
+      ..writeByte(3)
+      ..write(obj.appTint);
   }
 
   @override

@@ -1,8 +1,10 @@
 import 'package:auto_route/annotations.dart';
 import 'package:dunno/components/animation/emoji_emitter.dart';
 import 'package:dunno/components/dunno_scaffold.dart';
+import 'package:dunno/constants/numbers.dart';
 import 'package:dunno/constants/sizes.dart';
 import 'package:dunno/data/user_preferences_provider.dart';
+import 'package:dunno/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +21,7 @@ class AppearanceSettingsScreen extends ConsumerStatefulWidget {
 class _AppearanceSettingsScreenState
     extends ConsumerState<AppearanceSettingsScreen> {
   final GlobalKey<EmojiEmitterState> emitterKey =
-      GlobalKey<EmojiEmitterState>();
+  GlobalKey<EmojiEmitterState>();
   late final TextEditingController emojiController;
 
   @override
@@ -99,10 +101,23 @@ class _AppearanceSettingsScreenState
                     ),
                   ],
                 ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Wrap(
+                    alignment: WrapAlignment.start,
+                      children: Colors.primaries.map((color) => AppThemeTintButton(
+                          isSelected: preferences.appTint == color.toSimpleColor(),
+                          onTap: () => ref
+                              .read(userPreferencesProvider.notifier)
+                              .setTint(color),
+                          color: color)
+                      ).toList()
+                  ),
+                ),
               ],
             ),
 
-            // DEFAULT EMOJIS
+            // DEFAULT CONFETTI
             AppearanceSettingsPanel(
               title: "Confetti",
               children: [
@@ -118,7 +133,6 @@ class _AppearanceSettingsScreenState
                           filled: true,
                           fillColor: Theme.of(context).colorScheme.surfaceContainerLow,
                           border: OutlineInputBorder(
-
                             borderRadius: defaultBorderRadius,
                           ),
                           hintText: preferences.defaultEmojis,
@@ -127,7 +141,7 @@ class _AppearanceSettingsScreenState
                           ),
                         ),
                         controller: emojiController,
-                        maxLength: 3,
+                        maxLength: AppNumbers.maxConfettiStringLength,
                         maxLengthEnforcement: MaxLengthEnforcement.enforced,
                         onChanged: ref
                             .read(userPreferencesProvider.notifier)
@@ -191,6 +205,35 @@ class AppearanceSettingsPanel extends StatelessWidget {
           Text(title, style: Theme.of(context).textTheme.labelLarge),
           ...?children,
         ],
+      ),
+    );
+  }
+}
+
+class AppThemeTintButton extends StatelessWidget {
+  final VoidCallback onTap;
+  final Color color;
+  final bool isSelected;
+
+  const AppThemeTintButton({super.key, required this.onTap, required this.color, required this.isSelected});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.all(4),
+        height: 32,
+        width: 32,
+        decoration: BoxDecoration(
+            border: Border.all(color: isSelected
+                ? Theme.of(context).colorScheme.onSurface
+                : Theme.of(context).colorScheme.onPrimary,
+                width: 2
+            ),
+            borderRadius: defaultBorderRadius,
+            color: color
+        ),
       ),
     );
   }

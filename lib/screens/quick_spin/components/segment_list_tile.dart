@@ -1,3 +1,4 @@
+
 import 'package:dunno/components/animation/grow_animation.dart';
 import 'package:dunno/constants/sizes.dart';
 import 'package:dunno/models/spinner_segment_model.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 class SegmentListTile extends StatefulWidget {
   final SpinnerSegmentModel segment;
   final Color color;
-  final DismissDirectionCallback? onDismiss;
+  final VoidCallback? onDismiss;
   final VoidCallback? onTapIncrease;
   final VoidCallback? onTapDecrease;
 
@@ -47,63 +48,63 @@ class _SegmentListTileState extends State<SegmentListTile> {
     return GrowAppearAnimation(
       key: key,
       duration: appearTransitionDuration,
-      child: Dismissible(
+      child: AnimatedContainer(
+        height: 48,
         key: key,
-        onDismissed: widget.onDismiss,
-        background: Row(
-          children: [
-            Icon(Icons.delete_rounded, color: Colors.red)
-          ],
+        duration: colorTransitionDuration,
+        curve: Curves.easeInOut,
+        decoration: BoxDecoration(
+          borderRadius: defaultBorderRadius,
+          color: widget.color,
         ),
-        direction: DismissDirection.startToEnd,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Text(widget.segment.title,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: textColor
+                  )),
+            ),
 
-        // not sure this animated container business actually works yet
-        child: AnimatedContainer(
-          height: 48,
-          key: key,
-          duration: colorTransitionDuration,
-          curve: Curves.easeInOut,
-          decoration: BoxDecoration(
-            borderRadius: defaultBorderRadius,
-            color: widget.color,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Text(widget.segment.title,
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w600,
+            if (widget.onTapIncrease != null && widget.onTapDecrease != null)
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: widget.onTapDecrease,
+                    icon: Icon(widget.segment.weight > 1
+                        ? Icons.remove_circle
+                        : Icons.delete_rounded,
                         color: textColor
-                    )),
+                    ),
+                    padding: null,
+                  ),
+                  Text(widget.segment.weight.toString(),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: textColor,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: widget.onTapIncrease,
+                    icon: Icon(Icons.add_circle, color: textColor,),
+                    padding: null,
+                  )
+                ],
+              )
+            else
+              IconButton(
+                onPressed: widget.onDismiss,
+                icon: Icon(Icons.remove,
+                    color: textColor
+                ),
+                padding: null,
               ),
-
-              if (widget.onTapIncrease != null && widget.onTapDecrease != null)
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: widget.onTapDecrease,
-                      icon: Icon(Icons.remove_circle, color: textColor),
-                      padding: null,
-                    ),
-                    Text(widget.segment.weight.toString(),
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: textColor,
-                          fontWeight: FontWeight.bold
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: widget.onTapIncrease,
-                      icon: Icon(Icons.add_circle, color: textColor,),
-                      padding: null,
-                    )
-                  ],
-                )
-            ],
-          ),
+          ],
         ),
       ),
     );

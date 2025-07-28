@@ -31,13 +31,29 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeMode = ref.watch(userPreferencesProvider).appTheme;
+    final preferences = ref.watch(userPreferencesProvider);
+
+    final lightTheme = ThemeData.from(
+        colorScheme: ColorScheme.fromSeed(
+            brightness: Brightness.light,
+            seedColor: preferences.appTint.toColor()
+        ),
+        useMaterial3: true
+    );
+
+    final darkTheme = ThemeData.from(
+        colorScheme: ColorScheme.fromSeed(
+          brightness: Brightness.dark,
+          seedColor: preferences.appTint.toColor(),
+        ),
+        useMaterial3: true
+    );
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true),
-      darkTheme: ThemeData.dark(useMaterial3: true),
-      themeMode: themeMode,
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: preferences.appTheme,
       routerConfig: _appRouter.config(),
     );
   }

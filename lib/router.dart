@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dunno/router.gr.dart';
-import 'package:dunno/screens/account/appearance_settings_screen.dart';
 
 @AutoRouterConfig()
 class AppRouter extends RootStackRouter {
