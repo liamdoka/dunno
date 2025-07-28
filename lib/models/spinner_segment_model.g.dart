@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'spinner_segment.dart';
+part of 'spinner_segment_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

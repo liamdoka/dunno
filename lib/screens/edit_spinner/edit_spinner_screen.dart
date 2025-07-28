@@ -6,9 +6,10 @@ import 'package:dunno/components/dunno_scroll_view.dart';
 import 'package:dunno/constants/sizes.dart';
 import 'package:dunno/data/spinner_edit_provider.dart';
 import 'package:dunno/data/user_preferences_provider.dart';
-import 'package:dunno/models/spinner_segment.dart';
+import 'package:dunno/models/spinner_segment_model.dart';
 import 'package:dunno/router.gr.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../quick_spin/components/segment_list_tile.dart';
@@ -32,6 +33,7 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
   late final TextEditingController titleController;
   late final TextEditingController descriptionController;
   late final TextEditingController segmentsController;
+  late final TextEditingController emojiController;
 
   // Shorthand for the provider family
   late final SpinnerEditProvider editProvider;
@@ -49,6 +51,7 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
 
     titleController = TextEditingController(text: initialState.title);
     descriptionController = TextEditingController(text: initialState.description);
+    emojiController = TextEditingController(text: initialState.emojis);
     segmentsController = TextEditingController();
   }
 
@@ -63,12 +66,16 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
   @override
   Widget build(BuildContext context) {
     final editState = ref.watch(editProvider);
-    final palette = ref.watch(userPreferencesProvider).defaultColorPalette;
+    final preferences = ref.watch(userPreferencesProvider);
+
+    final palette = preferences.defaultColorPalette;
+    final emojiHint = editState.emojis ?? preferences.defaultEmojis;
 
     return DunnoScaffold(
       appBar: AppBar(
         leading: BackButton(),
         centerTitle: true,
+        forceMaterialTransparency: true,
         title: Text(widget.id.isEmpty
             ? "Create Spinner"
             : "Edit Spinner"
@@ -162,8 +169,9 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
                       ),
                     ],
                   ),
-                  DunnoScrollView(
-                      overlayHeight: 0,
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                      spacing: 8.0,
                       children: editState.segments
                           .mapIndexed((index, segment) {
                         return SegmentListTile(
@@ -181,19 +189,46 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
 
                   // TODO some sort of color palette selection
 
-                  // TODO some sort of emoji particle picker
-
                   // TODO is evil
+
+
+                  if (editState.segments.length >= 2)
+                    Column(
+                      spacing: 12,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TextButton.icon(
+                          onPressed: () => setState(() {
+                            isAdvancedExpanded = !isAdvancedExpanded;
+                          }),
+                          label: Text(isAdvancedExpanded
+                              ? "Hide advanced options"
+                              : "Show advanced options"
+                          ),
+                          iconAlignment: IconAlignment.end,
+                          icon: Icon(isAdvancedExpanded
+                              ? Icons.keyboard_arrow_up_rounded
+                              : Icons.keyboard_arrow_down_rounded
+                          ),
+                        ),
+
+                        if (isAdvancedExpanded)
+                          buildAdvancedOptions(emojiHint)
+                      ],
+                    ),
                 ],
               ),
             ),
           ),
           // SAVE BUTTON
           FilledButton(
-              onPressed: () {
+              onPressed: editState.segments.length < 2
+                  ? null
+                  : () {
                 ref.read(editProvider.notifier).save();
 
-                // make sure family provider is not fucked after navigating back
+                // if you want to go back and edit, use edit button duhhh
                 context.router.replace(SpinnerRoute(spinner: editState));
               },
               child: Text("Save and Spin")
@@ -203,7 +238,38 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
     );
   }
 
-  Widget buildAdvancedOptions() {
-    return Container();
+  Widget buildAdvancedOptions(String emojiHint) {
+    return Column(
+      children: [
+        Row(
+            textBaseline: TextBaseline.alphabetic,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            spacing: 24.0,
+            children: [
+              Text("Confetti for the winner",
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: defaultBorderRadius,
+                      ),
+                      hintText: emojiHint,
+                      hintStyle: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.5)
+                      )
+                  ),
+                  controller: emojiController,
+                  maxLength: 3,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  onChanged: ref.read(editProvider.notifier).setEmojis,
+                ),
+              )
+            ]),
+      ],
+    );
   }
 }

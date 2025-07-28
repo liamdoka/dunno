@@ -1,6 +1,6 @@
 import 'package:dunno/components/animation/grow_animation.dart';
 import 'package:dunno/constants/sizes.dart';
-import 'package:dunno/models/spinner_segment.dart';
+import 'package:dunno/models/spinner_segment_model.dart';
 import 'package:dunno/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -41,8 +41,8 @@ class _SegmentListTileState extends State<SegmentListTile> {
   @override
   Widget build(BuildContext context) {
     final textColor = widget.color.isBright
-        ? Theme.of(context).colorScheme.surface
-        : Theme.of(context).colorScheme.onSurface;
+        ? Colors.blueGrey.shade900
+        : Colors.blueGrey.shade50;
 
     return GrowAppearAnimation(
       key: key,

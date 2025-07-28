@@ -12,7 +12,7 @@ class SpinnerListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final allSpinners = ref.watch(spinnerListProvider);
+    final allSpinners = ref.watch(allSpinnersProvider);
 
     return Container(
       padding: const EdgeInsets.all(24.0),

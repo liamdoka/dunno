@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
         StatsRoute(),
         AccountRoute()
       ],
-
+      homeIndex: 0,
       builder: (context, child) {
         return Scaffold(
           appBar: AppBar(

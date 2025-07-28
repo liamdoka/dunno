@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SpinnerModel {
 
- String get id; SpinnerStatsModel get stats; String get title; SimpleColor get color; List<SpinnerSegmentModel> get segments; String? get description; bool get isFavorite; List<String> get tags;
+ String get id; SpinnerStatsModel get stats; String get title; SimpleColor get color; List<SpinnerSegmentModel> get segments; String? get description; String? get emojis; ColorPaletteModel? get palette; bool get isFavorite; List<String> get tags;
 /// Create a copy of SpinnerModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $SpinnerModelCopyWith<SpinnerModel> get copyWith => _$SpinnerModelCopyWithImpl<S
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpinnerModel&&(identical(other.id, id) || other.id == id)&&(identical(other.stats, stats) || other.stats == stats)&&(identical(other.title, title) || other.title == title)&&(identical(other.color, color) || other.color == color)&&const DeepCollectionEquality().equals(other.segments, segments)&&(identical(other.description, description) || other.description == description)&&(identical(other.isFavorite, isFavorite) || other.isFavorite == isFavorite)&&const DeepCollectionEquality().equals(other.tags, tags));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpinnerModel&&(identical(other.id, id) || other.id == id)&&(identical(other.stats, stats) || other.stats == stats)&&(identical(other.title, title) || other.title == title)&&(identical(other.color, color) || other.color == color)&&const DeepCollectionEquality().equals(other.segments, segments)&&(identical(other.description, description) || other.description == description)&&(identical(other.emojis, emojis) || other.emojis == emojis)&&(identical(other.palette, palette) || other.palette == palette)&&(identical(other.isFavorite, isFavorite) || other.isFavorite == isFavorite)&&const DeepCollectionEquality().equals(other.tags, tags));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,stats,title,color,const DeepCollectionEquality().hash(segments),description,isFavorite,const DeepCollectionEquality().hash(tags));
+int get hashCode => Object.hash(runtimeType,id,stats,title,color,const DeepCollectionEquality().hash(segments),description,emojis,palette,isFavorite,const DeepCollectionEquality().hash(tags));
 
 @override
 String toString() {
-  return 'SpinnerModel(id: $id, stats: $stats, title: $title, color: $color, segments: $segments, description: $description, isFavorite: $isFavorite, tags: $tags)';
+  return 'SpinnerModel(id: $id, stats: $stats, title: $title, color: $color, segments: $segments, description: $description, emojis: $emojis, palette: $palette, isFavorite: $isFavorite, tags: $tags)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $SpinnerModelCopyWith<$Res>  {
   factory $SpinnerModelCopyWith(SpinnerModel value, $Res Function(SpinnerModel) _then) = _$SpinnerModelCopyWithImpl;
 @useResult
 $Res call({
- String title, SimpleColor color, List<SpinnerSegmentModel> segments, String? description, String? id, SpinnerStatsModel? stats, bool isFavorite, List<String> tags
+ String title, SimpleColor color, List<SpinnerSegmentModel> segments, String? description, String? id, String? emojis, SpinnerStatsModel? stats, ColorPaletteModel? palette, bool isFavorite, List<String> tags
 });
 
 
-$SimpleColorCopyWith<$Res> get color;$SpinnerStatsModelCopyWith<$Res>? get stats;
+$SimpleColorCopyWith<$Res> get color;$SpinnerStatsModelCopyWith<$Res>? get stats;$ColorPaletteModelCopyWith<$Res>? get palette;
 
 }
 /// @nodoc
@@ -65,15 +65,17 @@ class _$SpinnerModelCopyWithImpl<$Res>
 
 /// Create a copy of SpinnerModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? color = null,Object? segments = null,Object? description = freezed,Object? id = freezed,Object? stats = freezed,Object? isFavorite = null,Object? tags = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? color = null,Object? segments = null,Object? description = freezed,Object? id = freezed,Object? emojis = freezed,Object? stats = freezed,Object? palette = freezed,Object? isFavorite = null,Object? tags = null,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
 as SimpleColor,segments: null == segments ? _self.segments : segments // ignore: cast_nullable_to_non_nullable
 as List<SpinnerSegmentModel>,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String?,id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String?,stats: freezed == stats ? _self.stats : stats // ignore: cast_nullable_to_non_nullable
-as SpinnerStatsModel?,isFavorite: null == isFavorite ? _self.isFavorite : isFavorite // ignore: cast_nullable_to_non_nullable
+as String?,id: freezed == id ? _self.id! : id // ignore: cast_nullable_to_non_nullable
+as String?,emojis: freezed == emojis ? _self.emojis : emojis // ignore: cast_nullable_to_non_nullable
+as String?,stats: freezed == stats ? _self.stats! : stats // ignore: cast_nullable_to_non_nullable
+as SpinnerStatsModel?,palette: freezed == palette ? _self.palette : palette // ignore: cast_nullable_to_non_nullable
+as ColorPaletteModel?,isFavorite: null == isFavorite ? _self.isFavorite : isFavorite // ignore: cast_nullable_to_non_nullable
 as bool,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
 as List<String>,
   ));
@@ -92,8 +94,24 @@ $SimpleColorCopyWith<$Res> get color {
 @override
 @pragma('vm:prefer-inline')
 $SpinnerStatsModelCopyWith<$Res>? get stats {
-    return $SpinnerStatsModelCopyWith<$Res>(_self.stats, (value) {
+    if (_self.stats == null) {
+    return null;
+  }
+
+  return $SpinnerStatsModelCopyWith<$Res>(_self.stats!, (value) {
     return _then(_self.copyWith(stats: value));
+  });
+}/// Create a copy of SpinnerModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ColorPaletteModelCopyWith<$Res>? get palette {
+    if (_self.palette == null) {
+    return null;
+  }
+
+  return $ColorPaletteModelCopyWith<$Res>(_self.palette!, (value) {
+    return _then(_self.copyWith(palette: value));
   });
 }
 }
@@ -174,10 +192,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  SimpleColor color,  List<SpinnerSegmentModel> segments,  String? description,  String? id,  SpinnerStatsModel? stats,  bool isFavorite,  List<String> tags)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  SimpleColor color,  List<SpinnerSegmentModel> segments,  String? description,  String? id,  String? emojis,  SpinnerStatsModel? stats,  ColorPaletteModel? palette,  bool isFavorite,  List<String> tags)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SpinnerModel() when $default != null:
-return $default(_that.title,_that.color,_that.segments,_that.description,_that.id,_that.stats,_that.isFavorite,_that.tags);case _:
+return $default(_that.title,_that.color,_that.segments,_that.description,_that.id,_that.emojis,_that.stats,_that.palette,_that.isFavorite,_that.tags);case _:
   return orElse();
 
 }
@@ -195,10 +213,10 @@ return $default(_that.title,_that.color,_that.segments,_that.description,_that.i
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  SimpleColor color,  List<SpinnerSegmentModel> segments,  String? description,  String? id,  SpinnerStatsModel? stats,  bool isFavorite,  List<String> tags)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  SimpleColor color,  List<SpinnerSegmentModel> segments,  String? description,  String? id,  String? emojis,  SpinnerStatsModel? stats,  ColorPaletteModel? palette,  bool isFavorite,  List<String> tags)  $default,) {final _that = this;
 switch (_that) {
 case _SpinnerModel():
-return $default(_that.title,_that.color,_that.segments,_that.description,_that.id,_that.stats,_that.isFavorite,_that.tags);}
+return $default(_that.title,_that.color,_that.segments,_that.description,_that.id,_that.emojis,_that.stats,_that.palette,_that.isFavorite,_that.tags);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -212,10 +230,10 @@ return $default(_that.title,_that.color,_that.segments,_that.description,_that.i
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  SimpleColor color,  List<SpinnerSegmentModel> segments,  String? description,  String? id,  SpinnerStatsModel? stats,  bool isFavorite,  List<String> tags)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  SimpleColor color,  List<SpinnerSegmentModel> segments,  String? description,  String? id,  String? emojis,  SpinnerStatsModel? stats,  ColorPaletteModel? palette,  bool isFavorite,  List<String> tags)?  $default,) {final _that = this;
 switch (_that) {
 case _SpinnerModel() when $default != null:
-return $default(_that.title,_that.color,_that.segments,_that.description,_that.id,_that.stats,_that.isFavorite,_that.tags);case _:
+return $default(_that.title,_that.color,_that.segments,_that.description,_that.id,_that.emojis,_that.stats,_that.palette,_that.isFavorite,_that.tags);case _:
   return null;
 
 }
@@ -227,7 +245,7 @@ return $default(_that.title,_that.color,_that.segments,_that.description,_that.i
 @JsonSerializable()
 
 class _SpinnerModel extends SpinnerModel {
-   _SpinnerModel({required this.title, required this.color, required final  List<SpinnerSegmentModel> segments, this.description, final  String? id, final  SpinnerStatsModel? stats, this.isFavorite = false, final  List<String> tags = const []}): _segments = segments,_tags = tags,super._(id: id, stats: stats);
+   _SpinnerModel({required this.title, required this.color, required final  List<SpinnerSegmentModel> segments, this.description, final  String? id, this.emojis, final  SpinnerStatsModel? stats, this.palette, this.isFavorite = false, final  List<String> tags = const []}): _segments = segments,_tags = tags,super._(id: id, stats: stats);
   factory _SpinnerModel.fromJson(Map<String, dynamic> json) => _$SpinnerModelFromJson(json);
 
 @override final  String title;
@@ -240,6 +258,8 @@ class _SpinnerModel extends SpinnerModel {
 }
 
 @override final  String? description;
+@override final  String? emojis;
+@override final  ColorPaletteModel? palette;
 @override@JsonKey() final  bool isFavorite;
  final  List<String> _tags;
 @override@JsonKey() List<String> get tags {
@@ -262,16 +282,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpinnerModel&&(identical(other.title, title) || other.title == title)&&(identical(other.color, color) || other.color == color)&&const DeepCollectionEquality().equals(other._segments, _segments)&&(identical(other.description, description) || other.description == description)&&(identical(other.id, id) || other.id == id)&&(identical(other.stats, stats) || other.stats == stats)&&(identical(other.isFavorite, isFavorite) || other.isFavorite == isFavorite)&&const DeepCollectionEquality().equals(other._tags, _tags));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpinnerModel&&(identical(other.title, title) || other.title == title)&&(identical(other.color, color) || other.color == color)&&const DeepCollectionEquality().equals(other._segments, _segments)&&(identical(other.description, description) || other.description == description)&&(identical(other.id, id) || other.id == id)&&(identical(other.emojis, emojis) || other.emojis == emojis)&&(identical(other.stats, stats) || other.stats == stats)&&(identical(other.palette, palette) || other.palette == palette)&&(identical(other.isFavorite, isFavorite) || other.isFavorite == isFavorite)&&const DeepCollectionEquality().equals(other._tags, _tags));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,color,const DeepCollectionEquality().hash(_segments),description,id,stats,isFavorite,const DeepCollectionEquality().hash(_tags));
+int get hashCode => Object.hash(runtimeType,title,color,const DeepCollectionEquality().hash(_segments),description,id,emojis,stats,palette,isFavorite,const DeepCollectionEquality().hash(_tags));
 
 @override
 String toString() {
-  return 'SpinnerModel(title: $title, color: $color, segments: $segments, description: $description, id: $id, stats: $stats, isFavorite: $isFavorite, tags: $tags)';
+  return 'SpinnerModel(title: $title, color: $color, segments: $segments, description: $description, id: $id, emojis: $emojis, stats: $stats, palette: $palette, isFavorite: $isFavorite, tags: $tags)';
 }
 
 
@@ -282,11 +302,11 @@ abstract mixin class _$SpinnerModelCopyWith<$Res> implements $SpinnerModelCopyWi
   factory _$SpinnerModelCopyWith(_SpinnerModel value, $Res Function(_SpinnerModel) _then) = __$SpinnerModelCopyWithImpl;
 @override @useResult
 $Res call({
- String title, SimpleColor color, List<SpinnerSegmentModel> segments, String? description, String? id, SpinnerStatsModel? stats, bool isFavorite, List<String> tags
+ String title, SimpleColor color, List<SpinnerSegmentModel> segments, String? description, String? id, String? emojis, SpinnerStatsModel? stats, ColorPaletteModel? palette, bool isFavorite, List<String> tags
 });
 
 
-@override $SimpleColorCopyWith<$Res> get color;@override $SpinnerStatsModelCopyWith<$Res>? get stats;
+@override $SimpleColorCopyWith<$Res> get color;@override $SpinnerStatsModelCopyWith<$Res>? get stats;@override $ColorPaletteModelCopyWith<$Res>? get palette;
 
 }
 /// @nodoc
@@ -299,15 +319,17 @@ class __$SpinnerModelCopyWithImpl<$Res>
 
 /// Create a copy of SpinnerModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? color = null,Object? segments = null,Object? description = freezed,Object? id = freezed,Object? stats = freezed,Object? isFavorite = null,Object? tags = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? color = null,Object? segments = null,Object? description = freezed,Object? id = freezed,Object? emojis = freezed,Object? stats = freezed,Object? palette = freezed,Object? isFavorite = null,Object? tags = null,}) {
   return _then(_SpinnerModel(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
 as SimpleColor,segments: null == segments ? _self._segments : segments // ignore: cast_nullable_to_non_nullable
 as List<SpinnerSegmentModel>,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String?,emojis: freezed == emojis ? _self.emojis : emojis // ignore: cast_nullable_to_non_nullable
 as String?,stats: freezed == stats ? _self.stats : stats // ignore: cast_nullable_to_non_nullable
-as SpinnerStatsModel?,isFavorite: null == isFavorite ? _self.isFavorite : isFavorite // ignore: cast_nullable_to_non_nullable
+as SpinnerStatsModel?,palette: freezed == palette ? _self.palette : palette // ignore: cast_nullable_to_non_nullable
+as ColorPaletteModel?,isFavorite: null == isFavorite ? _self.isFavorite : isFavorite // ignore: cast_nullable_to_non_nullable
 as bool,tags: null == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
 as List<String>,
   ));
@@ -327,8 +349,24 @@ $SimpleColorCopyWith<$Res> get color {
 @override
 @pragma('vm:prefer-inline')
 $SpinnerStatsModelCopyWith<$Res>? get stats {
-    return $SpinnerStatsModelCopyWith<$Res>(_self.stats, (value) {
+    if (_self.stats == null) {
+    return null;
+  }
+
+  return $SpinnerStatsModelCopyWith<$Res>(_self.stats!, (value) {
     return _then(_self.copyWith(stats: value));
+  });
+}/// Create a copy of SpinnerModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ColorPaletteModelCopyWith<$Res>? get palette {
+    if (_self.palette == null) {
+    return null;
+  }
+
+  return $ColorPaletteModelCopyWith<$Res>(_self.palette!, (value) {
+    return _then(_self.copyWith(palette: value));
   });
 }
 }
@@ -389,7 +427,7 @@ class _$SpinnerStatsModelCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? createdTime = freezed,Object? lastEditTime = freezed,Object? lastSpinTime = freezed,Object? deletedTime = freezed,Object? spinCount = null,Object? editCount = null,}) {
   return _then(_self.copyWith(
-createdTime: freezed == createdTime ? _self.createdTime : createdTime // ignore: cast_nullable_to_non_nullable
+createdTime: freezed == createdTime ? _self.createdTime! : createdTime // ignore: cast_nullable_to_non_nullable
 as int?,lastEditTime: freezed == lastEditTime ? _self.lastEditTime : lastEditTime // ignore: cast_nullable_to_non_nullable
 as int?,lastSpinTime: freezed == lastSpinTime ? _self.lastSpinTime : lastSpinTime // ignore: cast_nullable_to_non_nullable
 as int?,deletedTime: freezed == deletedTime ? _self.deletedTime : deletedTime // ignore: cast_nullable_to_non_nullable

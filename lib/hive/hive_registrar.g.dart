@@ -12,6 +12,8 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(SpinnerModelAdapter());
     registerAdapter(SpinnerSegmentModelAdapter());
     registerAdapter(SpinnerStatsModelAdapter());
+    registerAdapter(ThemeModeAdapter());
+    registerAdapter(UserPreferencesModelAdapter());
   }
 }
 
@@ -22,5 +24,7 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(SpinnerModelAdapter());
     registerAdapter(SpinnerSegmentModelAdapter());
     registerAdapter(SpinnerStatsModelAdapter());
+    registerAdapter(ThemeModeAdapter());
+    registerAdapter(UserPreferencesModelAdapter());
   }
 }

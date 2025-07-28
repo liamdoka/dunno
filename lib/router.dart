@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dunno/router.gr.dart';
+import 'package:dunno/screens/account/appearance_settings_screen.dart';
 
 @AutoRouterConfig()
 class AppRouter extends RootStackRouter {
@@ -26,9 +27,9 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: AccountRoute.page),
       ]
     ),
+    AutoRoute(page: EditSpinnerRoute.page),
     CustomRoute(
       page: SpinnerRoute.page,
-      // fullscreenDialog: true,
       transitionsBuilder: TransitionsBuilders.slideBottom,
       duration: const Duration(milliseconds: 200),
       reverseDuration: const Duration(milliseconds: 200),
@@ -38,6 +39,15 @@ class AppRouter extends RootStackRouter {
       duration: const Duration(milliseconds: 200),
       reverseDuration: const Duration(milliseconds: 200),
     ),
-    AutoRoute(page: EditSpinnerRoute.page)
+    CustomRoute(page: DeletedSpinnersRoute.page,
+      transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+      duration: const Duration(milliseconds: 200),
+      reverseDuration: const Duration(milliseconds: 200),
+    ),
+    CustomRoute(page: AppearanceSettingsRoute.page,
+      transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+      duration: const Duration(milliseconds: 200),
+      reverseDuration: const Duration(milliseconds: 200),
+    ),
   ];
 }

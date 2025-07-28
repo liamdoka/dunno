@@ -19,13 +19,7 @@ class SaveSpinnerDialog extends ConsumerStatefulWidget {
 
 class _SaveSpinnerDialogState extends ConsumerState<SaveSpinnerDialog> {
 
-  late final TextEditingController textController;
-
-  @override
-  void initState() {
-    textController = TextEditingController();
-    super.initState();
-  }
+  final textController = TextEditingController();
 
   @override
   void dispose() {

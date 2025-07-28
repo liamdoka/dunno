@@ -2,7 +2,7 @@
 
 import 'dart:math' as math;
 
-import 'package:dunno/models/spinner_segment.dart';
+import 'package:dunno/models/spinner_segment_model.dart';
 import 'package:dunno/screens/spinner/spinner_screen.dart';
 import 'package:dunno/utils/colors.dart';
 import 'package:flutter/material.dart';

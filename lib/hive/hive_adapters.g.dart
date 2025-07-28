@@ -17,36 +17,42 @@ class SpinnerModelAdapter extends TypeAdapter<SpinnerModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return SpinnerModel(
-      title: fields[38] as String,
-      color: fields[39] as SimpleColor,
-      segments: (fields[40] as List).cast<SpinnerSegmentModel>(),
-      description: fields[41] as String?,
+      title: fields[54] as String,
+      color: fields[55] as SimpleColor,
+      segments: (fields[56] as List).cast<SpinnerSegmentModel>(),
+      description: fields[57] as String?,
       id: fields[23] as String?,
+      emojis: fields[58] as String?,
       stats: fields[37] as SpinnerStatsModel?,
-      isFavorite: fields[42] == null ? false : fields[42] as bool,
-      tags: fields[43] == null ? [] : (fields[43] as List).cast<String>(),
+      palette: fields[59] as ColorPaletteModel?,
+      isFavorite: fields[60] == null ? false : fields[60] as bool,
+      tags: fields[61] == null ? [] : (fields[61] as List).cast<String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, SpinnerModel obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(10)
       ..writeByte(23)
       ..write(obj.id)
       ..writeByte(37)
       ..write(obj.stats)
-      ..writeByte(38)
+      ..writeByte(54)
       ..write(obj.title)
-      ..writeByte(39)
+      ..writeByte(55)
       ..write(obj.color)
-      ..writeByte(40)
+      ..writeByte(56)
       ..write(obj.segments)
-      ..writeByte(41)
+      ..writeByte(57)
       ..write(obj.description)
-      ..writeByte(42)
+      ..writeByte(58)
+      ..write(obj.emojis)
+      ..writeByte(59)
+      ..write(obj.palette)
+      ..writeByte(60)
       ..write(obj.isFavorite)
-      ..writeByte(43)
+      ..writeByte(61)
       ..write(obj.tags);
   }
 
@@ -113,11 +119,11 @@ class SpinnerStatsModelAdapter extends TypeAdapter<SpinnerStatsModel> {
     };
     return SpinnerStatsModel(
       createdTime: (fields[0] as num?)?.toInt(),
-      lastEditTime: (fields[13] as num?)?.toInt(),
-      lastSpinTime: (fields[14] as num?)?.toInt(),
-      deletedTime: (fields[15] as num?)?.toInt(),
-      spinCount: fields[16] == null ? 0 : (fields[16] as num).toInt(),
-      editCount: fields[17] == null ? 0 : (fields[17] as num).toInt(),
+      lastEditTime: (fields[23] as num?)?.toInt(),
+      lastSpinTime: (fields[24] as num?)?.toInt(),
+      deletedTime: (fields[25] as num?)?.toInt(),
+      spinCount: fields[26] == null ? 0 : (fields[26] as num).toInt(),
+      editCount: fields[27] == null ? 0 : (fields[27] as num).toInt(),
     );
   }
 
@@ -127,15 +133,15 @@ class SpinnerStatsModelAdapter extends TypeAdapter<SpinnerStatsModel> {
       ..writeByte(6)
       ..writeByte(0)
       ..write(obj.createdTime)
-      ..writeByte(13)
+      ..writeByte(23)
       ..write(obj.lastEditTime)
-      ..writeByte(14)
+      ..writeByte(24)
       ..write(obj.lastSpinTime)
-      ..writeByte(15)
+      ..writeByte(25)
       ..write(obj.deletedTime)
-      ..writeByte(16)
+      ..writeByte(26)
       ..write(obj.spinCount)
-      ..writeByte(17)
+      ..writeByte(27)
       ..write(obj.editCount);
   }
 
@@ -226,6 +232,89 @@ class SpinnerSegmentModelAdapter extends TypeAdapter<SpinnerSegmentModel> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is SpinnerSegmentModelAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class UserPreferencesModelAdapter extends TypeAdapter<UserPreferencesModel> {
+  @override
+  final typeId = 5;
+
+  @override
+  UserPreferencesModel read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return UserPreferencesModel(
+      appTheme: fields[0] == null ? ThemeMode.system : fields[0] as ThemeMode,
+      defaultColorPalette: fields[1] == null
+          ? DunnoColorPalettes.bubblegum
+          : fields[1] as ColorPaletteModel,
+      defaultEmojis: fields[2] == null ? '⭐️' : fields[2] as String,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, UserPreferencesModel obj) {
+    writer
+      ..writeByte(3)
+      ..writeByte(0)
+      ..write(obj.appTheme)
+      ..writeByte(1)
+      ..write(obj.defaultColorPalette)
+      ..writeByte(2)
+      ..write(obj.defaultEmojis);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is UserPreferencesModelAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class ThemeModeAdapter extends TypeAdapter<ThemeMode> {
+  @override
+  final typeId = 6;
+
+  @override
+  ThemeMode read(BinaryReader reader) {
+    switch (reader.readByte()) {
+      case 0:
+        return ThemeMode.system;
+      case 1:
+        return ThemeMode.light;
+      case 2:
+        return ThemeMode.dark;
+      default:
+        return ThemeMode.system;
+    }
+  }
+
+  @override
+  void write(BinaryWriter writer, ThemeMode obj) {
+    switch (obj) {
+      case ThemeMode.system:
+        writer.writeByte(0);
+      case ThemeMode.light:
+        writer.writeByte(1);
+      case ThemeMode.dark:
+        writer.writeByte(2);
+    }
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ThemeModeAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'simple_color.freezed.dart';
-part 'simple_color.g.dart';
+part 'simple_color_model.freezed.dart';
+part 'simple_color_model.g.dart';
 
 @freezed
 sealed class SimpleColor with _$SimpleColor {

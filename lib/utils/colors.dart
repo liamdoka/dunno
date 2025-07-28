@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:dunno/models/simple_color.dart';
+import 'package:dunno/models/simple_color_model.dart';
 
 /// Convert Dart [Color] to and from a serializable format.
 extension SimplerColor on Color {

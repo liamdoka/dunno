@@ -1,8 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:dunno/data/user_preferences_provider.dart';
 import 'package:dunno/hive/hive_adapters.dart';
+import 'package:dunno/models/simple_color_model.dart';
 import 'package:dunno/models/spinner_model.dart';
-import 'package:dunno/models/spinner_segment.dart';
+import 'package:dunno/models/spinner_segment_model.dart';
 import 'package:dunno/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_ce/hive.dart';
@@ -51,6 +52,12 @@ class SpinnerEdit extends _$SpinnerEdit {
     state = state.copyWith(description: description);
   }
 
+  void setEmojis(String? emojis) {
+    state = state.copyWith(
+      emojis: emojis
+    );
+  }
+
   void clearSegments() {
     state = state.copyWith(segments: []);
   }
@@ -78,6 +85,7 @@ class SpinnerEdit extends _$SpinnerEdit {
     state = state.copyWith(segments: newList);
   }
 
+
   void decreaseSegmentWeight(int index) {
     if (index < 0 || index >= state.segments.length) return;
 
@@ -90,17 +98,24 @@ class SpinnerEdit extends _$SpinnerEdit {
     state = state.copyWith(segments: newList);
   }
 
+  /// Save the changes made to the spinner
   void save() {
     // map colors for real
     final colorPalette = ref.read(userPreferencesProvider).defaultColorPalette;
     final newSegments = List<SpinnerSegmentModel>.from(
       state.segments.mapIndexed(
-        (index, segment) =>
-            segment.copyWith(color: colorPalette.forIndexSimple(index)),
+        (index, segment) => segment.copyWith(
+            color: colorPalette.forIndexSimple(index)
+        ),
       ),
     );
 
-    box.put(state.id, state.copyWith(segments: newSegments));
+    final newStats = state.stats.copyWith(
+        editCount: state.stats.editCount + 1,
+        lastEditTime: DateTime.now().millisecondsSinceEpoch
+    );
+
+    box.put(state.id, state.copyWith(segments: newSegments, stats: newStats));
     ref.invalidateSelf();
   }
 }

@@ -1,8 +1,8 @@
-import 'package:dunno/models/simple_color.dart';
+import 'package:dunno/models/simple_color_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'spinner_segment.freezed.dart';
-part 'spinner_segment.g.dart';
+part 'spinner_segment_model.freezed.dart';
+part 'spinner_segment_model.g.dart';
 
 @freezed
 sealed class SpinnerSegmentModel with _$SpinnerSegmentModel {

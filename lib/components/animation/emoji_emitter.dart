@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:dunno/utils/math.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:uuid/uuid.dart';
 
 class EmojiEmitter extends StatefulWidget {
   final Widget? child;
@@ -15,9 +16,11 @@ class EmojiEmitter extends StatefulWidget {
 class EmojiEmitterState extends State<EmojiEmitter> with SingleTickerProviderStateMixin {
 
   late final Ticker ticker;
-  final List<EmojiParticle> particles = [];
+  final Map<String, List<EmojiParticle>> particles = {};
   final Random rand = Random();
   Duration lastFrameTime = Duration.zero;
+
+  final uuid = Uuid();
 
   static const particleCount = 60;
 
@@ -30,8 +33,10 @@ class EmojiEmitterState extends State<EmojiEmitter> with SingleTickerProviderSta
       lastFrameTime = elapsed;
 
       setState(() {
-        for (final p in particles) {
-          p.update(dt);
+        for (final set in particles.values) {
+          for (final p in set) {
+            p.update(dt);
+          }
         }
       });
     });
@@ -45,22 +50,28 @@ class EmojiEmitterState extends State<EmojiEmitter> with SingleTickerProviderSta
   }
 
   void emitBurst(String value, {Offset position = Offset.zero}) async {
-    print("Emitting");
-    particles.addAll(List.generate(particleCount, (_) {
+    final id = uuid.v4();
+    particles[id] = List.generate(particleCount, (index) {
       final direction = Offset(
         rand.nextDoubleRange(-180, 180),
         rand.nextDoubleRange(-360, 0)
       );
 
       return EmojiParticle(
-          emoji: value,
+          emoji: value.characters.characterAt(index % value.characters.length).toString(),
           position: position,
           velocity: direction
       );
-    }));
+    });
 
-    await Future.delayed(Duration(seconds: 4), () {
-      setState(particles.clear);
+    Future.delayed(Duration(seconds: 4), () {
+      try {
+        if (context.mounted) {
+          setState(() => particles.remove(id));
+        }
+      } catch (e) {
+        print("Something evil happened");
+      }
     });
   }
 
@@ -68,7 +79,7 @@ class EmojiEmitterState extends State<EmojiEmitter> with SingleTickerProviderSta
   Widget build(BuildContext context) {
     return CustomPaint(
       size: Size.infinite,
-      painter: EmojiPainter(particles: particles),
+      painter: EmojiPainter(particles: particles.flatMap<EmojiParticle>()),
       child: widget.child
     );
   }
@@ -119,4 +130,11 @@ class EmojiPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+}
+
+
+extension FlatMap on Map {
+  List<T> flatMap<T>() {
+    return List<T>.from(values.expand((e) => e));
+  }
 }

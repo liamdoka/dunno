@@ -1,6 +1,8 @@
 
 import 'package:auto_route/auto_route.dart';
+import 'package:collection/collection.dart';
 import 'package:dunno/data/spinner_list_provider.dart';
+import 'package:dunno/data/user_preferences_provider.dart';
 import 'package:dunno/router.gr.dart';
 import './spinner_tile.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +15,8 @@ class RecentSpinnerList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final recentSpinners = ref.watch(recentSpinnersProvider);
-    final totalSpinnerCount = ref.watch(spinnerListProvider).length;
+    final totalSpinnerCount = ref.watch(allSpinnersProvider).length;
+    final palette = ref.watch(userPreferencesProvider).defaultColorPalette;
 
     return Column(
       spacing: 16.0,
@@ -28,25 +31,49 @@ class RecentSpinnerList extends ConsumerWidget {
           ],
         ),
 
+        // recentSpinners.isEmpty
+        //     ? Text("No recent spinners")
+        //     : Flexible(
+        //   child: ListView.separated(
+        //       shrinkWrap: true,
+        //       separatorBuilder: (_, _,) => SizedBox(height: 8),
+        //       itemCount: recentSpinners.length,
+        //       itemBuilder: (context, index) {
+        //         final spinner = recentSpinners[index];
+        //         return SpinnerTile(
+        //           key: ValueKey(spinner.id),
+        //           spinner: spinner,
+        //           color: palette.forIndex(index),
+        //           dismissBackground: Row(
+        //             children: [Icon(Icons.delete_rounded, color: Colors.red,)],
+        //           ),
+        //           onDismiss: (direction) => ref
+        //               .read(spinnerListProvider.notifier)
+        //               .deleteSpinner(spinner.id),
+        //           onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
+        //         );
+        //       },
+        //   ),
+        // ),
+
         recentSpinners.isEmpty
             ? Text("No recent spinners")
-            : Flexible(
-          child: ListView.separated(
-              shrinkWrap: true,
-              separatorBuilder: (_, _,) => SizedBox(height: 8),
-              itemCount: recentSpinners.length,
-              itemBuilder: (context, index) {
-                final spinner = recentSpinners[index];
-                return SpinnerTile(
-                  key: ValueKey(spinner.id),
-                  spinner: spinner,
-                  onDismiss: (direction) => ref
-                      .read(spinnerListProvider.notifier)
-                      .deleteSpinner(spinner.id),
-                  onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
-                );
-              },
-          ),
+            : Column(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 8.0,
+          children: recentSpinners.mapIndexed((index, spinner) => SpinnerTile(
+              key: ValueKey(spinner.id),
+              spinner: spinner,
+              color: palette.forIndex(index),
+              dismissBackground: Row(
+                children: [Icon(Icons.delete_rounded, color: Colors.red,)],
+              ),
+              onDismiss: (direction) => ref
+                  .read(spinnerListProvider.notifier)
+                  .deleteSpinner(spinner.id),
+              onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
+            )
+          ).toList(),
         ),
 
         if (totalSpinnerCount > recentSpinners.length)

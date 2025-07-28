@@ -3,3 +3,7 @@
 abstract class AppTextStyles {
 
 }
+
+abstract class BoxStyles {
+
+}

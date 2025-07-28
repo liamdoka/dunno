@@ -1,7 +1,8 @@
 import 'dart:math';
 
-import 'package:dunno/models/simple_color.dart';
-import 'package:dunno/models/spinner_segment.dart';
+import 'package:dunno/models/color_palette_model.dart';
+import 'package:dunno/models/simple_color_model.dart';
+import 'package:dunno/models/spinner_segment_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -22,7 +23,9 @@ sealed class SpinnerModel with _$SpinnerModel {
     required List<SpinnerSegmentModel> segments,
     String? description,
     String? id,
+    String? emojis,
     SpinnerStatsModel? stats,
+    ColorPaletteModel? palette,
     @Default(false) bool isFavorite,
     @Default([]) List<String> tags
   }) = _SpinnerModel;
@@ -34,6 +37,9 @@ sealed class SpinnerModel with _$SpinnerModel {
 
   factory SpinnerModel.fromJson(Map<String, dynamic> json) =>
       _$SpinnerModelFromJson(json);
+
+  bool get isDeleted => stats.deletedTime != null;
+  bool get isNotDeleted => stats.deletedTime == null;
 }
 
 
@@ -60,5 +66,5 @@ sealed class SpinnerStatsModel with _$SpinnerStatsModel {
 
   /// The last time the [SpinnerModel] was interacted with.
   int get lastTime =>
-      [0, createdTime, ?lastSpinTime, ?lastEditTime, ?deletedTime].reduce(max);
+      [createdTime, ?lastSpinTime, ?lastEditTime, ?deletedTime].fold(0, max);
 }
