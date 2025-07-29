@@ -44,7 +44,7 @@ class DeletedSpinnersScreen extends ConsumerWidget {
                     color: palette.forIndex(index),
                     dismissBackground: Row(
                       children: [
-                        Icon(Icons.delete_forever_rounded, color: Colors.red),
+                        Icon(Icons.delete_forever_rounded, color: Theme.of(context).colorScheme.error),
                       ],
                     ),
                     onDismiss: (_) => ref
@@ -68,7 +68,7 @@ class DeletedSpinnersScreen extends ConsumerWidget {
               onPressed: ref
                   .read(spinnerListProvider.notifier)
                   .clearDeletedSpinners,
-              child: Text("Empty bin", style: TextStyle(color: Colors.red)),
+              child: Text("Empty bin", style: TextStyle(color: Theme.of(context).colorScheme.error)),
             ),
         ],
       ),

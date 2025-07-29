@@ -29,7 +29,7 @@ class _AppearanceSettingsScreenState
     super.initState();
 
     final preferences = ref.read(userPreferencesProvider);
-    emojiController = TextEditingController(text: preferences.defaultEmojis);
+    emojiController = TextEditingController(text: preferences.defaultConfetti);
   }
 
   @override
@@ -135,7 +135,7 @@ class _AppearanceSettingsScreenState
                           border: OutlineInputBorder(
                             borderRadius: defaultBorderRadius,
                           ),
-                          hintText: preferences.defaultEmojis,
+                          hintText: preferences.defaultConfetti,
                           hintStyle: TextStyle(
                             color: Colors.white.withValues(alpha: 0.5),
                           ),
@@ -145,7 +145,7 @@ class _AppearanceSettingsScreenState
                         maxLengthEnforcement: MaxLengthEnforcement.enforced,
                         onChanged: ref
                             .read(userPreferencesProvider.notifier)
-                            .setDefaultEmojis,
+                            .setDefaultConfetti,
                       ),
                     ),
                     Flexible(
