@@ -51,9 +51,9 @@ class SpinnerEdit extends _$SpinnerEdit {
     state = state.copyWith(description: description);
   }
 
-  void setEmojis(String? emojis) {
+  void setConfetti(String? confetti) {
     state = state.copyWith(
-      emojis: emojis
+      confetti: confetti
     );
   }
 

@@ -1,28 +1,28 @@
 import 'dart:math';
 
+import 'package:dunno/constants/numbers.dart';
+import 'package:dunno/utils/collections.dart';
 import 'package:dunno/utils/math.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:uuid/uuid.dart';
 
-class EmojiEmitter extends StatefulWidget {
+class ConfettiEmitter extends StatefulWidget {
   final Widget? child;
-  const EmojiEmitter({super.key, this.child});
+  const ConfettiEmitter({super.key, this.child});
 
   @override
-  State<EmojiEmitter> createState() => EmojiEmitterState();
+  State<ConfettiEmitter> createState() => ConfettiEmitterState();
 }
 
-class EmojiEmitterState extends State<EmojiEmitter> with SingleTickerProviderStateMixin {
+class ConfettiEmitterState extends State<ConfettiEmitter> with SingleTickerProviderStateMixin {
 
   late final Ticker ticker;
-  final Map<String, List<EmojiParticle>> particles = {};
+  final Map<String, List<ConfettiParticle>> particles = {};
   final Random rand = Random();
   Duration lastFrameTime = Duration.zero;
 
   final uuid = Uuid();
-
-  static const particleCount = 60;
 
   @override
   void initState() {
@@ -51,14 +51,14 @@ class EmojiEmitterState extends State<EmojiEmitter> with SingleTickerProviderSta
 
   void emitBurst(String value, {Offset position = Offset.zero}) async {
     final id = uuid.v4();
-    particles[id] = List.generate(particleCount, (index) {
+    particles[id] = List.generate(AppNumbers.confettiParticlesPerEmission, (index) {
       final direction = Offset(
         rand.nextDoubleRange(-180, 180),
         rand.nextDoubleRange(-360, 0)
       );
 
-      return EmojiParticle(
-          emoji: value.characters.characterAt(index % value.characters.length).toString(),
+      return ConfettiParticle(
+          value: value.characters.characterAt(index % value.characters.length).toString(),
           position: position,
           velocity: direction
       );
@@ -79,20 +79,20 @@ class EmojiEmitterState extends State<EmojiEmitter> with SingleTickerProviderSta
   Widget build(BuildContext context) {
     return CustomPaint(
       size: Size.infinite,
-      painter: EmojiPainter(particles: particles.flatMap<EmojiParticle>()),
+      painter: ConfettiPainter(particles: particles.flatMap()),
       child: widget.child
     );
   }
 }
 
-class EmojiParticle {
-  final String emoji;
+class ConfettiParticle {
+  final String value;
   Offset position;
   Offset velocity;
   static const gravity = Offset(0, 400); // px/sec^2
 
-  EmojiParticle({
-    required this.emoji,
+  ConfettiParticle({
+    required this.value,
     required this.position,
     required this.velocity,
   });
@@ -104,7 +104,7 @@ class EmojiParticle {
 
   void draw(Canvas canvas, TextPainter painter) {
     painter.text = TextSpan(
-        text: emoji,
+        text: value,
         style: TextStyle(fontSize: 24, color: Colors.white)
     );
     painter.layout();
@@ -112,10 +112,10 @@ class EmojiParticle {
   }
 }
 
-class EmojiPainter extends CustomPainter {
-  final List<EmojiParticle> particles;
+class ConfettiPainter extends CustomPainter {
+  final List<ConfettiParticle> particles;
 
-  EmojiPainter({required this.particles});
+  ConfettiPainter({required this.particles});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -130,11 +130,4 @@ class EmojiPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
-}
-
-
-extension FlatMap on Map {
-  List<T> flatMap<T>() {
-    return List<T>.from(values.expand((e) => e));
-  }
 }

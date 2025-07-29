@@ -44,7 +44,6 @@ sealed class ColorPaletteModel with _$ColorPaletteModel {
 
   /// Return the simple color for the segment based on its index.
   SimpleColor forIndexSimple(int index) => colors[index % colors.length];
-
 }
 
 
@@ -58,7 +57,8 @@ abstract class DunnoColorPalettes {
         SimpleColor(171,195,47),
         SimpleColor(128,156,19),
         SimpleColor(96,124,60)
-      ]);
+      ]
+  );
 
   static const bubblegum = ColorPaletteModel(
       title: "Bubblegum",
@@ -68,7 +68,8 @@ abstract class DunnoColorPalettes {
         SimpleColor(236,217,198),
         SimpleColor(247,212,212),
         SimpleColor(255,248,240)
-      ]);
+      ]
+  );
 
   static final material = ColorPaletteModel.fromColors(
       Colors.primaries,

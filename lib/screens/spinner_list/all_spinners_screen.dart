@@ -9,13 +9,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
-class AllSpinnersScreen extends ConsumerWidget {
+class AllSpinnersScreen extends ConsumerStatefulWidget{
 
   const AllSpinnersScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final allSpinners = ref.watch(allSpinnersProvider);
+  ConsumerState<AllSpinnersScreen> createState() => _AllSpinnersScreenState();
+}
+
+class _AllSpinnersScreenState extends ConsumerState<AllSpinnersScreen> {
+  final searchBarFocusNode = FocusNode();
+  final searchBarController = TextEditingController();
+
+  String filterText = "";
+
+  @override
+  void dispose() {
+    searchBarFocusNode.dispose();
+    searchBarController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final allSpinners = ref.watch(allSpinnersProvider)
+        .where((spinner) => spinner.title.contains(filterText))
+        .toList();
+
     final palette = ref.watch(userPreferencesProvider).defaultColorPalette;
 
     return DunnoScaffold(
@@ -24,6 +44,29 @@ class AllSpinnersScreen extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          SearchBar(
+            focusNode: searchBarFocusNode,
+            controller: searchBarController,
+            onChanged: (text) => setState(() {
+              filterText = text;
+            }),
+            onTapOutside: (_) => searchBarFocusNode.unfocus(),
+            hintText: "Search spinners...",
+            elevation: WidgetStatePropertyAll(1),
+            leading: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Icon(Icons.search),
+            ),
+            trailing: [
+              IconButton(
+                  onPressed: () {
+                    searchBarController.clear();
+                    setState(() => filterText = "");
+                  },
+                  icon: Icon(Icons.clear_rounded)
+              )
+            ],
+          ),
           Row(
             children: [
               Text("All Spinners",
@@ -42,12 +85,12 @@ class AllSpinnersScreen extends ConsumerWidget {
                     spinner: spinner,
                     color: palette.forIndex(index),
                     dismissBackground: Row(
-                      children: [Icon(Icons.delete_rounded, color: Colors.red,)],
+                      children: [Icon(Icons.delete_rounded, color: Theme.of(context).colorScheme.error,)],
                     ),
                     onDismiss: (direction) => ref
-                          .read(spinnerListProvider.notifier)
-                          .deleteSpinner(spinner.id),
-                      onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
+                        .read(spinnerListProvider.notifier)
+                        .deleteSpinner(spinner.id),
+                    onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
                   );
                 }
             ),

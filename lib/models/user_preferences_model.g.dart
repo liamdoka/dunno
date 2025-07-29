@@ -20,7 +20,7 @@ _UserPreferencesModel _$UserPreferencesModelFromJson(
       : ColorPaletteModel.fromJson(
           json['defaultColorPalette'] as Map<String, dynamic>,
         ),
-  defaultEmojis: json['defaultEmojis'] as String? ?? '⭐️',
+  defaultConfetti: json['defaultConfetti'] as String? ?? '⭐️⭐️⭐️',
 );
 
 Map<String, dynamic> _$UserPreferencesModelToJson(
@@ -29,7 +29,7 @@ Map<String, dynamic> _$UserPreferencesModelToJson(
   'appTheme': _$ThemeModeEnumMap[instance.appTheme]!,
   'appTint': instance.appTint,
   'defaultColorPalette': instance.defaultColorPalette,
-  'defaultEmojis': instance.defaultEmojis,
+  'defaultConfetti': instance.defaultConfetti,
 };
 
 const _$ThemeModeEnumMap = {
@@ -37,20 +37,3 @@ const _$ThemeModeEnumMap = {
   ThemeMode.light: 'light',
   ThemeMode.dark: 'dark',
 };
-
-_UserStatsModel _$UserStatsModelFromJson(
-  Map<String, dynamic> json,
-) => _UserStatsModel(
-  totalSpins: (json['totalSpins'] as num?)?.toInt() ?? 0,
-  spinnersCreatedCount: (json['spinnersCreatedCount'] as num?)?.toInt() ?? 0,
-  spinnersDeletedCount: (json['spinnersDeletedCount'] as num?)?.toInt() ?? 0,
-  confettiCount: (json['confettiCount'] as num?)?.toInt() ?? 0,
-);
-
-Map<String, dynamic> _$UserStatsModelToJson(_UserStatsModel instance) =>
-    <String, dynamic>{
-      'totalSpins': instance.totalSpins,
-      'spinnersCreatedCount': instance.spinnersCreatedCount,
-      'spinnersDeletedCount': instance.spinnersDeletedCount,
-      'confettiCount': instance.confettiCount,
-    };

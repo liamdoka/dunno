@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:collection/collection.dart';
+import 'package:dunno/data/user_stats_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
@@ -85,6 +86,10 @@ class SpinnerList extends _$SpinnerList {
 
   /// Saves the spinner to the device storage
   void saveSpinner(SpinnerModel spinner) async {
+    if (box.get(spinner.id) == null) {
+      ref.read(userStatsProvider.notifier).logSpinnerCreated();
+    }
+
     box.put(spinner.id, spinner.copyWith(
       // have to do this because it maintains shallow copies of the screen state.
       segments: List.from(spinner.segments),
@@ -118,6 +123,9 @@ class SpinnerList extends _$SpinnerList {
     final spinner = state.firstWhereOrNull((spinner) => spinner.id == id);
     if (spinner == null) return;
 
+    // track the spins for the user.
+    ref.read(userStatsProvider.notifier).logSpinnerDeleted();
+
     box.put(spinner.id, spinner.copyWith.stats!(
       deletedTime: DateTime.now().millisecondsSinceEpoch
     ));
@@ -141,7 +149,11 @@ class SpinnerList extends _$SpinnerList {
   /// Update the stats for spinning.
   void logSpin(String id) {
     final spinner = state.firstWhereOrNull((spinner) => spinner.id == id);
-    // if spinner is not saved yet, don't track the stats.
+
+    // track the spins for the user.
+    ref.read(userStatsProvider.notifier).logSpin();
+
+    // if spinner is not saved yet, don't track the spinner stats.
     if (spinner == null) return;
 
     final updatedSpinner = spinner.copyWith.stats!(

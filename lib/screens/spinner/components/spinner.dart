@@ -92,7 +92,7 @@ class _SpinnerState extends State<Spinner> with SingleTickerProviderStateMixin {
                 child: Icon(
                   Icons.arrow_drop_down_rounded,
                   size: 48,
-                  color: Colors.red,
+                  color: Theme.of(context).colorScheme.error,
                   shadows: [
                     Shadow(
                       color: Colors.black,

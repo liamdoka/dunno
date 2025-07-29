@@ -4,6 +4,8 @@ import 'package:dunno/router.gr.dart';
 @AutoRouterConfig()
 class AppRouter extends RootStackRouter {
 
+  static const defaultTransitionDuration = Duration(milliseconds: 200);
+
   @override
   RouteType get defaultRouteType => RouteType.adaptive();
 
@@ -30,23 +32,23 @@ class AppRouter extends RootStackRouter {
     CustomRoute(
       page: SpinnerRoute.page,
       transitionsBuilder: TransitionsBuilders.slideBottom,
-      duration: const Duration(milliseconds: 200),
-      reverseDuration: const Duration(milliseconds: 200),
+      duration: defaultTransitionDuration,
+      reverseDuration: defaultTransitionDuration,
     ),
     CustomRoute(page: AllSpinnersRoute.page,
       transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
-      duration: const Duration(milliseconds: 200),
-      reverseDuration: const Duration(milliseconds: 200),
+      duration: defaultTransitionDuration,
+      reverseDuration: defaultTransitionDuration,
     ),
     CustomRoute(page: DeletedSpinnersRoute.page,
       transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
-      duration: const Duration(milliseconds: 200),
-      reverseDuration: const Duration(milliseconds: 200),
+      duration: defaultTransitionDuration,
+      reverseDuration: defaultTransitionDuration,
     ),
     CustomRoute(page: AppearanceSettingsRoute.page,
       transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
-      duration: const Duration(milliseconds: 200),
-      reverseDuration: const Duration(milliseconds: 200),
+      duration: defaultTransitionDuration,
+      reverseDuration: defaultTransitionDuration,
     ),
   ];
 }

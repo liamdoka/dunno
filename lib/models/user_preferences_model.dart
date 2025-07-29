@@ -12,23 +12,9 @@ sealed class UserPreferencesModel with _$UserPreferencesModel {
     @Default(ThemeMode.system) ThemeMode appTheme,
     @Default(SimpleColor(103, 58, 183)) SimpleColor appTint,
     @Default(DunnoColorPalettes.bubblegum) ColorPaletteModel defaultColorPalette,
-    @Default('⭐️') String defaultEmojis,
+    @Default('⭐️⭐️⭐️') String defaultConfetti,
   }) = _UserPreferencesModel;
 
   factory UserPreferencesModel.fromJson(Map<String, dynamic> json) =>
       _$UserPreferencesModelFromJson(json);
-}
-
-
-@freezed
-sealed class UserStatsModel with _$UserStatsModel {
-  const factory UserStatsModel({
-    @Default(0) int totalSpins,
-    @Default(0) int spinnersCreatedCount,
-    @Default(0) int spinnersDeletedCount,
-    @Default(0) int confettiCount,
-  }) = _UserStatsModel;
-
-  factory UserStatsModel.fromJson(Map<String, dynamic> json) =>
-      _$UserStatsModelFromJson(json);
 }

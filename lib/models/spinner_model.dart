@@ -23,7 +23,7 @@ sealed class SpinnerModel with _$SpinnerModel {
     required List<SpinnerSegmentModel> segments,
     String? description,
     String? id,
-    String? emojis,
+    String? confetti,
     SpinnerStatsModel? stats,
     ColorPaletteModel? palette,
     @Default(false) bool isFavorite,
@@ -57,7 +57,7 @@ sealed class SpinnerStatsModel with _$SpinnerStatsModel {
     @Default(0) int editCount,
   }) = _SpinnerStatsModel;
 
-  // Generate in 'non-constant fashion' the createdTime
+  // Generate, in 'non-constant fashion', the createdTime
   SpinnerStatsModel._({ int? createdTime }) :
         createdTime = createdTime ?? DateTime.now().millisecondsSinceEpoch;
 

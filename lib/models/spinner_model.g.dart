@@ -15,7 +15,7 @@ _SpinnerModel _$SpinnerModelFromJson(Map<String, dynamic> json) =>
           .toList(),
       description: json['description'] as String?,
       id: json['id'] as String?,
-      emojis: json['emojis'] as String?,
+      confetti: json['confetti'] as String?,
       stats: json['stats'] == null
           ? null
           : SpinnerStatsModel.fromJson(json['stats'] as Map<String, dynamic>),
@@ -36,7 +36,7 @@ Map<String, dynamic> _$SpinnerModelToJson(_SpinnerModel instance) =>
       'color': instance.color,
       'segments': instance.segments,
       'description': instance.description,
-      'emojis': instance.emojis,
+      'confetti': instance.confetti,
       'palette': instance.palette,
       'isFavorite': instance.isFavorite,
       'tags': instance.tags,

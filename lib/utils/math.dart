@@ -30,3 +30,50 @@ extension OrdinalInt on int {
     }
   }
 }
+
+extension ReadableInt on int {
+  String toReadable() {
+    final n = this;
+
+    if (n < 1000) return n.toString();
+
+    if (n < 10000) {
+      // 1,000 -> 9,999 (comma separated)
+      return '${n ~/ 1000},${(n % 1000).toString().padLeft(3, '0')}';
+    }
+
+    if (n < 1000000) {
+      // Show K suffix, keep total ~4 characters (e.g. 10.2K)
+      final value = n / 1000;
+      return _formatWithSuffix(value, 'K');
+    }
+
+    if (n < 1000000000) {
+      // Show M suffix
+      final value = n / 1000000;
+      return _formatWithSuffix(value, 'M');
+    }
+
+    // Show B suffix for billions
+    final value = n / 1000000000;
+    return _formatWithSuffix(value, 'B');
+  }
+
+  String _formatWithSuffix(double value, String suffix) {
+    // Limit to 3 significant digits (ensuring <=4 total chars incl suffix)
+    String text;
+
+    if (value >= 100) {
+      text = value.toStringAsFixed(0); // No decimals, e.g. 123K
+    } else if (value >= 10) {
+      text = value.toStringAsFixed(1); // e.g. 12.3K
+    } else {
+      text = value.toStringAsFixed(2); // e.g. 1.23K
+    }
+
+    // Remove trailing zeros and decimal point
+    text = text.replaceAll(RegExp(r'\.?0+$'), '');
+
+    return '$text$suffix';
+  }
+}

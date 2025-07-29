@@ -13,6 +13,7 @@ _SpinnerSegmentModel _$SpinnerSegmentModelFromJson(Map<String, dynamic> json) =>
           ? SimpleColor.green
           : SimpleColor.fromJson(json['color'] as Map<String, dynamic>),
       weight: (json['weight'] as num?)?.toInt() ?? 1,
+      winCount: (json['winCount'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$SpinnerSegmentModelToJson(
@@ -21,4 +22,5 @@ Map<String, dynamic> _$SpinnerSegmentModelToJson(
   'title': instance.title,
   'color': instance.color,
   'weight': instance.weight,
+  'winCount': instance.winCount,
 };

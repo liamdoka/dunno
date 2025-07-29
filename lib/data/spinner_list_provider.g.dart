@@ -122,7 +122,7 @@ final mostEditsProvider = AutoDisposeProvider<List<SpinnerModel>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef MostEditsRef = AutoDisposeProviderRef<List<SpinnerModel>>;
-String _$spinnerListHash() => r'2470b6081bdd373dd928410f73d1025120279797';
+String _$spinnerListHash() => r'3197f364c7ce767a01f7b0394331fc701e33b741';
 
 /// See also [SpinnerList].
 @ProviderFor(SpinnerList)

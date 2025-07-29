@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SpinnerSegmentModel {
 
- String get title; SimpleColor get color; int get weight;
+ String get title; SimpleColor get color; int get weight; int get winCount;
 /// Create a copy of SpinnerSegmentModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $SpinnerSegmentModelCopyWith<SpinnerSegmentModel> get copyWith => _$SpinnerSegme
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpinnerSegmentModel&&(identical(other.title, title) || other.title == title)&&(identical(other.color, color) || other.color == color)&&(identical(other.weight, weight) || other.weight == weight));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpinnerSegmentModel&&(identical(other.title, title) || other.title == title)&&(identical(other.color, color) || other.color == color)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.winCount, winCount) || other.winCount == winCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,color,weight);
+int get hashCode => Object.hash(runtimeType,title,color,weight,winCount);
 
 @override
 String toString() {
-  return 'SpinnerSegmentModel(title: $title, color: $color, weight: $weight)';
+  return 'SpinnerSegmentModel(title: $title, color: $color, weight: $weight, winCount: $winCount)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $SpinnerSegmentModelCopyWith<$Res>  {
   factory $SpinnerSegmentModelCopyWith(SpinnerSegmentModel value, $Res Function(SpinnerSegmentModel) _then) = _$SpinnerSegmentModelCopyWithImpl;
 @useResult
 $Res call({
- String title, SimpleColor color, int weight
+ String title, SimpleColor color, int weight, int winCount
 });
 
 
@@ -65,11 +65,12 @@ class _$SpinnerSegmentModelCopyWithImpl<$Res>
 
 /// Create a copy of SpinnerSegmentModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? color = null,Object? weight = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? color = null,Object? weight = null,Object? winCount = null,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
 as SimpleColor,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
+as int,winCount: null == winCount ? _self.winCount : winCount // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
@@ -161,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  SimpleColor color,  int weight)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  SimpleColor color,  int weight,  int winCount)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SpinnerSegmentModel() when $default != null:
-return $default(_that.title,_that.color,_that.weight);case _:
+return $default(_that.title,_that.color,_that.weight,_that.winCount);case _:
   return orElse();
 
 }
@@ -182,10 +183,10 @@ return $default(_that.title,_that.color,_that.weight);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  SimpleColor color,  int weight)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  SimpleColor color,  int weight,  int winCount)  $default,) {final _that = this;
 switch (_that) {
 case _SpinnerSegmentModel():
-return $default(_that.title,_that.color,_that.weight);}
+return $default(_that.title,_that.color,_that.weight,_that.winCount);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -199,10 +200,10 @@ return $default(_that.title,_that.color,_that.weight);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  SimpleColor color,  int weight)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  SimpleColor color,  int weight,  int winCount)?  $default,) {final _that = this;
 switch (_that) {
 case _SpinnerSegmentModel() when $default != null:
-return $default(_that.title,_that.color,_that.weight);case _:
+return $default(_that.title,_that.color,_that.weight,_that.winCount);case _:
   return null;
 
 }
@@ -214,12 +215,13 @@ return $default(_that.title,_that.color,_that.weight);case _:
 @JsonSerializable()
 
 class _SpinnerSegmentModel implements SpinnerSegmentModel {
-  const _SpinnerSegmentModel({required this.title, this.color = SimpleColor.green, this.weight = 1});
+  const _SpinnerSegmentModel({required this.title, this.color = SimpleColor.green, this.weight = 1, this.winCount = 0});
   factory _SpinnerSegmentModel.fromJson(Map<String, dynamic> json) => _$SpinnerSegmentModelFromJson(json);
 
 @override final  String title;
 @override@JsonKey() final  SimpleColor color;
 @override@JsonKey() final  int weight;
+@override@JsonKey() final  int winCount;
 
 /// Create a copy of SpinnerSegmentModel
 /// with the given fields replaced by the non-null parameter values.
@@ -234,16 +236,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpinnerSegmentModel&&(identical(other.title, title) || other.title == title)&&(identical(other.color, color) || other.color == color)&&(identical(other.weight, weight) || other.weight == weight));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpinnerSegmentModel&&(identical(other.title, title) || other.title == title)&&(identical(other.color, color) || other.color == color)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.winCount, winCount) || other.winCount == winCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,color,weight);
+int get hashCode => Object.hash(runtimeType,title,color,weight,winCount);
 
 @override
 String toString() {
-  return 'SpinnerSegmentModel(title: $title, color: $color, weight: $weight)';
+  return 'SpinnerSegmentModel(title: $title, color: $color, weight: $weight, winCount: $winCount)';
 }
 
 
@@ -254,7 +256,7 @@ abstract mixin class _$SpinnerSegmentModelCopyWith<$Res> implements $SpinnerSegm
   factory _$SpinnerSegmentModelCopyWith(_SpinnerSegmentModel value, $Res Function(_SpinnerSegmentModel) _then) = __$SpinnerSegmentModelCopyWithImpl;
 @override @useResult
 $Res call({
- String title, SimpleColor color, int weight
+ String title, SimpleColor color, int weight, int winCount
 });
 
 
@@ -271,11 +273,12 @@ class __$SpinnerSegmentModelCopyWithImpl<$Res>
 
 /// Create a copy of SpinnerSegmentModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? color = null,Object? weight = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? color = null,Object? weight = null,Object? winCount = null,}) {
   return _then(_SpinnerSegmentModel(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
 as SimpleColor,weight: null == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
+as int,winCount: null == winCount ? _self.winCount : winCount // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }

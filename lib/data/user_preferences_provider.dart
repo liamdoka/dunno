@@ -24,7 +24,7 @@ class UserPreferences extends _$UserPreferences {
 
     ref.onDispose(stream.cancel);
 
-    return box.values.firstOrNull ?? UserPreferencesModel(
+    return box.getAt(0) ?? UserPreferencesModel(
       defaultColorPalette: DunnoColorPalettes.material,
     );
   }
@@ -39,10 +39,10 @@ class UserPreferences extends _$UserPreferences {
     save();
   }
 
-  void setDefaultEmojis(String emojis) {
-    if (emojis.characters.length > AppNumbers.maxConfettiStringLength) return;
+  void setDefaultConfetti(String confetti) {
+    if (confetti.characters.length > AppNumbers.maxConfettiStringLength) return;
     state = state.copyWith(
-      defaultEmojis: emojis
+      defaultConfetti: confetti
     );
     save();
   }
@@ -61,6 +61,5 @@ class UserPreferences extends _$UserPreferences {
     } else {
       box.putAt(0, state);
     }
-    ref.invalidateSelf();
   }
 }

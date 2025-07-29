@@ -31,31 +31,6 @@ class RecentSpinnerList extends ConsumerWidget {
           ],
         ),
 
-        // recentSpinners.isEmpty
-        //     ? Text("No recent spinners")
-        //     : Flexible(
-        //   child: ListView.separated(
-        //       shrinkWrap: true,
-        //       separatorBuilder: (_, _,) => SizedBox(height: 8),
-        //       itemCount: recentSpinners.length,
-        //       itemBuilder: (context, index) {
-        //         final spinner = recentSpinners[index];
-        //         return SpinnerTile(
-        //           key: ValueKey(spinner.id),
-        //           spinner: spinner,
-        //           color: palette.forIndex(index),
-        //           dismissBackground: Row(
-        //             children: [Icon(Icons.delete_rounded, color: Colors.red,)],
-        //           ),
-        //           onDismiss: (direction) => ref
-        //               .read(spinnerListProvider.notifier)
-        //               .deleteSpinner(spinner.id),
-        //           onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
-        //         );
-        //       },
-        //   ),
-        // ),
-
         recentSpinners.isEmpty
             ? Text("No recent spinners")
             : Column(
@@ -66,7 +41,7 @@ class RecentSpinnerList extends ConsumerWidget {
               spinner: spinner,
               color: palette.forIndex(index),
               dismissBackground: Row(
-                children: [Icon(Icons.delete_rounded, color: Colors.red,)],
+                children: [Icon(Icons.delete_rounded, color: Theme.of(context).colorScheme.error)],
               ),
               onDismiss: (direction) => ref
                   .read(spinnerListProvider.notifier)

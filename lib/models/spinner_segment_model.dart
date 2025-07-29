@@ -9,7 +9,8 @@ sealed class SpinnerSegmentModel with _$SpinnerSegmentModel {
   const factory SpinnerSegmentModel({
     required String title,
     @Default(SimpleColor.green) SimpleColor color,
-    @Default(1) int weight
+    @Default(1) int weight,
+    @Default(0) int winCount
   }) = _SpinnerSegmentModel;
 
   factory SpinnerSegmentModel.fromJson(Map<String, dynamic> json) =>

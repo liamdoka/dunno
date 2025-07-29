@@ -40,6 +40,12 @@ class AccountScreen extends ConsumerWidget {
                 ),
                 Divider(height: 1),
                 DunnoSettingsButton(
+                    icon: Icon(Icons.auto_awesome_motion_rounded),
+                    text: "Content",
+                    onTap: () {}
+                ),
+                Divider(height: 1),
+                DunnoSettingsButton(
                     icon: Icon(Icons.recycling_rounded),
                     text: "Recycle bin",
                     onTap: () =>
@@ -55,46 +61,6 @@ class AccountScreen extends ConsumerWidget {
               ],
             ),
           ),
-
-          // Column(
-          //   crossAxisAlignment: CrossAxisAlignment.stretch,
-          //   children: [
-          //   ElevatedButton(
-          //     onPressed: (){},
-          //     child: Text("Sign in"),
-          //   ),
-          //     Divider(
-          //         thickness: 2,
-          //         color: Theme.of(context).colorScheme.surfaceContainer
-          //     ),
-          //     ElevatedButton(
-          //       onPressed: (){},
-          //       child: Text("Color Schemes"),
-          //     ),
-          //   ElevatedButton(
-          //     onPressed: (){},
-          //     child: Text("Deleted spinners"),
-          //   ),
-          //   Spacer(),
-          //   ElevatedButton(
-          //     onPressed: () async {
-          //       final box = HiveBox.spinners.name;
-          //
-          //       if (Hive.isBoxOpen(box)) {
-          //         await Hive.close();
-          //         await Hive.deleteBoxFromDisk(box);
-          //       }
-          //
-          //       await Hive.openBox<SpinnerModel>(box);
-          //       ref.invalidate(spinnerListProvider);
-          //     },
-          //     child: Text("Nuke account",
-          //       style: TextStyle(
-          //         color: Colors.red
-          //       ),
-          //     ),
-          //   ),
-          // ],)
         ],
       ),
     );
@@ -107,22 +73,6 @@ class DunnoSettingsButton extends StatelessWidget {
   final VoidCallback? onTap;
 
   const DunnoSettingsButton({super.key, required this.icon, required this.text, required this.onTap});
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Row(
-  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //     children: [
-  //       Row(
-  //         spacing: 24,
-  //         children: [
-  //           icon,
-  //           Text(text),
-  //         ],
-  //       )
-  //     ],
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {

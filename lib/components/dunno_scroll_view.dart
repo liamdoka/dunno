@@ -21,8 +21,8 @@ class DunnoScrollView extends StatefulWidget {
   State<DunnoScrollView> createState() => _DunnoScrollViewState();
 }
 
-class _DunnoScrollViewState extends State<DunnoScrollView> {
 
+class _DunnoScrollViewState extends State<DunnoScrollView> {
   late final ScrollController controller;
 
   @override
@@ -33,7 +33,7 @@ class _DunnoScrollViewState extends State<DunnoScrollView> {
 
   @override
   void didUpdateWidget(covariant DunnoScrollView oldWidget) {
-
+    super.didUpdateWidget(oldWidget);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (controller.hasClients && widget.autoScroll) {
         final delta = widget.children.length - oldWidget.children.length;
@@ -43,8 +43,6 @@ class _DunnoScrollViewState extends State<DunnoScrollView> {
         }
       }
     });
-
-    super.didUpdateWidget(oldWidget);
   }
 
   @override

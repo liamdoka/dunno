@@ -1,10 +1,11 @@
 import 'dart:math' as math;
 
 import 'package:auto_route/auto_route.dart';
-import 'package:dunno/components/animation/emoji_emitter.dart';
+import 'package:dunno/components/animation/confetti_emitter.dart';
 import 'package:dunno/data/spinner_edit_provider.dart';
 import 'package:dunno/data/spinner_list_provider.dart';
 import 'package:dunno/data/user_preferences_provider.dart';
+import 'package:dunno/data/user_stats_provider.dart';
 import 'package:dunno/models/spinner_model.dart';
 import 'package:dunno/router.gr.dart';
 import 'package:flutter/material.dart';
@@ -18,25 +19,24 @@ final rand = math.Random();
 @RoutePage()
 class SpinnerScreen extends ConsumerWidget {
   final SpinnerModel spinner;
-  final GlobalKey<EmojiEmitterState> emitterKey = GlobalKey<EmojiEmitterState>();
+  final GlobalKey<ConfettiEmitterState> emitterKey = GlobalKey<ConfettiEmitterState>();
 
   SpinnerScreen({super.key, required this.spinner});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final spinnerState = ref.watch(spinnerEditProvider(spinner.id));
-    final defaultEmojis = ref.watch(userPreferencesProvider).defaultEmojis;
+    final defaultConfetti = ref.watch(userPreferencesProvider).defaultConfetti;
 
     final isSaved = ref
         .watch(allSpinnersProvider)
-        .any((anySpinner) => anySpinner.id == spinner.id);
+        .any((savedSpinner) => savedSpinner.id == spinner.id);
 
-    final emitterValue = spinnerState.emojis ?? defaultEmojis;
+    final emitterValue = spinnerState.confetti ?? defaultConfetti;
     final emitterOffset = Offset(
         MediaQuery.of(context).size.width / 2,
         MediaQuery.of(context).size.width / 3
     );
-
 
     return Scaffold(
       appBar: AppBar(
@@ -44,10 +44,14 @@ class SpinnerScreen extends ConsumerWidget {
         leadingWidth: 80,
         leading: TextButton(
           onPressed: context.router.pop,
-          child: Text("Close"),
+          child: Text("Close",
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.error
+              )
+          ),
         ),
       ),
-      body: EmojiEmitter(
+      body: ConfettiEmitter(
         key: emitterKey,
         child: Container(
           padding: const EdgeInsets.all(24),
@@ -64,6 +68,7 @@ class SpinnerScreen extends ConsumerWidget {
                       segments: spinner.segments,
                       onComplete: () {
                         ref.read(spinnerListProvider.notifier).logSpin(spinner.id);
+                        ref.read(userStatsProvider.notifier).logConfetti();
                         emitterKey.currentState?.emitBurst(emitterValue, position: emitterOffset);
                       }
                   )

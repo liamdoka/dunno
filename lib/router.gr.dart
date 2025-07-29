@@ -12,8 +12,10 @@
 import 'package:auto_route/auto_route.dart' as _i11;
 import 'package:dunno/models/spinner_model.dart' as _i13;
 import 'package:dunno/screens/account/account_screen.dart' as _i1;
-import 'package:dunno/screens/account/appearance_settings_screen.dart' as _i3;
-import 'package:dunno/screens/account/deleted_spinners_screen.dart' as _i4;
+import 'package:dunno/screens/account/submenus/appearance_settings_screen.dart'
+    as _i3;
+import 'package:dunno/screens/account/submenus/deleted_spinners_screen.dart'
+    as _i4;
 import 'package:dunno/screens/edit_spinner/edit_spinner_screen.dart' as _i5;
 import 'package:dunno/screens/home/home_screen.dart' as _i6;
 import 'package:dunno/screens/quick_spin/quick_spin_screen.dart' as _i7;
