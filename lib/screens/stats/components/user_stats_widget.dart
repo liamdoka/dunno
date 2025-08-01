@@ -2,7 +2,7 @@ import 'package:dunno/components/animation/confetti_emitter.dart';
 import 'package:dunno/constants/sizes.dart';
 import 'package:dunno/data/user_preferences_provider.dart';
 import 'package:dunno/data/user_stats_provider.dart';
-import 'package:dunno/screens/account/submenus/appearance_settings_screen.dart';
+import 'package:dunno/screens/account/appearance_settings/components/appearance_settings_panel.dart';
 import 'package:dunno/utils/math.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,7 +34,6 @@ class UserStatsWidget extends ConsumerWidget {
                 onTap: () {
                   final confetti = ref.read(userPreferencesProvider).defaultConfetti;
                   emitterKey.currentState?.emitBurst(confetti, position: emitterOffset);
-                  ref.read(userStatsProvider.notifier).logConfetti();
                 },
             ),
           ],

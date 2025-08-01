@@ -4,7 +4,7 @@ import 'package:dunno/constants/sizes.dart';
 import 'package:dunno/data/spinner_list_provider.dart';
 import 'package:dunno/models/spinner_model.dart';
 import 'package:dunno/router.gr.dart';
-import 'package:dunno/screens/account/submenus/appearance_settings_screen.dart';
+import 'package:dunno/screens/account/appearance_settings/components/appearance_settings_panel.dart';
 import 'package:dunno/utils/math.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,22 +33,21 @@ class EditCountTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: defaultBorderRadius,
-      child: Material(
-        child: ListTile(
-          title: Text(spinner.title,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.bold
-            ),
+    return Material(
+      borderRadius: insetBorderRadius,
+      clipBehavior: Clip.hardEdge,
+      child: ListTile(
+        title: Text(spinner.title,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.bold
           ),
-          leading: index == 0
-              ? Icon(Icons.workspace_premium_rounded, color: Colors.amber.shade600,)
-              : Text((index + 1).toOrdinal()),
-          tileColor: Theme.of(context).colorScheme.onPrimary,
-          trailing: Text("${spinner.stats.editCount} edits"),
-          onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
         ),
+        leading: index == 0
+            ? Icon(Icons.workspace_premium_rounded, color: Colors.amber.shade600,)
+            : Text((index + 1).toOrdinal()),
+        tileColor: Theme.of(context).colorScheme.onPrimary,
+        trailing: Text("${spinner.stats.editCount} edits"),
+        onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
       ),
     );
   }

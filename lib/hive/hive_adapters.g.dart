@@ -23,7 +23,7 @@ class SpinnerModelAdapter extends TypeAdapter<SpinnerModel> {
       description: fields[57] as String?,
       id: fields[23] as String?,
       confetti: fields[62] as String?,
-      stats: fields[37] as SpinnerStatsModel?,
+      stats: fields[37] as DunnoStatsModel?,
       palette: fields[59] as ColorPaletteModel?,
       isFavorite: fields[60] == null ? false : fields[60] as bool,
       tags: fields[61] == null ? [] : (fields[61] as List).cast<String>(),
@@ -107,55 +107,6 @@ class SimpleColorAdapter extends TypeAdapter<SimpleColor> {
           typeId == other.typeId;
 }
 
-class SpinnerStatsModelAdapter extends TypeAdapter<SpinnerStatsModel> {
-  @override
-  final typeId = 2;
-
-  @override
-  SpinnerStatsModel read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
-    final fields = <int, dynamic>{
-      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
-    };
-    return SpinnerStatsModel(
-      createdTime: (fields[0] as num?)?.toInt(),
-      lastEditTime: (fields[23] as num?)?.toInt(),
-      lastSpinTime: (fields[24] as num?)?.toInt(),
-      deletedTime: (fields[25] as num?)?.toInt(),
-      spinCount: fields[26] == null ? 0 : (fields[26] as num).toInt(),
-      editCount: fields[27] == null ? 0 : (fields[27] as num).toInt(),
-    );
-  }
-
-  @override
-  void write(BinaryWriter writer, SpinnerStatsModel obj) {
-    writer
-      ..writeByte(6)
-      ..writeByte(0)
-      ..write(obj.createdTime)
-      ..writeByte(23)
-      ..write(obj.lastEditTime)
-      ..writeByte(24)
-      ..write(obj.lastSpinTime)
-      ..writeByte(25)
-      ..write(obj.deletedTime)
-      ..writeByte(26)
-      ..write(obj.spinCount)
-      ..writeByte(27)
-      ..write(obj.editCount);
-  }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SpinnerStatsModelAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
-}
-
 class ColorPaletteModelAdapter extends TypeAdapter<ColorPaletteModel> {
   @override
   final typeId = 3;
@@ -167,22 +118,28 @@ class ColorPaletteModelAdapter extends TypeAdapter<ColorPaletteModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ColorPaletteModel(
-      title: fields[3] as String,
-      colors: (fields[4] as List).cast<SimpleColor>(),
-      isFavorite: fields[5] == null ? false : fields[5] as bool,
+      id: fields[8] as String?,
+      stats: fields[10] as DunnoStatsModel?,
+      title: fields[6] as String,
+      colors: (fields[7] as List).cast<SimpleColor>(),
+      isFavorite: fields[9] == null ? false : fields[9] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, ColorPaletteModel obj) {
     writer
-      ..writeByte(3)
-      ..writeByte(3)
-      ..write(obj.title)
-      ..writeByte(4)
-      ..write(obj.colors)
       ..writeByte(5)
-      ..write(obj.isFavorite);
+      ..writeByte(6)
+      ..write(obj.title)
+      ..writeByte(7)
+      ..write(obj.colors)
+      ..writeByte(8)
+      ..write(obj.id)
+      ..writeByte(9)
+      ..write(obj.isFavorite)
+      ..writeByte(10)
+      ..write(obj.stats);
   }
 
   @override
@@ -250,29 +207,35 @@ class UserPreferencesModelAdapter extends TypeAdapter<UserPreferencesModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return UserPreferencesModel(
-      appTheme: fields[0] == null ? ThemeMode.system : fields[0] as ThemeMode,
-      appTint: fields[3] == null
+      id: fields[8] as String?,
+      appTheme: fields[10] == null ? ThemeMode.system : fields[10] as ThemeMode,
+      appTint: fields[11] == null
           ? const SimpleColor(103, 58, 183)
-          : fields[3] as SimpleColor,
-      defaultColorPalette: fields[1] == null
-          ? DunnoColorPalettes.bubblegum
-          : fields[1] as ColorPaletteModel,
-      defaultConfetti: fields[4] == null ? '⭐️⭐️⭐️' : fields[4] as String,
+          : fields[11] as SimpleColor,
+      defaultConfetti: fields[12] == null ? '⭐️⭐️⭐️' : fields[12] as String,
+      confettiAmount: fields[13] == null
+          ? ConfettiAmount.medium
+          : fields[13] as ConfettiAmount,
+      defaultColorPalette: fields[9] as ColorPaletteModel?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserPreferencesModel obj) {
     writer
-      ..writeByte(4)
-      ..writeByte(0)
-      ..write(obj.appTheme)
-      ..writeByte(1)
+      ..writeByte(6)
+      ..writeByte(8)
+      ..write(obj.id)
+      ..writeByte(9)
       ..write(obj.defaultColorPalette)
-      ..writeByte(3)
+      ..writeByte(10)
+      ..write(obj.appTheme)
+      ..writeByte(11)
       ..write(obj.appTint)
-      ..writeByte(4)
-      ..write(obj.defaultConfetti);
+      ..writeByte(12)
+      ..write(obj.defaultConfetti)
+      ..writeByte(13)
+      ..write(obj.confettiAmount);
   }
 
   @override
@@ -366,6 +329,100 @@ class UserStatsModelAdapter extends TypeAdapter<UserStatsModel> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is UserStatsModelAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class ConfettiAmountAdapter extends TypeAdapter<ConfettiAmount> {
+  @override
+  final typeId = 9;
+
+  @override
+  ConfettiAmount read(BinaryReader reader) {
+    switch (reader.readByte()) {
+      case 0:
+        return ConfettiAmount.low;
+      case 1:
+        return ConfettiAmount.medium;
+      case 2:
+        return ConfettiAmount.high;
+      case 3:
+        return ConfettiAmount.ridiculous;
+      default:
+        return ConfettiAmount.low;
+    }
+  }
+
+  @override
+  void write(BinaryWriter writer, ConfettiAmount obj) {
+    switch (obj) {
+      case ConfettiAmount.low:
+        writer.writeByte(0);
+      case ConfettiAmount.medium:
+        writer.writeByte(1);
+      case ConfettiAmount.high:
+        writer.writeByte(2);
+      case ConfettiAmount.ridiculous:
+        writer.writeByte(3);
+    }
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ConfettiAmountAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class DunnoStatsModelAdapter extends TypeAdapter<DunnoStatsModel> {
+  @override
+  final typeId = 10;
+
+  @override
+  DunnoStatsModel read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return DunnoStatsModel(
+      createdTime: (fields[0] as num?)?.toInt(),
+      lastEditTime: (fields[1] as num?)?.toInt(),
+      lastSpinTime: (fields[2] as num?)?.toInt(),
+      deletedTime: (fields[3] as num?)?.toInt(),
+      spinCount: fields[4] == null ? 0 : (fields[4] as num).toInt(),
+      editCount: fields[5] == null ? 0 : (fields[5] as num).toInt(),
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, DunnoStatsModel obj) {
+    writer
+      ..writeByte(6)
+      ..writeByte(0)
+      ..write(obj.createdTime)
+      ..writeByte(1)
+      ..write(obj.lastEditTime)
+      ..writeByte(2)
+      ..write(obj.lastSpinTime)
+      ..writeByte(3)
+      ..write(obj.deletedTime)
+      ..writeByte(4)
+      ..write(obj.spinCount)
+      ..writeByte(5)
+      ..write(obj.editCount);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DunnoStatsModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

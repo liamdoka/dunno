@@ -1,21 +1,23 @@
 import 'dart:math';
 
-import 'package:dunno/constants/numbers.dart';
 import 'package:dunno/utils/collections.dart';
 import 'package:dunno/utils/math.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:dunno/data/user_stats_provider.dart';
+import 'package:dunno/data/user_preferences_provider.dart';
 
-class ConfettiEmitter extends StatefulWidget {
+class ConfettiEmitter extends ConsumerStatefulWidget {
   final Widget? child;
   const ConfettiEmitter({super.key, this.child});
 
   @override
-  State<ConfettiEmitter> createState() => ConfettiEmitterState();
+  ConsumerState<ConfettiEmitter> createState() => ConfettiEmitterState();
 }
 
-class ConfettiEmitterState extends State<ConfettiEmitter> with SingleTickerProviderStateMixin {
+class ConfettiEmitterState extends ConsumerState<ConfettiEmitter> with SingleTickerProviderStateMixin {
 
   late final Ticker ticker;
   final Map<String, List<ConfettiParticle>> particles = {};
@@ -50,11 +52,16 @@ class ConfettiEmitterState extends State<ConfettiEmitter> with SingleTickerProvi
   }
 
   void emitBurst(String value, {Offset position = Offset.zero}) async {
+    final preferences = ref.read(userPreferencesProvider);
+    final particleCount = preferences.confettiAmount.random(rand);
+
+    ref.read(userStatsProvider.notifier).logConfetti(particleCount);
+
     final id = uuid.v4();
-    particles[id] = List.generate(AppNumbers.confettiParticlesPerEmission, (index) {
+    particles[id] = List.generate(particleCount, (index) {
       final direction = Offset(
         rand.nextDoubleRange(-180, 180),
-        rand.nextDoubleRange(-360, 0)
+        rand.nextDoubleRange(-540, 0)
       );
 
       return ConfettiParticle(

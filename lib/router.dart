@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:dunno/router.gr.dart';
 
@@ -46,6 +48,11 @@ class AppRouter extends RootStackRouter {
       reverseDuration: defaultTransitionDuration,
     ),
     CustomRoute(page: AppearanceSettingsRoute.page,
+      transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+      duration: defaultTransitionDuration,
+      reverseDuration: defaultTransitionDuration,
+    ),
+    CustomRoute(page: ColorPalettesRoute.page,
       transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
       duration: defaultTransitionDuration,
       reverseDuration: defaultTransitionDuration,

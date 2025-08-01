@@ -18,7 +18,7 @@ _SpinnerModel _$SpinnerModelFromJson(Map<String, dynamic> json) =>
       confetti: json['confetti'] as String?,
       stats: json['stats'] == null
           ? null
-          : SpinnerStatsModel.fromJson(json['stats'] as Map<String, dynamic>),
+          : DunnoStatsModel.fromJson(json['stats'] as Map<String, dynamic>),
       palette: json['palette'] == null
           ? null
           : ColorPaletteModel.fromJson(json['palette'] as Map<String, dynamic>),
@@ -40,24 +40,4 @@ Map<String, dynamic> _$SpinnerModelToJson(_SpinnerModel instance) =>
       'palette': instance.palette,
       'isFavorite': instance.isFavorite,
       'tags': instance.tags,
-    };
-
-_SpinnerStatsModel _$SpinnerStatsModelFromJson(Map<String, dynamic> json) =>
-    _SpinnerStatsModel(
-      createdTime: (json['createdTime'] as num?)?.toInt(),
-      lastEditTime: (json['lastEditTime'] as num?)?.toInt(),
-      lastSpinTime: (json['lastSpinTime'] as num?)?.toInt(),
-      deletedTime: (json['deletedTime'] as num?)?.toInt(),
-      spinCount: (json['spinCount'] as num?)?.toInt() ?? 0,
-      editCount: (json['editCount'] as num?)?.toInt() ?? 0,
-    );
-
-Map<String, dynamic> _$SpinnerStatsModelToJson(_SpinnerStatsModel instance) =>
-    <String, dynamic>{
-      'createdTime': instance.createdTime,
-      'lastEditTime': instance.lastEditTime,
-      'lastSpinTime': instance.lastSpinTime,
-      'deletedTime': instance.deletedTime,
-      'spinCount': instance.spinCount,
-      'editCount': instance.editCount,
     };

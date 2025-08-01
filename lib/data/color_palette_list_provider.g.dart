@@ -1,26 +1,29 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_stats_provider.dart';
+part of 'color_palette_list_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userStatsHash() => r'febed44f9def751be757d6e71c9a5d6aadd2d018';
+String _$colorPaletteListHash() => r'b4d30be57b320c7e8e905ee41edc5b235dee4737';
 
-/// See also [UserStats].
-@ProviderFor(UserStats)
-final userStatsProvider =
-    AutoDisposeNotifierProvider<UserStats, UserStatsModel>.internal(
-      UserStats.new,
-      name: r'userStatsProvider',
+/// See also [ColorPaletteList].
+@ProviderFor(ColorPaletteList)
+final colorPaletteListProvider =
+    AutoDisposeNotifierProvider<
+      ColorPaletteList,
+      List<ColorPaletteModel>
+    >.internal(
+      ColorPaletteList.new,
+      name: r'colorPaletteListProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$userStatsHash,
+          : _$colorPaletteListHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$UserStats = AutoDisposeNotifier<UserStatsModel>;
+typedef _$ColorPaletteList = AutoDisposeNotifier<List<ColorPaletteModel>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

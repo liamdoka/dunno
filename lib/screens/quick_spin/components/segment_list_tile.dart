@@ -1,5 +1,6 @@
 
 import 'package:dunno/components/animation/grow_animation.dart';
+import 'package:dunno/constants/numbers.dart';
 import 'package:dunno/constants/sizes.dart';
 import 'package:dunno/models/spinner_segment_model.dart';
 import 'package:dunno/utils/colors.dart';
@@ -49,7 +50,7 @@ class _SegmentListTileState extends State<SegmentListTile> {
       key: key,
       duration: appearTransitionDuration,
       child: AnimatedContainer(
-        height: 48,
+        height: AppNumbers.listTileHeight,
         key: key,
         duration: colorTransitionDuration,
         curve: Curves.easeInOut,

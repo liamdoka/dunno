@@ -1,4 +1,5 @@
 import 'package:dunno/models/color_palette_model.dart';
+import 'package:dunno/models/dunno_stats_model.dart';
 import 'package:dunno/models/simple_color_model.dart';
 import 'package:dunno/models/spinner_segment_model.dart';
 import 'package:dunno/models/user_preferences_model.dart';
@@ -11,10 +12,11 @@ import 'package:dunno/models/spinner_model.dart';
   AdapterSpec<SimpleColor>(),
   AdapterSpec<SpinnerModel>(),
   AdapterSpec<SpinnerSegmentModel>(),
-  AdapterSpec<SpinnerStatsModel>(),
+  AdapterSpec<DunnoStatsModel>(),
   AdapterSpec<ColorPaletteModel>(),
   AdapterSpec<UserPreferencesModel>(),
   AdapterSpec<UserStatsModel>(),
+  AdapterSpec<ConfettiAmount>(),
   AdapterSpec<ThemeMode>(),
 ])
 part 'hive_adapters.g.dart';

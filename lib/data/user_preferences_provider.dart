@@ -16,15 +16,14 @@ class UserPreferences extends _$UserPreferences {
   @override
   UserPreferencesModel build() {
     final stream = box.watch().listen((_) {
-      final model = box.getAt(0);
-      if (model != null) {
-        state = model;
-      }
+      state = box.values.firstOrNull ?? UserPreferencesModel(
+        defaultColorPalette: DunnoColorPalettes.material
+      );
     });
 
     ref.onDispose(stream.cancel);
 
-    return box.getAt(0) ?? UserPreferencesModel(
+    return box.values.firstOrNull ?? UserPreferencesModel(
       defaultColorPalette: DunnoColorPalettes.material,
     );
   }
@@ -33,25 +32,31 @@ class UserPreferences extends _$UserPreferences {
     final theme = themes.firstOrNull;
     if (theme == null) return;
 
-    state = state.copyWith(
-      appTheme: theme
-    );
+    state = state.copyWith(appTheme: theme);
     save();
   }
 
   void setDefaultConfetti(String confetti) {
     if (confetti.characters.length > AppNumbers.maxConfettiStringLength) return;
-    state = state.copyWith(
-      defaultConfetti: confetti
-    );
+    if (confetti.characters.isEmpty) return;
+
+    state = state.copyWith(defaultConfetti: confetti);
     save();
   }
 
   void setTint(Color color) {
     final simpleColor = color.toSimpleColor();
-    state = state.copyWith(
-      appTint: simpleColor
-    );
+    state = state.copyWith(appTint: simpleColor);
+    save();
+  }
+
+  void setConfettiAmount(ConfettiAmount amount) {
+    state = state.copyWith(confettiAmount: amount);
+    save();
+  }
+
+  void setDefaultColorPalette(ColorPaletteModel palette) {
+    state = state.copyWith(defaultColorPalette: palette);
     save();
   }
 

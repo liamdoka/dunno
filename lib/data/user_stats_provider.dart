@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:dunno/constants/numbers.dart';
 import 'package:dunno/hive/hive_adapters.dart';
 import 'package:dunno/models/user_stats_model.dart';
 import 'package:hive_ce/hive.dart';
@@ -21,8 +18,6 @@ class UserStats extends _$UserStats {
 
     ref.onDispose(stream.cancel);
 
-
-    print("about probably range error");
     return box.values.firstOrNull ?? UserStatsModel();
   }
 
@@ -48,12 +43,9 @@ class UserStats extends _$UserStats {
     save();
   }
 
-  void logConfetti() {
-    // spoof the confetti, i don't care yet
-    // will probably be configurable in the future.
-    final more = AppNumbers.confettiParticlesPerEmission + (Random().nextInt(10) - 5);
+  void logConfetti(int particleCount) {
     state = state.copyWith(
-        confettiCount: state.confettiCount + more
+        confettiCount: state.confettiCount + particleCount
     );
     save();
   }

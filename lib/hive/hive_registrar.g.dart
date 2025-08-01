@@ -8,10 +8,11 @@ import 'package:dunno/hive/hive_adapters.dart';
 extension HiveRegistrar on HiveInterface {
   void registerAdapters() {
     registerAdapter(ColorPaletteModelAdapter());
+    registerAdapter(ConfettiAmountAdapter());
+    registerAdapter(DunnoStatsModelAdapter());
     registerAdapter(SimpleColorAdapter());
     registerAdapter(SpinnerModelAdapter());
     registerAdapter(SpinnerSegmentModelAdapter());
-    registerAdapter(SpinnerStatsModelAdapter());
     registerAdapter(ThemeModeAdapter());
     registerAdapter(UserPreferencesModelAdapter());
     registerAdapter(UserStatsModelAdapter());
@@ -21,10 +22,11 @@ extension HiveRegistrar on HiveInterface {
 extension IsolatedHiveRegistrar on IsolatedHiveInterface {
   void registerAdapters() {
     registerAdapter(ColorPaletteModelAdapter());
+    registerAdapter(ConfettiAmountAdapter());
+    registerAdapter(DunnoStatsModelAdapter());
     registerAdapter(SimpleColorAdapter());
     registerAdapter(SpinnerModelAdapter());
     registerAdapter(SpinnerSegmentModelAdapter());
-    registerAdapter(SpinnerStatsModelAdapter());
     registerAdapter(ThemeModeAdapter());
     registerAdapter(UserPreferencesModelAdapter());
     registerAdapter(UserStatsModelAdapter());

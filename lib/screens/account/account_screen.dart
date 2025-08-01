@@ -34,15 +34,15 @@ class AccountScreen extends ConsumerWidget {
               children: [
                 Divider(height: 1),
                 DunnoSettingsButton(
-                    icon: Icon(Icons.palette_rounded),
+                    icon: Icon(Icons.light_mode_rounded),
                     text: "Appearance",
                     onTap: () => context.router.push(AppearanceSettingsRoute())
                 ),
                 Divider(height: 1),
                 DunnoSettingsButton(
-                    icon: Icon(Icons.auto_awesome_motion_rounded),
-                    text: "Content",
-                    onTap: () {}
+                    icon: Icon(Icons.palette_rounded),
+                    text: "Color Palettes",
+                    onTap: () => context.router.push(ColorPalettesRoute())
                 ),
                 Divider(height: 1),
                 DunnoSettingsButton(

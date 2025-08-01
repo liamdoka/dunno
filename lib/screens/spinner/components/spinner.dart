@@ -2,6 +2,7 @@
 
 import 'dart:math' as math;
 
+import 'package:dunno/constants/numbers.dart';
 import 'package:dunno/models/spinner_segment_model.dart';
 import 'package:dunno/screens/spinner/spinner_screen.dart';
 import 'package:dunno/utils/colors.dart';
@@ -91,7 +92,7 @@ class _SpinnerState extends State<Spinner> with SingleTickerProviderStateMixin {
                 scaleY: 2,
                 child: Icon(
                   Icons.arrow_drop_down_rounded,
-                  size: 48,
+                  size: AppNumbers.listTileHeight,
                   color: Theme.of(context).colorScheme.error,
                   shadows: [
                     Shadow(

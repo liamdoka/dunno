@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserPreferencesModel {
 
- ThemeMode get appTheme; SimpleColor get appTint; ColorPaletteModel get defaultColorPalette; String get defaultConfetti;
+ String get id; ColorPaletteModel get defaultColorPalette; ThemeMode get appTheme; SimpleColor get appTint; String get defaultConfetti; ConfettiAmount get confettiAmount;
 /// Create a copy of UserPreferencesModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserPreferencesModelCopyWith<UserPreferencesModel> get copyWith => _$UserPrefer
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserPreferencesModel&&(identical(other.appTheme, appTheme) || other.appTheme == appTheme)&&(identical(other.appTint, appTint) || other.appTint == appTint)&&(identical(other.defaultColorPalette, defaultColorPalette) || other.defaultColorPalette == defaultColorPalette)&&(identical(other.defaultConfetti, defaultConfetti) || other.defaultConfetti == defaultConfetti));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserPreferencesModel&&(identical(other.id, id) || other.id == id)&&(identical(other.defaultColorPalette, defaultColorPalette) || other.defaultColorPalette == defaultColorPalette)&&(identical(other.appTheme, appTheme) || other.appTheme == appTheme)&&(identical(other.appTint, appTint) || other.appTint == appTint)&&(identical(other.defaultConfetti, defaultConfetti) || other.defaultConfetti == defaultConfetti)&&(identical(other.confettiAmount, confettiAmount) || other.confettiAmount == confettiAmount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,appTheme,appTint,defaultColorPalette,defaultConfetti);
+int get hashCode => Object.hash(runtimeType,id,defaultColorPalette,appTheme,appTint,defaultConfetti,confettiAmount);
 
 @override
 String toString() {
-  return 'UserPreferencesModel(appTheme: $appTheme, appTint: $appTint, defaultColorPalette: $defaultColorPalette, defaultConfetti: $defaultConfetti)';
+  return 'UserPreferencesModel(id: $id, defaultColorPalette: $defaultColorPalette, appTheme: $appTheme, appTint: $appTint, defaultConfetti: $defaultConfetti, confettiAmount: $confettiAmount)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $UserPreferencesModelCopyWith<$Res>  {
   factory $UserPreferencesModelCopyWith(UserPreferencesModel value, $Res Function(UserPreferencesModel) _then) = _$UserPreferencesModelCopyWithImpl;
 @useResult
 $Res call({
- ThemeMode appTheme, SimpleColor appTint, ColorPaletteModel defaultColorPalette, String defaultConfetti
+ String? id, ThemeMode appTheme, SimpleColor appTint, String defaultConfetti, ConfettiAmount confettiAmount, ColorPaletteModel? defaultColorPalette
 });
 
 
-$SimpleColorCopyWith<$Res> get appTint;$ColorPaletteModelCopyWith<$Res> get defaultColorPalette;
+$SimpleColorCopyWith<$Res> get appTint;$ColorPaletteModelCopyWith<$Res>? get defaultColorPalette;
 
 }
 /// @nodoc
@@ -65,13 +65,15 @@ class _$UserPreferencesModelCopyWithImpl<$Res>
 
 /// Create a copy of UserPreferencesModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? appTheme = null,Object? appTint = null,Object? defaultColorPalette = null,Object? defaultConfetti = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? appTheme = null,Object? appTint = null,Object? defaultConfetti = null,Object? confettiAmount = null,Object? defaultColorPalette = freezed,}) {
   return _then(_self.copyWith(
-appTheme: null == appTheme ? _self.appTheme : appTheme // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id! : id // ignore: cast_nullable_to_non_nullable
+as String?,appTheme: null == appTheme ? _self.appTheme : appTheme // ignore: cast_nullable_to_non_nullable
 as ThemeMode,appTint: null == appTint ? _self.appTint : appTint // ignore: cast_nullable_to_non_nullable
-as SimpleColor,defaultColorPalette: null == defaultColorPalette ? _self.defaultColorPalette : defaultColorPalette // ignore: cast_nullable_to_non_nullable
-as ColorPaletteModel,defaultConfetti: null == defaultConfetti ? _self.defaultConfetti : defaultConfetti // ignore: cast_nullable_to_non_nullable
-as String,
+as SimpleColor,defaultConfetti: null == defaultConfetti ? _self.defaultConfetti : defaultConfetti // ignore: cast_nullable_to_non_nullable
+as String,confettiAmount: null == confettiAmount ? _self.confettiAmount : confettiAmount // ignore: cast_nullable_to_non_nullable
+as ConfettiAmount,defaultColorPalette: freezed == defaultColorPalette ? _self.defaultColorPalette! : defaultColorPalette // ignore: cast_nullable_to_non_nullable
+as ColorPaletteModel?,
   ));
 }
 /// Create a copy of UserPreferencesModel
@@ -87,9 +89,12 @@ $SimpleColorCopyWith<$Res> get appTint {
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$ColorPaletteModelCopyWith<$Res> get defaultColorPalette {
-  
-  return $ColorPaletteModelCopyWith<$Res>(_self.defaultColorPalette, (value) {
+$ColorPaletteModelCopyWith<$Res>? get defaultColorPalette {
+    if (_self.defaultColorPalette == null) {
+    return null;
+  }
+
+  return $ColorPaletteModelCopyWith<$Res>(_self.defaultColorPalette!, (value) {
     return _then(_self.copyWith(defaultColorPalette: value));
   });
 }
@@ -171,10 +176,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeMode appTheme,  SimpleColor appTint,  ColorPaletteModel defaultColorPalette,  String defaultConfetti)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  ThemeMode appTheme,  SimpleColor appTint,  String defaultConfetti,  ConfettiAmount confettiAmount,  ColorPaletteModel? defaultColorPalette)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserPreferencesModel() when $default != null:
-return $default(_that.appTheme,_that.appTint,_that.defaultColorPalette,_that.defaultConfetti);case _:
+return $default(_that.id,_that.appTheme,_that.appTint,_that.defaultConfetti,_that.confettiAmount,_that.defaultColorPalette);case _:
   return orElse();
 
 }
@@ -192,10 +197,10 @@ return $default(_that.appTheme,_that.appTint,_that.defaultColorPalette,_that.def
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeMode appTheme,  SimpleColor appTint,  ColorPaletteModel defaultColorPalette,  String defaultConfetti)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  ThemeMode appTheme,  SimpleColor appTint,  String defaultConfetti,  ConfettiAmount confettiAmount,  ColorPaletteModel? defaultColorPalette)  $default,) {final _that = this;
 switch (_that) {
 case _UserPreferencesModel():
-return $default(_that.appTheme,_that.appTint,_that.defaultColorPalette,_that.defaultConfetti);}
+return $default(_that.id,_that.appTheme,_that.appTint,_that.defaultConfetti,_that.confettiAmount,_that.defaultColorPalette);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -209,10 +214,10 @@ return $default(_that.appTheme,_that.appTint,_that.defaultColorPalette,_that.def
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeMode appTheme,  SimpleColor appTint,  ColorPaletteModel defaultColorPalette,  String defaultConfetti)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  ThemeMode appTheme,  SimpleColor appTint,  String defaultConfetti,  ConfettiAmount confettiAmount,  ColorPaletteModel? defaultColorPalette)?  $default,) {final _that = this;
 switch (_that) {
 case _UserPreferencesModel() when $default != null:
-return $default(_that.appTheme,_that.appTint,_that.defaultColorPalette,_that.defaultConfetti);case _:
+return $default(_that.id,_that.appTheme,_that.appTint,_that.defaultConfetti,_that.confettiAmount,_that.defaultColorPalette);case _:
   return null;
 
 }
@@ -223,14 +228,14 @@ return $default(_that.appTheme,_that.appTint,_that.defaultColorPalette,_that.def
 /// @nodoc
 @JsonSerializable()
 
-class _UserPreferencesModel implements UserPreferencesModel {
-  const _UserPreferencesModel({this.appTheme = ThemeMode.system, this.appTint = const SimpleColor(103, 58, 183), this.defaultColorPalette = DunnoColorPalettes.bubblegum, this.defaultConfetti = '⭐️⭐️⭐️'});
+class _UserPreferencesModel extends UserPreferencesModel {
+   _UserPreferencesModel({final  String? id, this.appTheme = ThemeMode.system, this.appTint = const SimpleColor(103, 58, 183), this.defaultConfetti = '⭐️⭐️⭐️', this.confettiAmount = ConfettiAmount.medium, final  ColorPaletteModel? defaultColorPalette}): super._(id: id, defaultColorPalette: defaultColorPalette);
   factory _UserPreferencesModel.fromJson(Map<String, dynamic> json) => _$UserPreferencesModelFromJson(json);
 
 @override@JsonKey() final  ThemeMode appTheme;
 @override@JsonKey() final  SimpleColor appTint;
-@override@JsonKey() final  ColorPaletteModel defaultColorPalette;
 @override@JsonKey() final  String defaultConfetti;
+@override@JsonKey() final  ConfettiAmount confettiAmount;
 
 /// Create a copy of UserPreferencesModel
 /// with the given fields replaced by the non-null parameter values.
@@ -245,16 +250,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserPreferencesModel&&(identical(other.appTheme, appTheme) || other.appTheme == appTheme)&&(identical(other.appTint, appTint) || other.appTint == appTint)&&(identical(other.defaultColorPalette, defaultColorPalette) || other.defaultColorPalette == defaultColorPalette)&&(identical(other.defaultConfetti, defaultConfetti) || other.defaultConfetti == defaultConfetti));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserPreferencesModel&&(identical(other.id, id) || other.id == id)&&(identical(other.appTheme, appTheme) || other.appTheme == appTheme)&&(identical(other.appTint, appTint) || other.appTint == appTint)&&(identical(other.defaultConfetti, defaultConfetti) || other.defaultConfetti == defaultConfetti)&&(identical(other.confettiAmount, confettiAmount) || other.confettiAmount == confettiAmount)&&(identical(other.defaultColorPalette, defaultColorPalette) || other.defaultColorPalette == defaultColorPalette));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,appTheme,appTint,defaultColorPalette,defaultConfetti);
+int get hashCode => Object.hash(runtimeType,id,appTheme,appTint,defaultConfetti,confettiAmount,defaultColorPalette);
 
 @override
 String toString() {
-  return 'UserPreferencesModel(appTheme: $appTheme, appTint: $appTint, defaultColorPalette: $defaultColorPalette, defaultConfetti: $defaultConfetti)';
+  return 'UserPreferencesModel(id: $id, appTheme: $appTheme, appTint: $appTint, defaultConfetti: $defaultConfetti, confettiAmount: $confettiAmount, defaultColorPalette: $defaultColorPalette)';
 }
 
 
@@ -265,11 +270,11 @@ abstract mixin class _$UserPreferencesModelCopyWith<$Res> implements $UserPrefer
   factory _$UserPreferencesModelCopyWith(_UserPreferencesModel value, $Res Function(_UserPreferencesModel) _then) = __$UserPreferencesModelCopyWithImpl;
 @override @useResult
 $Res call({
- ThemeMode appTheme, SimpleColor appTint, ColorPaletteModel defaultColorPalette, String defaultConfetti
+ String? id, ThemeMode appTheme, SimpleColor appTint, String defaultConfetti, ConfettiAmount confettiAmount, ColorPaletteModel? defaultColorPalette
 });
 
 
-@override $SimpleColorCopyWith<$Res> get appTint;@override $ColorPaletteModelCopyWith<$Res> get defaultColorPalette;
+@override $SimpleColorCopyWith<$Res> get appTint;@override $ColorPaletteModelCopyWith<$Res>? get defaultColorPalette;
 
 }
 /// @nodoc
@@ -282,13 +287,15 @@ class __$UserPreferencesModelCopyWithImpl<$Res>
 
 /// Create a copy of UserPreferencesModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? appTheme = null,Object? appTint = null,Object? defaultColorPalette = null,Object? defaultConfetti = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? appTheme = null,Object? appTint = null,Object? defaultConfetti = null,Object? confettiAmount = null,Object? defaultColorPalette = freezed,}) {
   return _then(_UserPreferencesModel(
-appTheme: null == appTheme ? _self.appTheme : appTheme // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String?,appTheme: null == appTheme ? _self.appTheme : appTheme // ignore: cast_nullable_to_non_nullable
 as ThemeMode,appTint: null == appTint ? _self.appTint : appTint // ignore: cast_nullable_to_non_nullable
-as SimpleColor,defaultColorPalette: null == defaultColorPalette ? _self.defaultColorPalette : defaultColorPalette // ignore: cast_nullable_to_non_nullable
-as ColorPaletteModel,defaultConfetti: null == defaultConfetti ? _self.defaultConfetti : defaultConfetti // ignore: cast_nullable_to_non_nullable
-as String,
+as SimpleColor,defaultConfetti: null == defaultConfetti ? _self.defaultConfetti : defaultConfetti // ignore: cast_nullable_to_non_nullable
+as String,confettiAmount: null == confettiAmount ? _self.confettiAmount : confettiAmount // ignore: cast_nullable_to_non_nullable
+as ConfettiAmount,defaultColorPalette: freezed == defaultColorPalette ? _self.defaultColorPalette : defaultColorPalette // ignore: cast_nullable_to_non_nullable
+as ColorPaletteModel?,
   ));
 }
 
@@ -305,9 +312,12 @@ $SimpleColorCopyWith<$Res> get appTint {
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$ColorPaletteModelCopyWith<$Res> get defaultColorPalette {
-  
-  return $ColorPaletteModelCopyWith<$Res>(_self.defaultColorPalette, (value) {
+$ColorPaletteModelCopyWith<$Res>? get defaultColorPalette {
+    if (_self.defaultColorPalette == null) {
+    return null;
+  }
+
+  return $ColorPaletteModelCopyWith<$Res>(_self.defaultColorPalette!, (value) {
     return _then(_self.copyWith(defaultColorPalette: value));
   });
 }

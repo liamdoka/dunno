@@ -5,7 +5,6 @@ import 'package:dunno/components/animation/confetti_emitter.dart';
 import 'package:dunno/data/spinner_edit_provider.dart';
 import 'package:dunno/data/spinner_list_provider.dart';
 import 'package:dunno/data/user_preferences_provider.dart';
-import 'package:dunno/data/user_stats_provider.dart';
 import 'package:dunno/models/spinner_model.dart';
 import 'package:dunno/router.gr.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +67,6 @@ class SpinnerScreen extends ConsumerWidget {
                       segments: spinner.segments,
                       onComplete: () {
                         ref.read(spinnerListProvider.notifier).logSpin(spinner.id);
-                        ref.read(userStatsProvider.notifier).logConfetti();
                         emitterKey.currentState?.emitBurst(emitterValue, position: emitterOffset);
                       }
                   )
