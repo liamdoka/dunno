@@ -123,7 +123,7 @@ class SpinnerList extends _$SpinnerList {
     final spinner = state.firstWhereOrNull((spinner) => spinner.id == id);
     if (spinner == null) return;
 
-    // track the spins for the user.
+    // track the stats for the user.
     ref.read(userStatsProvider.notifier).logSpinnerDeleted();
 
     box.put(spinner.id, spinner.copyWith.stats!(

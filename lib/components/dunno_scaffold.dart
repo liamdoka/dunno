@@ -17,7 +17,7 @@ class DunnoScaffold extends StatelessWidget {
             color: Theme.of(context).scaffoldBackgroundColor,
             padding: const EdgeInsets.all(24),
             child: child,
-        )
+        ),
     );
   }
 }

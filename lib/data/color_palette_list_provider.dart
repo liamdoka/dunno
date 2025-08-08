@@ -19,24 +19,56 @@ class ColorPaletteList extends _$ColorPaletteList {
     ref.onDispose(stream.cancel);
 
     if (box.values.isEmpty) {
-      box.put("material", DunnoColorPalettes.material);
-      box.put("shrek", DunnoColorPalettes.green);
-      box.put("bubblegum", DunnoColorPalettes.bubblegum);
-      box.put("materialAccent", DunnoColorPalettes.materialAccent);
+      savePalette(DunnoColorPalettes.material);
+      savePalette(DunnoColorPalettes.materialAccent);
+      savePalette(DunnoColorPalettes.green);
+      savePalette(DunnoColorPalettes.bubblegum);
     }
 
     return List.from(box.values, growable: false);
   }
 
-  void addColorPalette(ColorPaletteModel palette) {
-    print("nothing");
+
+  /// Saves the palette to the device.
+  void savePalette(ColorPaletteModel palette) {
+    box.put(palette.id, palette.copyWith.stats!(
+      deletedTime: null,
+      lastEditTime: DateTime.now().millisecondsSinceEpoch
+    ));
   }
 
+  /// Removes the palette from device storage.
+  void deletePaletteFromDevice(String id) async {
+    await box.delete(id);
+  }
 
-  void deleteColorPalette(String id) {
+  /// Removes all deleted palettes from device storage.
+  void clearDeletedPalettes() async {
+    final List<String> ids = state
+        .where((palette) => palette.isDeleted)
+        .map((palette) => palette.id)
+        .toList();
+
+    await box.deleteAll(ids);
+  }
+
+  /// Mark the palette as deleted
+  void deletePalette(String id) {
     final palette = state.firstWhereOrNull((palette) => palette.id == id);
     if (palette == null) return;
 
+    box.put(palette.id, palette.copyWith.stats!(
+      deletedTime: DateTime.now().millisecondsSinceEpoch
+    ));
+  }
 
+  /// Toggles the `isFavorite` status
+  void toggleFavorite(String id) {
+    final palette = state.firstWhereOrNull((palette) => palette.id == id);
+    if (palette == null) return;
+
+    box.put(palette.id, palette.copyWith(
+        isFavorite: !palette.isFavorite
+    ));
   }
 }

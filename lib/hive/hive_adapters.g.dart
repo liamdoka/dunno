@@ -24,7 +24,7 @@ class SpinnerModelAdapter extends TypeAdapter<SpinnerModel> {
       id: fields[23] as String?,
       confetti: fields[62] as String?,
       stats: fields[37] as DunnoStatsModel?,
-      palette: fields[59] as ColorPaletteModel?,
+      paletteId: fields[63] as String?,
       isFavorite: fields[60] == null ? false : fields[60] as bool,
       tags: fields[61] == null ? [] : (fields[61] as List).cast<String>(),
     );
@@ -46,14 +46,14 @@ class SpinnerModelAdapter extends TypeAdapter<SpinnerModel> {
       ..write(obj.segments)
       ..writeByte(57)
       ..write(obj.description)
-      ..writeByte(59)
-      ..write(obj.palette)
       ..writeByte(60)
       ..write(obj.isFavorite)
       ..writeByte(61)
       ..write(obj.tags)
       ..writeByte(62)
-      ..write(obj.confetti);
+      ..write(obj.confetti)
+      ..writeByte(63)
+      ..write(obj.paletteId);
   }
 
   @override

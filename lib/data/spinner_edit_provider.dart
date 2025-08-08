@@ -57,10 +57,12 @@ class SpinnerEdit extends _$SpinnerEdit {
     );
   }
 
+  /// Removes ALL segments from the list.
   void clearSegments() {
     state = state.copyWith(segments: []);
   }
 
+  /// Removes a segment from the list.
   void deleteSegment(int index) {
     state = state.copyWith(
       segments: state.segments
@@ -69,13 +71,13 @@ class SpinnerEdit extends _$SpinnerEdit {
     );
   }
 
+  /// add segment to the front of the list.
   void addSegment(SpinnerSegmentModel segment) {
     state = state.copyWith(segments: [segment, ...state.segments]);
   }
 
   void increaseSegmentWeight(int index) {
     if (index < 0 || index >= state.segments.length) return;
-
     final segment = state.segments[index];
 
     var newList = List<SpinnerSegmentModel>.from(state.segments);
@@ -83,7 +85,6 @@ class SpinnerEdit extends _$SpinnerEdit {
 
     state = state.copyWith(segments: newList);
   }
-
 
   void decreaseSegmentWeight(int index) {
     if (index < 0 || index >= state.segments.length) return;
@@ -109,6 +110,7 @@ class SpinnerEdit extends _$SpinnerEdit {
       ),
     );
 
+    // log edit
     final newStats = state.stats.copyWith(
         editCount: state.stats.editCount + 1,
         lastEditTime: DateTime.now().millisecondsSinceEpoch

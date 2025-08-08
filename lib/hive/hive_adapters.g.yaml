@@ -5,7 +5,7 @@ nextTypeId: 11
 types:
   SpinnerModel:
     typeId: 0
-    nextIndex: 63
+    nextIndex: 64
     fields:
       id:
         index: 23
@@ -19,14 +19,14 @@ types:
         index: 56
       description:
         index: 57
-      palette:
-        index: 59
       isFavorite:
         index: 60
       tags:
         index: 61
       confetti:
         index: 62
+      paletteId:
+        index: 63
   SimpleColor:
     typeId: 1
     nextIndex: 3

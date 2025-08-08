@@ -19,9 +19,7 @@ _SpinnerModel _$SpinnerModelFromJson(Map<String, dynamic> json) =>
       stats: json['stats'] == null
           ? null
           : DunnoStatsModel.fromJson(json['stats'] as Map<String, dynamic>),
-      palette: json['palette'] == null
-          ? null
-          : ColorPaletteModel.fromJson(json['palette'] as Map<String, dynamic>),
+      paletteId: json['paletteId'] as String?,
       isFavorite: json['isFavorite'] as bool? ?? false,
       tags:
           (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
@@ -37,7 +35,7 @@ Map<String, dynamic> _$SpinnerModelToJson(_SpinnerModel instance) =>
       'segments': instance.segments,
       'description': instance.description,
       'confetti': instance.confetti,
-      'palette': instance.palette,
+      'paletteId': instance.paletteId,
       'isFavorite': instance.isFavorite,
       'tags': instance.tags,
     };

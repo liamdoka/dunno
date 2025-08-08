@@ -40,6 +40,10 @@ sealed class ColorPaletteModel with _$ColorPaletteModel {
   /// Shorthand for `palette.colors.length`
   int get size => colors.length;
 
+  /// Shorthand for deleted status
+  bool get isDeleted => stats.deletedTime != null;
+  bool get isNotDeleted => stats.deletedTime == null;
+
   /// Create a `[ColorPaletteModel] from Dart "complex" colors.
   static ColorPaletteModel fromColors(
     List<Color> colors, {

@@ -27,7 +27,7 @@ sealed class SpinnerModel with _$SpinnerModel {
     String? id,
     String? confetti,
     DunnoStatsModel? stats,
-    ColorPaletteModel? palette,
+    String? paletteId,
     @Default(false) bool isFavorite,
     @Default([]) List<String> tags
   }) = _SpinnerModel;

@@ -99,7 +99,10 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
                 descriptionController.clear();
                 segmentsController.clear();
               },
-              child: Text("Reset", style: TextStyle(color: Theme.of(context).colorScheme.error)),
+              child: Text(
+                "Reset",
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
             ),
           ),
         ],
@@ -176,21 +179,23 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     spacing: 8.0,
-                    children: editState.segments.mapIndexed((index, segment) =>
-                        SegmentListTile(
-                          color: palette.forIndex(index),
-                          segment: segment,
-                          onTapIncrease: () => ref
-                              .read(editProvider.notifier)
-                              .increaseSegmentWeight(index),
-                          onTapDecrease: () => ref
-                              .read(editProvider.notifier)
-                              .decreaseSegmentWeight(index),
-                          onDismiss: () => ref
-                              .read(editProvider.notifier)
-                              .deleteSegment(index),
+                    children: editState.segments
+                        .mapIndexed(
+                          (index, segment) => SegmentListTile(
+                            color: palette.forIndex(index),
+                            segment: segment,
+                            onTapIncrease: () => ref
+                                .read(editProvider.notifier)
+                                .increaseSegmentWeight(index),
+                            onTapDecrease: () => ref
+                                .read(editProvider.notifier)
+                                .decreaseSegmentWeight(index),
+                            onDismiss: () => ref
+                                .read(editProvider.notifier)
+                                .deleteSegment(index),
+                          ),
                         )
-                    ).toList(),
+                        .toList(),
                   ),
 
                   // TODO some sort of color palette selection
@@ -231,10 +236,10 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
             onPressed: editState.segments.length < 2
                 ? null
                 : () {
-              ref.read(editProvider.notifier).save();
-              // if you want to go back and edit, use edit button duhhh
-              context.router.replace(SpinnerRoute(spinner: editState));
-            },
+                    ref.read(editProvider.notifier).save();
+                    // if you want to go back and edit, use edit button duhhh
+                    context.router.replace(SpinnerRoute(spinner: editState));
+                  },
             child: Text("Save and Spin"),
           ),
         ],
