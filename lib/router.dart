@@ -1,8 +1,6 @@
-import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:dunno/router.gr.dart';
-import 'package:dunno/screens/account/color_palettes/edit_color_palette_screen.dart';
 
 @AutoRouterConfig()
 class AppRouter extends RootStackRouter {
@@ -18,15 +16,8 @@ class AppRouter extends RootStackRouter {
       page: HomeRoute.page,
       path: "/",
       children: [
-        AutoRoute(
-          page: SpinnerListRoute.page,
-          path: 'spinners',
-        ),
-        AutoRoute(
-          page: QuickSpinRoute.page,
-          path: "quick-spin",
-          title: (_, _) => "Quick Spin"
-        ),
+        AutoRoute(page: SpinnerListRoute.page,),
+        AutoRoute(page: QuickSpinRoute.page,),
         AutoRoute(page: StatsRoute.page),
         AutoRoute(page: AccountRoute.page),
       ]

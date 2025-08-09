@@ -67,8 +67,8 @@ class _$ColorPaletteModelCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? stats = freezed,Object? title = null,Object? colors = null,Object? isFavorite = null,}) {
   return _then(_self.copyWith(
-id: freezed == id ? _self.id! : id // ignore: cast_nullable_to_non_nullable
-as String?,stats: freezed == stats ? _self.stats! : stats // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String?,stats: freezed == stats ? _self.stats : stats // ignore: cast_nullable_to_non_nullable
 as DunnoStatsModel?,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,colors: null == colors ? _self.colors : colors // ignore: cast_nullable_to_non_nullable
 as List<SimpleColor>,isFavorite: null == isFavorite ? _self.isFavorite : isFavorite // ignore: cast_nullable_to_non_nullable
@@ -80,11 +80,7 @@ as bool,
 @override
 @pragma('vm:prefer-inline')
 $DunnoStatsModelCopyWith<$Res>? get stats {
-    if (_self.stats == null) {
-    return null;
-  }
-
-  return $DunnoStatsModelCopyWith<$Res>(_self.stats!, (value) {
+    return $DunnoStatsModelCopyWith<$Res>(_self.stats, (value) {
     return _then(_self.copyWith(stats: value));
   });
 }
@@ -298,11 +294,7 @@ as bool,
 @override
 @pragma('vm:prefer-inline')
 $DunnoStatsModelCopyWith<$Res>? get stats {
-    if (_self.stats == null) {
-    return null;
-  }
-
-  return $DunnoStatsModelCopyWith<$Res>(_self.stats!, (value) {
+    return $DunnoStatsModelCopyWith<$Res>(_self.stats, (value) {
     return _then(_self.copyWith(stats: value));
   });
 }

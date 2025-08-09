@@ -71,9 +71,9 @@ title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nulla
 as String,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
 as SimpleColor,segments: null == segments ? _self.segments : segments // ignore: cast_nullable_to_non_nullable
 as List<SpinnerSegmentModel>,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String?,id: freezed == id ? _self.id! : id // ignore: cast_nullable_to_non_nullable
+as String?,id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,confetti: freezed == confetti ? _self.confetti : confetti // ignore: cast_nullable_to_non_nullable
-as String?,stats: freezed == stats ? _self.stats! : stats // ignore: cast_nullable_to_non_nullable
+as String?,stats: freezed == stats ? _self.stats : stats // ignore: cast_nullable_to_non_nullable
 as DunnoStatsModel?,paletteId: freezed == paletteId ? _self.paletteId : paletteId // ignore: cast_nullable_to_non_nullable
 as String?,isFavorite: null == isFavorite ? _self.isFavorite : isFavorite // ignore: cast_nullable_to_non_nullable
 as bool,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
@@ -94,11 +94,7 @@ $SimpleColorCopyWith<$Res> get color {
 @override
 @pragma('vm:prefer-inline')
 $DunnoStatsModelCopyWith<$Res>? get stats {
-    if (_self.stats == null) {
-    return null;
-  }
-
-  return $DunnoStatsModelCopyWith<$Res>(_self.stats!, (value) {
+    return $DunnoStatsModelCopyWith<$Res>(_self.stats, (value) {
     return _then(_self.copyWith(stats: value));
   });
 }
@@ -337,11 +333,7 @@ $SimpleColorCopyWith<$Res> get color {
 @override
 @pragma('vm:prefer-inline')
 $DunnoStatsModelCopyWith<$Res>? get stats {
-    if (_self.stats == null) {
-    return null;
-  }
-
-  return $DunnoStatsModelCopyWith<$Res>(_self.stats!, (value) {
+    return $DunnoStatsModelCopyWith<$Res>(_self.stats, (value) {
     return _then(_self.copyWith(stats: value));
   });
 }

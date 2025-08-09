@@ -1,6 +1,4 @@
-import 'dart:math';
 
-import 'package:dunno/models/color_palette_model.dart';
 import 'package:dunno/models/simple_color_model.dart';
 import 'package:dunno/models/spinner_segment_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

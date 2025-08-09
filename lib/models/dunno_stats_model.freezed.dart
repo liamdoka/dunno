@@ -67,7 +67,7 @@ class _$DunnoStatsModelCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? createdTime = freezed,Object? lastEditTime = freezed,Object? lastSpinTime = freezed,Object? deletedTime = freezed,Object? spinCount = null,Object? editCount = null,}) {
   return _then(_self.copyWith(
-createdTime: freezed == createdTime ? _self.createdTime! : createdTime // ignore: cast_nullable_to_non_nullable
+createdTime: freezed == createdTime ? _self.createdTime : createdTime // ignore: cast_nullable_to_non_nullable
 as int?,lastEditTime: freezed == lastEditTime ? _self.lastEditTime : lastEditTime // ignore: cast_nullable_to_non_nullable
 as int?,lastSpinTime: freezed == lastSpinTime ? _self.lastSpinTime : lastSpinTime // ignore: cast_nullable_to_non_nullable
 as int?,deletedTime: freezed == deletedTime ? _self.deletedTime : deletedTime // ignore: cast_nullable_to_non_nullable

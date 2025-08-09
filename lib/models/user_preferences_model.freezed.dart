@@ -67,12 +67,12 @@ class _$UserPreferencesModelCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? appTheme = null,Object? appTint = null,Object? defaultConfetti = null,Object? confettiAmount = null,Object? defaultColorPalette = freezed,}) {
   return _then(_self.copyWith(
-id: freezed == id ? _self.id! : id // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,appTheme: null == appTheme ? _self.appTheme : appTheme // ignore: cast_nullable_to_non_nullable
 as ThemeMode,appTint: null == appTint ? _self.appTint : appTint // ignore: cast_nullable_to_non_nullable
 as SimpleColor,defaultConfetti: null == defaultConfetti ? _self.defaultConfetti : defaultConfetti // ignore: cast_nullable_to_non_nullable
 as String,confettiAmount: null == confettiAmount ? _self.confettiAmount : confettiAmount // ignore: cast_nullable_to_non_nullable
-as ConfettiAmount,defaultColorPalette: freezed == defaultColorPalette ? _self.defaultColorPalette! : defaultColorPalette // ignore: cast_nullable_to_non_nullable
+as ConfettiAmount,defaultColorPalette: freezed == defaultColorPalette ? _self.defaultColorPalette : defaultColorPalette // ignore: cast_nullable_to_non_nullable
 as ColorPaletteModel?,
   ));
 }
@@ -90,11 +90,7 @@ $SimpleColorCopyWith<$Res> get appTint {
 @override
 @pragma('vm:prefer-inline')
 $ColorPaletteModelCopyWith<$Res>? get defaultColorPalette {
-    if (_self.defaultColorPalette == null) {
-    return null;
-  }
-
-  return $ColorPaletteModelCopyWith<$Res>(_self.defaultColorPalette!, (value) {
+    return $ColorPaletteModelCopyWith<$Res>(_self.defaultColorPalette, (value) {
     return _then(_self.copyWith(defaultColorPalette: value));
   });
 }
@@ -313,11 +309,7 @@ $SimpleColorCopyWith<$Res> get appTint {
 @override
 @pragma('vm:prefer-inline')
 $ColorPaletteModelCopyWith<$Res>? get defaultColorPalette {
-    if (_self.defaultColorPalette == null) {
-    return null;
-  }
-
-  return $ColorPaletteModelCopyWith<$Res>(_self.defaultColorPalette!, (value) {
+    return $ColorPaletteModelCopyWith<$Res>(_self.defaultColorPalette, (value) {
     return _then(_self.copyWith(defaultColorPalette: value));
   });
 }
