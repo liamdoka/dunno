@@ -25,6 +25,8 @@ class DunnoScrollView extends StatefulWidget {
 class _DunnoScrollViewState extends State<DunnoScrollView> {
   late final ScrollController controller;
 
+  static const autoScrollDuration = Duration(milliseconds: 200);
+
   @override
   void initState() {
     super.initState();
@@ -37,9 +39,9 @@ class _DunnoScrollViewState extends State<DunnoScrollView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (controller.hasClients && widget.autoScroll) {
         final delta = widget.children.length - oldWidget.children.length;
-        final distance = 1000 * max(0, delta);
+        final distance = 64 * max(0, delta);
         if (distance > 0) {
-          controller.animateTo(distance.toDouble(), duration: const Duration(milliseconds: 2000), curve: Curves.ease);
+          controller.animateTo(distance.toDouble(), duration: autoScrollDuration, curve: Curves.ease);
         }
       }
     });

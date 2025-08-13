@@ -28,5 +28,5 @@ sealed class DunnoStatsModel with _$DunnoStatsModel {
 
   /// The last time the [parent] was interacted with.
   int get lastTime =>
-      [createdTime, ?lastSpinTime, ?lastEditTime, ?deletedTime].fold(0, max);
+      [createdTime, ?lastSpinTime, ?lastEditTime, ?deletedTime].reduce(max);
 }
