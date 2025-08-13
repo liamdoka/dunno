@@ -3,8 +3,8 @@ import 'package:dunno/data/spinner_list_provider.dart';
 import 'package:dunno/router.gr.dart';
 import 'package:dunno/screens/spinner_list/components/favorite_spinner_list.dart';
 import 'package:dunno/screens/spinner_list/components/recent_spinner_list.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
 class SpinnerListScreen extends ConsumerWidget {
@@ -15,7 +15,7 @@ class SpinnerListScreen extends ConsumerWidget {
     final allSpinners = ref.watch(allSpinnersProvider);
 
     return Container(
-      padding: const EdgeInsets.all(24.0),
+      padding: const EdgeInsets.all(24),
       child: Stack(
         children: [
           Positioned(
@@ -24,21 +24,18 @@ class SpinnerListScreen extends ConsumerWidget {
               child: FloatingActionButton.extended(
                   elevation: 2,
                   onPressed: () => context.router.push(EditSpinnerRoute()),
-                  icon: Icon(Icons.add),
-                  label: Text("New Spinner")
+                  icon: const Icon(Icons.add),
+                  label: const Text('New Spinner')
               )
           ),
-          allSpinners.isEmpty
-              ? Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          if (allSpinners.isEmpty) const Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Center(child: Text("Create a spinner and check back later!")),
+              Center(child: Text('Create a spinner and check back later!')),
               SizedBox.shrink()
             ],
-          )
-              : Column(
-            spacing: 48.0,
+          ) else const Column(
+            spacing: 48,
             mainAxisSize: MainAxisSize.min,
             children: [
               RecentSpinnerList(),

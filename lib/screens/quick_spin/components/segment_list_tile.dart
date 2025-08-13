@@ -7,20 +7,18 @@ import 'package:dunno/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class SegmentListTile extends StatefulWidget {
+
+  const SegmentListTile({
+    required this.segment, required this.color, super.key,
+    this.onDismiss,
+    this.onTapIncrease,
+    this.onTapDecrease,
+  });
   final SpinnerSegmentModel segment;
   final Color color;
   final VoidCallback? onDismiss;
   final VoidCallback? onTapIncrease;
   final VoidCallback? onTapDecrease;
-
-  const SegmentListTile({
-    super.key,
-    required this.segment,
-    required this.color,
-    this.onDismiss,
-    this.onTapIncrease,
-    this.onTapDecrease,
-  });
 
   @override
   State<SegmentListTile> createState() => _SegmentListTileState();
@@ -28,7 +26,7 @@ class SegmentListTile extends StatefulWidget {
 
 class _SegmentListTileState extends State<SegmentListTile> {
 
-  late final key = widget.key ?? ObjectKey(widget.segment);
+  late final Key key = widget.key ?? ObjectKey(widget.segment);
   static const colorTransitionDuration = Duration(milliseconds: 500);
   static const appearTransitionDuration = Duration(milliseconds: 200);
 
@@ -62,7 +60,7 @@ class _SegmentListTileState extends State<SegmentListTile> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Text(widget.segment.title,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w600,
@@ -73,7 +71,6 @@ class _SegmentListTileState extends State<SegmentListTile> {
             if (widget.onTapIncrease != null && widget.onTapDecrease != null)
               Row(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   IconButton(
                     onPressed: widget.onTapDecrease,
@@ -82,7 +79,6 @@ class _SegmentListTileState extends State<SegmentListTile> {
                         : Icons.delete_rounded,
                         color: textColor
                     ),
-                    padding: null,
                   ),
                   Text(widget.segment.weight.toString(),
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -93,7 +89,6 @@ class _SegmentListTileState extends State<SegmentListTile> {
                   IconButton(
                     onPressed: widget.onTapIncrease,
                     icon: Icon(Icons.add_circle, color: textColor,),
-                    padding: null,
                   )
                 ],
               )
@@ -103,7 +98,6 @@ class _SegmentListTileState extends State<SegmentListTile> {
                 icon: Icon(Icons.remove,
                     color: textColor
                 ),
-                padding: null,
               ),
           ],
         ),

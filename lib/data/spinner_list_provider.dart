@@ -2,12 +2,12 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:dunno/data/user_stats_provider.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:hive_ce_flutter/hive_flutter.dart';
-import 'package:hive_ce_flutter/adapters.dart';
 import 'package:dunno/hive/hive_adapters.dart';
 import 'package:dunno/models/spinner_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_ce_flutter/adapters.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'spinner_list_provider.g.dart';
 
@@ -25,27 +25,21 @@ List<SpinnerModel> recentSpinners(Ref ref) {
 
 /// Returns a list spinners that have been `favorited`.
 @riverpod
-List<SpinnerModel> favoriteSpinners(Ref ref) {
-  return ref.watch(spinnerListProvider)
+List<SpinnerModel> favoriteSpinners(Ref ref) => ref.watch(spinnerListProvider)
       .where((spinner) => spinner.isFavorite && spinner.isNotDeleted)
       .toList(growable: false);
-}
 
 /// Returns a list of deleted spinners.
 @riverpod
-List<SpinnerModel> deletedSpinners(Ref ref) {
-  return ref.watch(spinnerListProvider)
+List<SpinnerModel> deletedSpinners(Ref ref) => ref.watch(spinnerListProvider)
       .where((spinner) => spinner.isDeleted)
       .toList(growable: false);
-}
 
 /// Returns a list of all spinners (that aren't deleted).
 @riverpod
-List<SpinnerModel> allSpinners(Ref ref) {
-  return ref.watch(spinnerListProvider)
+List<SpinnerModel> allSpinners(Ref ref) => ref.watch(spinnerListProvider)
       .where((spinner) => spinner.isNotDeleted)
       .toList(growable: false);
-}
 
 /// Returns a list of spinners with the highest spin count.
 @riverpod
@@ -70,27 +64,26 @@ List<SpinnerModel> mostEdits(Ref ref) {
 
 @riverpod
 class SpinnerList extends _$SpinnerList {
-  final box = Hive.box<SpinnerModel>(HiveBox.spinners.name);
+  final Box<SpinnerModel> _box = Hive.box<SpinnerModel>(HiveBox.spinners.name);
 
   @override
   List<SpinnerModel> build() {
-    final stream = box.watch().listen((_) {
-      print("something happened in the box (robbie rich)");
-      state = List.from(box.values);
+    final stream = _box.watch().listen((_) {
+      state = List.from(_box.values);
     });
 
     ref.onDispose(stream.cancel);
 
-    return List.from(box.values);
+    return List.from(_box.values);
   }
 
   /// Saves the spinner to the device storage
-  void saveSpinner(SpinnerModel spinner) async {
-    if (box.get(spinner.id) == null) {
+  void saveSpinner(SpinnerModel spinner) {
+    if (_box.get(spinner.id) == null) {
       ref.read(userStatsProvider.notifier).logSpinnerCreated();
     }
 
-    box.put(spinner.id, spinner.copyWith(
+    _box.put(spinner.id, spinner.copyWith(
       // have to do this because it maintains shallow copies of the screen state.
       segments: List.from(spinner.segments),
       stats: spinner.stats.copyWith(
@@ -98,24 +91,21 @@ class SpinnerList extends _$SpinnerList {
           lastEditTime: DateTime.now().millisecondsSinceEpoch
       ),
     ));
-    ref.notifyListeners();
   }
 
   /// Removes the spinner from device storage.
-  void deleteSpinnerFromDevice(String id) async {
-    await box.delete(id);
-    ref.notifyListeners();
+  void deleteSpinnerFromDevice(String id) {
+    _box.delete(id);
   }
 
   /// Removes all deleted spinners from device storage.
-  void clearDeletedSpinners() async {
+  void clearDeletedSpinners() {
     final List<String> ids = state
         .where((spinner) => spinner.isDeleted)
         .map((spinner) => spinner.id)
         .toList();
 
-    await box.deleteAll(ids);
-    ref.notifyListeners();
+    _box.deleteAll(ids);
   }
 
   /// Mark the spinner as deleted
@@ -126,11 +116,9 @@ class SpinnerList extends _$SpinnerList {
     // track the stats for the user.
     ref.read(userStatsProvider.notifier).logSpinnerDeleted();
 
-    box.put(spinner.id, spinner.copyWith.stats!(
+    _box.put(spinner.id, spinner.copyWith.stats!(
       deletedTime: DateTime.now().millisecondsSinceEpoch
     ));
-
-    ref.notifyListeners();
   }
 
   /// Toggles the `isFavorite` status
@@ -139,11 +127,9 @@ class SpinnerList extends _$SpinnerList {
 
     if (spinner == null) return;
 
-    box.put(spinner.id, spinner.copyWith(
+    _box.put(spinner.id, spinner.copyWith(
         isFavorite: !spinner.isFavorite
     ));
-
-    ref.notifyListeners();
   }
 
   /// Update the stats for spinning.
@@ -161,7 +147,6 @@ class SpinnerList extends _$SpinnerList {
       spinCount: spinner.stats.spinCount + 1
     );
 
-    box.put(spinner.id, updatedSpinner);
-    ref.notifyListeners();
+    _box.put(spinner.id, updatedSpinner);
   }
 }

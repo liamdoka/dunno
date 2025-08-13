@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dunno/constants/numbers.dart';
 import 'package:dunno/hive/hive_adapters.dart';
 import 'package:dunno/models/color_palette_model.dart';
@@ -11,24 +13,27 @@ part 'user_preferences_provider.g.dart';
 
 @riverpod
 class UserPreferences extends _$UserPreferences {
-  final box = Hive.box<UserPreferencesModel>(HiveBox.userPreferences.name);
+  final Box<UserPreferencesModel> _box = Hive.box<UserPreferencesModel>(
+    HiveBox.userPreferences.name,
+  );
 
   @override
   UserPreferencesModel build() {
-    final stream = box.watch().listen((_) {
-      state = box.values.firstOrNull ?? UserPreferencesModel(
-        defaultColorPalette: DunnoColorPalettes.material
-      );
+    final stream = _box.watch().listen((_) {
+      state =
+          _box.values.firstOrNull ??
+          UserPreferencesModel(
+            defaultColorPalette: DunnoColorPalettes.material,
+          );
     });
 
     ref.onDispose(stream.cancel);
 
-    return box.values.firstOrNull ?? UserPreferencesModel(
-      defaultColorPalette: DunnoColorPalettes.material,
-    );
+    return _box.values.firstOrNull ??
+        UserPreferencesModel(defaultColorPalette: DunnoColorPalettes.material);
   }
 
-  void setThemeMode(Set<ThemeMode> themes) {
+  Future<void> setThemeMode(Set<ThemeMode> themes) async {
     final theme = themes.firstOrNull;
     if (theme == null) return;
 
@@ -61,10 +66,10 @@ class UserPreferences extends _$UserPreferences {
   }
 
   void save() {
-    if (box.isEmpty) {
-      box.put(0, state);
+    if (_box.isEmpty) {
+      unawaited(_box.put(0, state));
     } else {
-      box.putAt(0, state);
+      unawaited(_box.putAt(0, state));
     }
   }
 }

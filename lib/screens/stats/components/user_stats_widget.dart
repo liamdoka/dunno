@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UserStatsWidget extends ConsumerWidget {
-  final GlobalKey<ConfettiEmitterState> emitterKey;
 
-  const UserStatsWidget({super.key, required this.emitterKey});
+  const UserStatsWidget({required this.emitterKey, super.key});
+  final GlobalKey<ConfettiEmitterState> emitterKey;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,16 +20,16 @@ class UserStatsWidget extends ConsumerWidget {
         0
     );
 
-    return AppearanceSettingsPanel(title: "Your totals",
+    return AppearanceSettingsPanel(title: 'Your totals',
       children: [
         Row(
           spacing: 8,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            UserStatsTile(title: "spins", value: stats.totalSpins.toReadable()),
-            UserStatsTile(title: "spinners", value: stats.spinnersCreatedCount.toReadable()),
+            UserStatsTile(title: 'spins', value: stats.totalSpins.toReadable()),
+            UserStatsTile(title: 'spinners', value: stats.spinnersCreatedCount.toReadable()),
             UserStatsTile(
-                title: "confetti bits",
+                title: 'confetti bits',
                 value: stats.confettiCount.toReadable(),
                 onTap: () {
                   final confetti = ref.read(userPreferencesProvider).defaultConfetti;
@@ -44,16 +44,14 @@ class UserStatsWidget extends ConsumerWidget {
 }
 
 class UserStatsTile extends StatelessWidget {
+
+  const UserStatsTile({required this.title, required this.value, super.key, this.onTap});
   final String title;
   final String value;
   final VoidCallback? onTap;
 
-  const UserStatsTile({super.key, required this.title, required this.value, this.onTap});
-
   @override
-  Widget build(BuildContext context) {
-    return Flexible(
-      flex: 1,
+  Widget build(BuildContext context) => Flexible(
       child: AspectRatio(
         aspectRatio: 1,
         child: Material(
@@ -77,5 +75,4 @@ class UserStatsTile extends StatelessWidget {
         ),
       ),
     );
-  }
 }

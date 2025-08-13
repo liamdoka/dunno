@@ -17,7 +17,7 @@ class MostSpinsList extends ConsumerWidget {
     final spinners = ref.watch(mostSpinsProvider);
 
     return AppearanceSettingsPanel(
-      title: "Most Spun",
+      title: 'Most Spun',
       children: spinners
           .mapIndexed((index, spinner) => SpinCountTile(index: index, spinner: spinner))
           .toList(),
@@ -26,14 +26,13 @@ class MostSpinsList extends ConsumerWidget {
 }
 
 class SpinCountTile extends StatelessWidget {
+
+  const SpinCountTile({required this.spinner, required this.index, super.key});
   final SpinnerModel spinner;
   final int index;
 
-  const SpinCountTile({super.key, required this.spinner, required this.index});
-
   @override
-  Widget build(BuildContext context) {
-    return Material(
+  Widget build(BuildContext context) => Material(
       borderRadius: insetBorderRadius,
       clipBehavior: Clip.hardEdge,
       child: ListTile(
@@ -46,9 +45,8 @@ class SpinCountTile extends StatelessWidget {
           ),
         ),
         tileColor: Theme.of(context).colorScheme.onPrimary,
-        trailing: Text("${spinner.stats.spinCount} spins"),
+        trailing: Text('${spinner.stats.spinCount} spins'),
         onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
       ),
     );
-  }
 }

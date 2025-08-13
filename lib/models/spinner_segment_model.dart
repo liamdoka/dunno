@@ -18,4 +18,4 @@ sealed class SpinnerSegmentModel with _$SpinnerSegmentModel {
 }
 
 
-// TODO: Add "wins" for segments
+// TODO(liamdoka): Add "wins" for segments

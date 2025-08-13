@@ -18,14 +18,14 @@ class DeletedSpinnersScreen extends ConsumerWidget {
 
     return DunnoScaffold(
       child: Column(
-        spacing: 24.0,
+        spacing: 24,
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
               Text(
-                "Deleted Spinners",
+                'Deleted Spinners',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
@@ -35,7 +35,7 @@ class DeletedSpinnersScreen extends ConsumerWidget {
             Flexible(
               child: ListView.separated(
                 itemCount: deletedSpinners.length,
-                separatorBuilder: (_, _) => const SizedBox(height: 8.0),
+                separatorBuilder: (_, _) => const SizedBox(height: 8),
                 clipBehavior: Clip.none,
                 itemBuilder: (context, index) {
                   final spinner = deletedSpinners[index];
@@ -44,7 +44,10 @@ class DeletedSpinnersScreen extends ConsumerWidget {
                     color: palette.forIndex(index),
                     dismissBackground: Row(
                       children: [
-                        Icon(Icons.delete_forever_rounded, color: Theme.of(context).colorScheme.error),
+                        Icon(
+                          Icons.delete_forever_rounded,
+                          color: Theme.of(context).colorScheme.error,
+                        ),
                       ],
                     ),
                     onDismiss: (_) => ref
@@ -57,9 +60,9 @@ class DeletedSpinnersScreen extends ConsumerWidget {
               ),
             )
           else
-            Expanded(
+            const Expanded(
               child: Center(
-                child: Text("Deleted spinners will end up here..."),
+                child: Text('Deleted spinners will end up here...'),
               ),
             ),
 
@@ -68,7 +71,10 @@ class DeletedSpinnersScreen extends ConsumerWidget {
               onPressed: ref
                   .read(spinnerListProvider.notifier)
                   .clearDeletedSpinners,
-              child: Text("Empty bin", style: TextStyle(color: Theme.of(context).colorScheme.error)),
+              child: Text(
+                'Empty bin',
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
             ),
         ],
       ),

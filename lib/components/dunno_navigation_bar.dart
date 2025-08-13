@@ -15,26 +15,24 @@ class DunnoNavigationBar extends StatelessWidget {
       labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
       selectedIndex: tabsRouter.activeIndex,
       onDestinationSelected: tabsRouter.setActiveIndex,
-      destinations: [
+      destinations: const [
         NavigationDestination(
           icon: Icon(Icons.home_rounded, size: iconSize),
-          label: "Home",
+          label: 'Home',
         ),
         NavigationDestination(
           icon: Icon(Icons.play_circle_fill_rounded, size: iconSize),
-          label: "Quick Spin",
+          label: 'Quick Spin',
         ),
         NavigationDestination(
           icon: Icon(Icons.bar_chart, size: iconSize),
-          label: "Stats",
+          label: 'Stats',
         ),
         NavigationDestination(
           icon: Icon(Icons.person_rounded, size: iconSize),
-          label: "Account",
+          label: 'Account',
         ),
       ],
     );
   }
-
-
 }

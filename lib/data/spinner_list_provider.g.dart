@@ -25,7 +25,7 @@ final recentSpinnersProvider = AutoDisposeProvider<List<SpinnerModel>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef RecentSpinnersRef = AutoDisposeProviderRef<List<SpinnerModel>>;
-String _$favoriteSpinnersHash() => r'1cab0b9571e53a5ac58777b52b7e448bded524c5';
+String _$favoriteSpinnersHash() => r'e21b713d24e29708ffa216ac12b7ac36a4347a9c';
 
 /// Returns a list spinners that have been `favorited`.
 ///
@@ -45,7 +45,7 @@ final favoriteSpinnersProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef FavoriteSpinnersRef = AutoDisposeProviderRef<List<SpinnerModel>>;
-String _$deletedSpinnersHash() => r'13f8139576a4a21d32147be232780ccef4d09057';
+String _$deletedSpinnersHash() => r'c53f46cf7481e91809238ae8320d1735c5d6cbf1';
 
 /// Returns a list of deleted spinners.
 ///
@@ -65,7 +65,7 @@ final deletedSpinnersProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef DeletedSpinnersRef = AutoDisposeProviderRef<List<SpinnerModel>>;
-String _$allSpinnersHash() => r'30e883f70ea2dbac1fc4c2f8ba306ae821dedbc4';
+String _$allSpinnersHash() => r'92c23807b21433c1c6e342e7e26c06778a64fade';
 
 /// Returns a list of all spinners (that aren't deleted).
 ///
@@ -122,7 +122,7 @@ final mostEditsProvider = AutoDisposeProvider<List<SpinnerModel>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef MostEditsRef = AutoDisposeProviderRef<List<SpinnerModel>>;
-String _$spinnerListHash() => r'3197f364c7ce767a01f7b0394331fc701e33b741';
+String _$spinnerListHash() => r'ecff03ceb371efa701f6c940c561726b649e613b';
 
 /// See also [SpinnerList].
 @ProviderFor(SpinnerList)

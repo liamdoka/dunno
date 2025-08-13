@@ -11,10 +11,10 @@ import 'package:flutter/physics.dart';
 import 'package:flutter/scheduler.dart';
 
 class Spinner extends StatefulWidget {
+
+  const Spinner({required this.segments, super.key, this.onComplete});
   final List<SpinnerSegmentModel> segments;
   final VoidCallback? onComplete;
-
-  const Spinner({super.key, required this.segments, this.onComplete});
 
   @override
   State<Spinner> createState() => _SpinnerState();
@@ -94,9 +94,8 @@ class _SpinnerState extends State<Spinner> with SingleTickerProviderStateMixin {
                   Icons.arrow_drop_down_rounded,
                   size: AppNumbers.listTileHeight,
                   color: Theme.of(context).colorScheme.error,
-                  shadows: [
+                  shadows: const [
                     Shadow(
-                      color: Colors.black,
                       offset: Offset(0, 1),
                       blurRadius: 1,
                     ),
@@ -106,16 +105,16 @@ class _SpinnerState extends State<Spinner> with SingleTickerProviderStateMixin {
             ),
           ],
         ),
-        FilledButton(onPressed: spin, child: Text("Spin!")),
+        FilledButton(onPressed: spin, child: const Text('Spin!')),
       ],
     );
   }
 }
 
 class SpinnerPainter extends CustomPainter {
-  final List<SpinnerSegmentModel> segments;
 
   const SpinnerPainter({required this.segments});
+  final List<SpinnerSegmentModel> segments;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -130,7 +129,7 @@ class SpinnerPainter extends CustomPainter {
     final arcPerUnit = 2 * math.pi / segmentWeights;
 
     var traversedWeight = 0;
-    for (int i = 0; i < segments.length; i++) {
+    for (var i = 0; i < segments.length; i++) {
       final segment = segments[i];
 
       final color = segment.color.toColor();
@@ -167,15 +166,18 @@ class SpinnerPainter extends CustomPainter {
           fontSize: 14,
         ),
       );
-      textPainter.text = textSpan;
-      textPainter.layout();
+      textPainter
+        ..text = textSpan
+        ..layout();
 
       final labelX = center.dx + (radius * 0.6) * math.cos(labelAngle);
       final labelY = center.dy + (radius * 0.6) * math.sin(labelAngle);
 
-      canvas.save();
-      canvas.translate(labelX, labelY);
-      canvas.rotate(labelAngle + math.pi / 2);
+      canvas
+        ..save()
+        ..translate(labelX, labelY)
+        ..rotate(labelAngle + math.pi / 2);
+
       textPainter.paint(
         canvas,
         Offset(-textPainter.width / 2, -textPainter.height / 2),
@@ -188,8 +190,9 @@ class SpinnerPainter extends CustomPainter {
       ..style = PaintingStyle.fill
       ..color = Colors.black;
 
-    canvas.drawCircle(center, 8, x);
-    canvas.restore();
+    canvas
+      ..drawCircle(center, 8, x)
+      ..restore();
   }
 
   @override

@@ -9,32 +9,30 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return DunnoConstraints(
-      child: AutoTabsRouter(
-        routes: [
-          SpinnerListRoute(),
-          QuickSpinRoute(),
-          StatsRoute(),
-          AccountRoute()
-        ],
-        homeIndex: 0,
-        builder: (context, child) {
-          return Scaffold(
-            appBar: AppBar(
-              forceMaterialTransparency: true,
-              centerTitle: true,
-              title: Text("Dunno",
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-            ),
-            body: child,
-      
-            // `const` here prevents rebuilds, who would have thought.
-            bottomNavigationBar: DunnoNavigationBar()
-          );
-        },
+  Widget build(BuildContext context) => DunnoConstraints(
+    child: AutoTabsRouter(
+      routes: [
+        const SpinnerListRoute(),
+        const QuickSpinRoute(),
+        StatsRoute(),
+        const AccountRoute(),
+      ],
+      homeIndex: 0,
+      builder: (context, child) => Scaffold(
+        appBar: AppBar(
+          forceMaterialTransparency: true,
+          centerTitle: true,
+          title: Text(
+            'Dunno',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+        ),
+        body: child,
+
+        // `const` here prevents rebuilds, who would have thought.
+        // ignore: prefer_const_constructors
+        bottomNavigationBar: DunnoNavigationBar(),
       ),
-    );
-  }
+    ),
+  );
 }

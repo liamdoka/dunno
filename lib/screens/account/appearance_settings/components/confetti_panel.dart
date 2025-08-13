@@ -5,17 +5,16 @@ import 'package:dunno/constants/numbers.dart';
 import 'package:dunno/constants/sizes.dart';
 import 'package:dunno/data/user_preferences_provider.dart';
 import 'package:dunno/models/user_preferences_model.dart';
+import 'package:dunno/screens/account/appearance_settings/components/appearance_settings_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'appearance_settings_panel.dart';
-
 class ConfettiPanel extends ConsumerStatefulWidget {
+
+  const ConfettiPanel({required this.emitterKey, required this.emitterOffset, super.key});
   final GlobalKey<ConfettiEmitterState> emitterKey;
   final Offset emitterOffset;
-
-  const ConfettiPanel({super.key, required this.emitterKey, required this.emitterOffset});
 
   @override
   ConsumerState<ConfettiPanel> createState() => _ConfettiPanelState();
@@ -43,7 +42,7 @@ class _ConfettiPanelState extends ConsumerState<ConfettiPanel> {
     final preferences = ref.watch(userPreferencesProvider);
 
     return AppearanceSettingsPanel(
-      title: "Confetti",
+      title: 'Confetti',
       children: [
         Row(
           spacing: 12,
@@ -51,14 +50,13 @@ class _ConfettiPanelState extends ConsumerState<ConfettiPanel> {
           crossAxisAlignment: CrossAxisAlignment.baseline,
           children: [
             Flexible(
-              flex: 1,
               child: TextField(
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Theme.of(
                     context,
                   ).colorScheme.surfaceContainerLow,
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: defaultBorderRadius,
                   ),
                 ),
@@ -72,7 +70,6 @@ class _ConfettiPanelState extends ConsumerState<ConfettiPanel> {
               ),
             ),
             Flexible(
-              flex: 1,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -86,8 +83,8 @@ class _ConfettiPanelState extends ConsumerState<ConfettiPanel> {
                         );
                       }
                     },
-                    label: Text("Test"),
-                    icon: Icon(Icons.celebration_rounded),
+                    label: const Text('Test'),
+                    icon: const Icon(Icons.celebration_rounded),
                   ),
                 ],
               ),
@@ -99,7 +96,7 @@ class _ConfettiPanelState extends ConsumerState<ConfettiPanel> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              "Amount",
+              'Amount',
               style: Theme.of(context).textTheme.labelLarge,
             ),
             Row(
@@ -122,18 +119,18 @@ class _ConfettiPanelState extends ConsumerState<ConfettiPanel> {
                             .setConfettiAmount(value);
                       }
                     },
-                    segments: [
+                    segments: const [
                       ButtonSegment(
                         value: ConfettiAmount.low,
-                        label: Text("Low"),
+                        label: Text('Low'),
                       ),
                       ButtonSegment(
                         value: ConfettiAmount.medium,
-                        label: Text("Medium"),
+                        label: Text('Medium'),
                       ),
                       ButtonSegment(
                         value: ConfettiAmount.high,
-                        label: Text("High"),
+                        label: Text('High'),
                       ),
                       ButtonSegment(
                         value: ConfettiAmount.ridiculous,

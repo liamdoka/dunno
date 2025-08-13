@@ -11,33 +11,31 @@ part 'color_palette_edit_provider.g.dart';
 
 @riverpod
 class ColorPaletteEdit extends _$ColorPaletteEdit {
-  final box = Hive.box<ColorPaletteModel>(HiveBox.colorPalettes.name);
+  final Box<ColorPaletteModel> _box = Hive.box<ColorPaletteModel>(
+    HiveBox.colorPalettes.name,
+  );
 
   @override
   ColorPaletteModel build(String id) {
-    final stream = box.watch(key: id).listen((_) {
-      state = box.get(id) ?? ColorPaletteModel(title: "Untitled", colors: []);
+    final stream = _box.watch(key: id).listen((_) {
+      state = _box.get(id) ?? ColorPaletteModel(title: 'Untitled', colors: []);
     });
 
     ref.onDispose(stream.cancel);
 
-    return box.get(id) ?? ColorPaletteModel(title: "Untitled", colors: []);
+    return _box.get(id) ?? ColorPaletteModel(title: 'Untitled', colors: []);
   }
 
   void toggleFavorite() {
-    state = state.copyWith(isFavorite: !(state.isFavorite));
+    state = state.copyWith(isFavorite: !state.isFavorite);
   }
 
   void setTitle(String title) {
-    state = state.copyWith(
-      title: title.isNotEmpty ? title: "Untitled"
-    );
+    state = state.copyWith(title: title.isNotEmpty ? title : 'Untitled');
   }
 
   void clearColors() {
-    state = state.copyWith(
-      colors: []
-    );
+    state = state.copyWith(colors: []);
   }
 
   void addColor(Color color) {
@@ -47,18 +45,16 @@ class ColorPaletteEdit extends _$ColorPaletteEdit {
 
   void deleteColor(int index) {
     state = state.copyWith(
-      colors: state.colors
-          .whereNotIndexed((idx, _) => index == idx)
-          .toList()
+      colors: state.colors.whereNotIndexed((idx, _) => index == idx).toList(),
     );
   }
 
-  void save() {
+  Future<void> save() async {
     final newStats = state.stats.copyWith(
       editCount: state.stats.editCount + 1,
-      lastEditTime: DateTime.now().millisecondsSinceEpoch
+      lastEditTime: DateTime.now().millisecondsSinceEpoch,
     );
 
-    box.put(state.id, state);
+    await _box.put(state.id, state.copyWith(stats: newStats));
   }
 }

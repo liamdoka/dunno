@@ -5,10 +5,10 @@ import 'package:dunno/models/color_palette_model.dart';
 import 'package:dunno/models/spinner_model.dart';
 import 'package:dunno/models/user_preferences_model.dart';
 import 'package:dunno/models/user_stats_model.dart';
+import 'package:dunno/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
-import './router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,7 +37,6 @@ class MyApp extends ConsumerWidget {
 
     final lightTheme = ThemeData.from(
         colorScheme: ColorScheme.fromSeed(
-            brightness: Brightness.light,
             seedColor: preferences.appTint.toColor()
         ),
         useMaterial3: true

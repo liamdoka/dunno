@@ -6,7 +6,7 @@ part of 'color_palette_edit_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$colorPaletteEditHash() => r'cc1b2b33765beb6134cad1bdb6c6a788b71a5c55';
+String _$colorPaletteEditHash() => r'37c821e7d37ec8a2714c2d240c7b6175235c650d';
 
 /// Copied from Dart SDK
 class _SystemHash {

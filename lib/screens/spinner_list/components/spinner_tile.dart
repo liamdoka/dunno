@@ -4,20 +4,17 @@ import 'package:dunno/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class SpinnerTile extends StatelessWidget {
+
+  const SpinnerTile({
+    required this.spinner, required this.color, required this.dismissBackground, super.key,
+    this.onDismiss,
+    this.onTap,
+  });
   final SpinnerModel spinner;
   final Color color;
   final Widget? dismissBackground;
   final DismissDirectionCallback? onDismiss;
   final VoidCallback? onTap;
-
-  const SpinnerTile({
-    super.key,
-    required this.spinner,
-    required this.color,
-    required this.dismissBackground,
-    this.onDismiss,
-    this.onTap,
-  });
 
   @override
   Widget build(BuildContext context) {

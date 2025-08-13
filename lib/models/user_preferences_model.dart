@@ -1,21 +1,18 @@
+import 'dart:math';
+
 import 'package:dunno/models/color_palette_model.dart';
 import 'package:dunno/models/simple_color_model.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'dart:math';
-
 import 'package:uuid/uuid.dart';
 
-part "user_preferences_model.freezed.dart";
-part "user_preferences_model.g.dart";
+part 'user_preferences_model.freezed.dart';
+part 'user_preferences_model.g.dart';
 
-final uuid = Uuid();
+const uuid = Uuid();
 
 @freezed
 sealed class UserPreferencesModel with _$UserPreferencesModel {
-
-  @override final String id;
-  @override final ColorPaletteModel defaultColorPalette;
 
   factory UserPreferencesModel({
     String? id,
@@ -32,6 +29,9 @@ sealed class UserPreferencesModel with _$UserPreferencesModel {
 
   factory UserPreferencesModel.fromJson(Map<String, dynamic> json) =>
       _$UserPreferencesModelFromJson(json);
+
+  @override final String id;
+  @override final ColorPaletteModel defaultColorPalette;
 }
 
 
@@ -41,9 +41,10 @@ enum ConfettiAmount {
   high(100, 200),
   ridiculous(500, 1000);
 
+  const ConfettiAmount(this.min, this.max);
+
   final int min;
   final int max;
-  const ConfettiAmount(this.min, this.max);
 
   int random(Random rand) => rand.nextInt(max - min + 1) + min;
 

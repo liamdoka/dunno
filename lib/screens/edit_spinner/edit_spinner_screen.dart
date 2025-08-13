@@ -7,17 +7,16 @@ import 'package:dunno/data/spinner_edit_provider.dart';
 import 'package:dunno/data/user_preferences_provider.dart';
 import 'package:dunno/models/spinner_segment_model.dart';
 import 'package:dunno/router.gr.dart';
+import 'package:dunno/screens/quick_spin/components/segment_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../quick_spin/components/segment_list_tile.dart';
-
 @RoutePage()
 class EditSpinnerScreen extends ConsumerStatefulWidget {
-  final String id;
 
-  const EditSpinnerScreen({super.key, this.id = ""});
+  const EditSpinnerScreen({super.key, this.id = ''});
+  final String id;
 
   @override
   ConsumerState<EditSpinnerScreen> createState() => _EditSpinnerScreenState();
@@ -85,13 +84,13 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
 
     return DunnoScaffold(
       appBar: AppBar(
-        leading: BackButton(),
+        leading: const BackButton(),
         centerTitle: true,
         forceMaterialTransparency: true,
-        title: Text(widget.id.isEmpty ? "Create Spinner" : "Edit Spinner"),
+        title: Text(widget.id.isEmpty ? 'Create Spinner' : 'Edit Spinner'),
         actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: TextButton(
               onPressed: () {
                 ref.read(editProvider.notifier).clearSegments();
@@ -100,7 +99,7 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
                 segmentsController.clear();
               },
               child: Text(
-                "Reset",
+                'Reset',
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
             ),
@@ -108,23 +107,23 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
         ],
       ),
       child: Column(
-        spacing: 16.0,
+        spacing: 16,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: SingleChildScrollView(
               child: Column(
-                spacing: 16.0,
+                spacing: 16,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // TITLE
                   TextField(
                     controller: titleController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: defaultBorderRadius,
                       ),
-                      hintText: "Title",
+                      hintText: 'Title',
                     ),
                     onChanged: ref.read(editProvider.notifier).setTitle,
                   ),
@@ -132,11 +131,11 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
                   // DESCRIPTION - Maybe remove
                   TextField(
                     controller: descriptionController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: defaultBorderRadius,
                       ),
-                      hintText: "Description",
+                      hintText: 'Description',
                     ),
                     minLines: 2,
                     maxLines: 2,
@@ -152,10 +151,10 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
                           controller: segmentsController,
                           textInputAction: TextInputAction.newline,
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderRadius: defaultBorderRadius,
                             ),
-                            hintText: "Add segments",
+                            hintText: 'Add segments',
                             suffixIcon: Container(
                               margin: const EdgeInsets.only(right: 3),
                               child: IconButton(
@@ -167,7 +166,7 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
                                   ),
                                 ),
                                 onPressed: addSegment,
-                                icon: Icon(Icons.add),
+                                icon: const Icon(Icons.add),
                               ),
                             ),
                           ),
@@ -178,7 +177,7 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
                   ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
-                    spacing: 8.0,
+                    spacing: 8,
                     children: editState.segments
                         .mapIndexed(
                           (index, segment) => SegmentListTile(
@@ -198,9 +197,9 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
                         .toList(),
                   ),
 
-                  // TODO some sort of color palette selection
+                  // TODOsome sort of color palette selection
 
-                  // TODO is evil
+                  // TODOis evil
                   Column(
                     spacing: 12,
                     mainAxisSize: MainAxisSize.min,
@@ -212,8 +211,8 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
                         }),
                         label: Text(
                           isAdvancedExpanded
-                              ? "Hide advanced options"
-                              : "Show advanced options",
+                              ? 'Hide advanced options'
+                              : 'Show advanced options',
                         ),
                         iconAlignment: IconAlignment.end,
                         icon: Icon(
@@ -240,23 +239,22 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
                     // if you want to go back and edit, use edit button duhhh
                     context.router.replace(SpinnerRoute(spinner: editState));
                   },
-            child: Text("Save and Spin"),
+            child: const Text('Save and Spin'),
           ),
         ],
       ),
     );
   }
 
-  Widget buildAdvancedOptions(String confettiHint) {
-    return Column(
+  Widget buildAdvancedOptions(String confettiHint) => Column(
       children: [
         Row(
           textBaseline: TextBaseline.alphabetic,
           crossAxisAlignment: CrossAxisAlignment.baseline,
-          spacing: 24.0,
+          spacing: 24,
           children: [
             Text(
-              "Confetti for the winner",
+              'Confetti for the winner',
               style: Theme.of(
                 context,
               ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -264,7 +262,7 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
             Expanded(
               child: TextField(
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(borderRadius: defaultBorderRadius),
+                  border: const OutlineInputBorder(borderRadius: defaultBorderRadius),
                   hintText: confettiHint,
                   hintStyle: TextStyle(
                     color: Colors.white.withValues(alpha: 0.5),
@@ -280,5 +278,4 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
         ),
       ],
     );
-  }
 }

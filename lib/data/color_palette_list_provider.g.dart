@@ -6,7 +6,7 @@ part of 'color_palette_list_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$colorPaletteListHash() => r'91866b61c94f1bc79db7a19327acf657bb60967a';
+String _$colorPaletteListHash() => r'24371b408e3599fffa024a8698c857b9eca67090';
 
 /// See also [ColorPaletteList].
 @ProviderFor(ColorPaletteList)

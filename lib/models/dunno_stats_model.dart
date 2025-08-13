@@ -8,8 +8,6 @@ part 'dunno_stats_model.g.dart';
 @freezed
 sealed class DunnoStatsModel with _$DunnoStatsModel {
 
-  @override final int createdTime;
-
   factory DunnoStatsModel({
     int? createdTime,
     int? lastEditTime,
@@ -26,7 +24,9 @@ sealed class DunnoStatsModel with _$DunnoStatsModel {
   factory DunnoStatsModel.fromJson(Map<String, dynamic> json) =>
       _$DunnoStatsModelFromJson(json);
 
-  /// The last time the [parent] was interacted with.
+  @override final int createdTime;
+
+  /// The last time the parent was interacted with.
   int get lastTime =>
       [createdTime, ?lastSpinTime, ?lastEditTime, ?deletedTime].reduce(max);
 }

@@ -1,10 +1,9 @@
 import 'package:dunno/constants/sizes.dart';
 import 'package:dunno/data/user_preferences_provider.dart';
+import 'package:dunno/screens/account/appearance_settings/components/appearance_settings_panel.dart';
 import 'package:dunno/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'appearance_settings_panel.dart';
 
 class DisplayPanel extends ConsumerWidget {
   const DisplayPanel({super.key});
@@ -14,7 +13,7 @@ class DisplayPanel extends ConsumerWidget {
     final preferences = ref.watch(userPreferencesProvider);
 
     return AppearanceSettingsPanel(
-      title: "Display",
+      title: 'Display',
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -30,18 +29,16 @@ class DisplayPanel extends ConsumerWidget {
                   context,
                 ).colorScheme.onPrimary,
               ),
-              segments: [
-                ButtonSegment(value: ThemeMode.light, label: Text("Light")),
-                ButtonSegment(value: ThemeMode.system, label: Text("System")),
-                ButtonSegment(value: ThemeMode.dark, label: Text("Dark")),
+              segments: const [
+                ButtonSegment(value: ThemeMode.light, label: Text('Light')),
+                ButtonSegment(value: ThemeMode.system, label: Text('System')),
+                ButtonSegment(value: ThemeMode.dark, label: Text('Dark')),
               ],
             ),
           ],
         ),
         Align(
-          alignment: Alignment.center,
           child: Wrap(
-            alignment: WrapAlignment.start,
             children: Colors.primaries
                 .map(
                   (color) => AppThemeTintButton(
@@ -61,20 +58,16 @@ class DisplayPanel extends ConsumerWidget {
 }
 
 class AppThemeTintButton extends StatelessWidget {
+
+  const AppThemeTintButton({
+    required this.onTap, required this.color, required this.isSelected, super.key,
+  });
   final VoidCallback onTap;
   final Color color;
   final bool isSelected;
 
-  const AppThemeTintButton({
-    super.key,
-    required this.onTap,
-    required this.color,
-    required this.isSelected,
-  });
-
   @override
-  Widget build(BuildContext context) {
-    return InkWell(
+  Widget build(BuildContext context) => InkWell(
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.all(4),
@@ -92,5 +85,4 @@ class AppThemeTintButton extends StatelessWidget {
         ),
       ),
     );
-  }
 }

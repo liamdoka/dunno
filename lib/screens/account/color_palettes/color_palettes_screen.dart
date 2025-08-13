@@ -25,23 +25,22 @@ class ColorPalettesScreen extends ConsumerWidget {
       child: Stack(
         children: [
           Column(
-            spacing: 24.0,
+            spacing: 24,
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 children: [
                   Text(
-                    "All Color Palettes",
+                    'All Color Palettes',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ],
               ),
               Flexible(
-                flex: 1,
                 child: ListView.separated(
                   itemCount: colorPalettes.length,
-                  separatorBuilder: (_, _) => const SizedBox(height: 8.0),
+                  separatorBuilder: (_, _) => const SizedBox(height: 8),
                   clipBehavior: Clip.none,
                   itemBuilder: (context, index) {
                     final palette = colorPalettes[index];
@@ -60,10 +59,10 @@ class ColorPalettesScreen extends ConsumerWidget {
           Align(
             alignment: Alignment.bottomRight,
             child: FloatingActionButton.extended(
-              heroTag: "AddColorPalette",
+              heroTag: 'AddColorPalette',
               onPressed: () => context.router.push(EditColorPaletteRoute()),
-              label: Text("New color palette"),
-              icon: Icon(Icons.add),
+              label: const Text('New color palette'),
+              icon: const Icon(Icons.add),
             ),
           ),
         ],
@@ -73,66 +72,68 @@ class ColorPalettesScreen extends ConsumerWidget {
 }
 
 class ColorPaletteTile extends StatelessWidget {
+  const ColorPaletteTile({
+    required this.palette,
+    this.onTap,
+    this.isDefault = false,
+    super.key,
+  });
+
   final ColorPaletteModel palette;
   final VoidCallback? onTap;
   final bool isDefault;
 
-  const ColorPaletteTile({
-    super.key,
-    required this.palette,
-    this.onTap,
-    this.isDefault = false,
-  });
-
   @override
-  Widget build(BuildContext context) {
-    return Material(
-      elevation: 2,
+  Widget build(BuildContext context) => Material(
+    elevation: 2,
+    borderRadius: defaultBorderRadius,
+    clipBehavior: Clip.hardEdge,
+    child: InkWell(
+      onTap: onTap,
       borderRadius: defaultBorderRadius,
-      clipBehavior: Clip.hardEdge,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: defaultBorderRadius,
-        child: SizedBox(
-          height: AppNumbers.listTileHeight,
-          child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                // TODO: Default indicator, Title, EditButton,
-                Row(children: palette.colors.map(_buildSegment).toList()),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Row(
-                    spacing: 12,
-                    children: [
-                      if (isDefault)
-                        Container(
-                            decoration: BoxDecoration(
-                                color: Theme.of(context).scaffoldBackgroundColor,
-                                borderRadius: BorderRadius.circular(9999)
-                            ),
-                            child: Icon(Icons.stars_rounded, color: Colors.amber)),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        decoration: BoxDecoration(
-                          borderRadius: insetBorderRadius,
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                        ),
-                        child: Text(palette.title, style: TextStyle(
-                            fontWeight: FontWeight.bold
-                        )),
-                      )
-                    ],
+      child: SizedBox(
+        height: AppNumbers.listTileHeight,
+        child: Stack(
+          alignment: Alignment.centerLeft,
+          children: [
+            // TODO(liamdoka): Default indicator, Title, EditButton,
+            Row(children: palette.colors.map(_buildSegment).toList()),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                spacing: 12,
+                children: [
+                  if (isDefault)
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: BorderRadius.circular(9999),
+                      ),
+                      child: const Icon(
+                        Icons.stars_rounded,
+                        color: Colors.amber,
+                      ),
+                    ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: insetBorderRadius,
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                    ),
+                    child: Text(
+                      palette.title,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
 
-  Widget _buildSegment(SimpleColor color) {
-    return Flexible(flex: 1, child: Container(color: color.toColor()));
-  }
+  Widget _buildSegment(SimpleColor color) =>
+      Flexible(child: Container(color: color.toColor()));
 }

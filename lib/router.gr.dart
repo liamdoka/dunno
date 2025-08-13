@@ -144,7 +144,7 @@ class EditColorPaletteRoute
     extends _i13.PageRouteInfo<EditColorPaletteRouteArgs> {
   EditColorPaletteRoute({
     _i14.Key? key,
-    String id = "",
+    String id = '',
     List<_i13.PageRouteInfo>? children,
   }) : super(
          EditColorPaletteRoute.name,
@@ -166,7 +166,7 @@ class EditColorPaletteRoute
 }
 
 class EditColorPaletteRouteArgs {
-  const EditColorPaletteRouteArgs({this.key, this.id = ""});
+  const EditColorPaletteRouteArgs({this.key, this.id = ''});
 
   final _i14.Key? key;
 
@@ -193,7 +193,7 @@ class EditColorPaletteRouteArgs {
 class EditSpinnerRoute extends _i13.PageRouteInfo<EditSpinnerRouteArgs> {
   EditSpinnerRoute({
     _i14.Key? key,
-    String id = "",
+    String id = '',
     List<_i13.PageRouteInfo>? children,
   }) : super(
          EditSpinnerRoute.name,
@@ -215,7 +215,7 @@ class EditSpinnerRoute extends _i13.PageRouteInfo<EditSpinnerRouteArgs> {
 }
 
 class EditSpinnerRouteArgs {
-  const EditSpinnerRouteArgs({this.key, this.id = ""});
+  const EditSpinnerRouteArgs({this.key, this.id = ''});
 
   final _i14.Key? key;
 
@@ -289,12 +289,12 @@ class SpinnerListRoute extends _i13.PageRouteInfo<void> {
 /// [_i11.SpinnerScreen]
 class SpinnerRoute extends _i13.PageRouteInfo<SpinnerRouteArgs> {
   SpinnerRoute({
-    _i14.Key? key,
     required _i15.SpinnerModel spinner,
+    _i14.Key? key,
     List<_i13.PageRouteInfo>? children,
   }) : super(
          SpinnerRoute.name,
-         args: SpinnerRouteArgs(key: key, spinner: spinner),
+         args: SpinnerRouteArgs(spinner: spinner, key: key),
          initialChildren: children,
        );
 
@@ -304,32 +304,32 @@ class SpinnerRoute extends _i13.PageRouteInfo<SpinnerRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<SpinnerRouteArgs>();
-      return _i11.SpinnerScreen(key: args.key, spinner: args.spinner);
+      return _i11.SpinnerScreen(spinner: args.spinner, key: args.key);
     },
   );
 }
 
 class SpinnerRouteArgs {
-  const SpinnerRouteArgs({this.key, required this.spinner});
-
-  final _i14.Key? key;
+  const SpinnerRouteArgs({required this.spinner, this.key});
 
   final _i15.SpinnerModel spinner;
 
+  final _i14.Key? key;
+
   @override
   String toString() {
-    return 'SpinnerRouteArgs{key: $key, spinner: $spinner}';
+    return 'SpinnerRouteArgs{spinner: $spinner, key: $key}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! SpinnerRouteArgs) return false;
-    return key == other.key && spinner == other.spinner;
+    return spinner == other.spinner && key == other.key;
   }
 
   @override
-  int get hashCode => key.hashCode ^ spinner.hashCode;
+  int get hashCode => spinner.hashCode ^ key.hashCode;
 }
 
 /// generated route for

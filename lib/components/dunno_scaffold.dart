@@ -2,18 +2,17 @@ import 'package:dunno/components/dunno_constraints.dart';
 import 'package:flutter/material.dart';
 
 class DunnoScaffold extends StatelessWidget {
+
+  const DunnoScaffold({super.key, this.appBar, this.child});
   final PreferredSizeWidget? appBar;
   final Widget? child;
 
-  const DunnoScaffold({super.key, this.appBar, this.child});
-
   @override
-  Widget build(BuildContext context) {
-    return DunnoConstraints(
+  Widget build(BuildContext context) => DunnoConstraints(
       child: Scaffold(
           appBar: appBar ?? AppBar(
             forceMaterialTransparency: true,
-            leading: BackButton(),
+            leading: const BackButton(),
           ),
           body: Container(
               color: Theme.of(context).scaffoldBackgroundColor,
@@ -22,5 +21,4 @@ class DunnoScaffold extends StatelessWidget {
           ),
       ),
     );
-  }
 }

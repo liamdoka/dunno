@@ -7,20 +7,19 @@ import 'package:dunno/data/spinner_list_provider.dart';
 import 'package:dunno/data/user_preferences_provider.dart';
 import 'package:dunno/models/spinner_model.dart';
 import 'package:dunno/router.gr.dart';
+import 'package:dunno/screens/spinner/components/save_spinner_dialog.dart';
+import 'package:dunno/screens/spinner/components/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'components/save_spinner_dialog.dart';
-import 'components/spinner.dart';
 
 final rand = math.Random();
 
 @RoutePage()
 class SpinnerScreen extends ConsumerWidget {
-  final SpinnerModel spinner;
-  final GlobalKey<ConfettiEmitterState> emitterKey = GlobalKey<ConfettiEmitterState>();
+  SpinnerScreen({required this.spinner, super.key});
 
-  SpinnerScreen({super.key, required this.spinner});
+  final SpinnerModel spinner;
+  final emitterKey = GlobalKey<ConfettiEmitterState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,8 +32,8 @@ class SpinnerScreen extends ConsumerWidget {
 
     final emitterValue = spinnerState.confetti ?? defaultConfetti;
     final emitterOffset = Offset(
-        MediaQuery.of(context).size.width / 2,
-        MediaQuery.of(context).size.width / 3
+      MediaQuery.of(context).size.width / 2,
+      MediaQuery.of(context).size.width / 3,
     );
 
     return Scaffold(
@@ -43,10 +42,9 @@ class SpinnerScreen extends ConsumerWidget {
         leadingWidth: 80,
         leading: TextButton(
           onPressed: context.router.pop,
-          child: Text("Close",
-              style: TextStyle(
-                  color: Theme.of(context).colorScheme.error
-              )
+          child: Text(
+            'Close',
+            style: TextStyle(color: Theme.of(context).colorScheme.error),
           ),
         ),
       ),
@@ -63,13 +61,16 @@ class SpinnerScreen extends ConsumerWidget {
                 textAlign: TextAlign.center,
               ),
               Expanded(
-                  child: Spinner(
-                      segments: spinner.segments,
-                      onComplete: () {
-                        ref.read(spinnerListProvider.notifier).logSpin(spinner.id);
-                        emitterKey.currentState?.emitBurst(emitterValue, position: emitterOffset);
-                      }
-                  )
+                child: Spinner(
+                  segments: spinner.segments,
+                  onComplete: () async {
+                    ref.read(spinnerListProvider.notifier).logSpin(spinner.id);
+                    await emitterKey.currentState?.emitBurst(
+                      emitterValue,
+                      position: emitterOffset,
+                    );
+                  },
+                ),
               ),
 
               if (isSaved)
@@ -78,14 +79,12 @@ class SpinnerScreen extends ConsumerWidget {
                   children: [
                     ElevatedButton.icon(
                       onPressed: () {
-                        final notifier = ref.read(
-                          spinnerEditProvider(spinner.id).notifier,
-                        );
-                        notifier.toggleFavorite();
-                        notifier.save();
+                        ref.read(spinnerEditProvider(spinner.id).notifier)
+                          ..toggleFavorite()
+                          ..save();
                       },
                       label: Text(
-                        spinnerState.isFavorite ? "Favorited" : "Favorite",
+                        spinnerState.isFavorite ? 'Favorited' : 'Favorite',
                       ),
                       icon: Icon(
                         spinnerState.isFavorite
@@ -95,10 +94,12 @@ class SpinnerScreen extends ConsumerWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {
-                        context.router.replace(EditSpinnerRoute(id: spinner.id));
+                      onPressed: () async {
+                        await context.router.replace(
+                          EditSpinnerRoute(id: spinner.id),
+                        );
                       },
-                      child: Text("Edit spinner"),
+                      child: const Text('Edit spinner'),
                     ),
                   ],
                 )
@@ -106,16 +107,20 @@ class SpinnerScreen extends ConsumerWidget {
                 TextButton(
                   onPressed: spinner.isDeleted
                       ? () {
-                    ref.read(spinnerListProvider.notifier).saveSpinner(spinner);
-                    context.router.replaceAll([ SpinnerListRoute() ]);
-                  }
-                      : () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => SaveSpinnerDialog(spinner: spinner),
-                    );
-                  },
-                  child: Text("Save spinner"),
+                            ref.read(spinnerListProvider.notifier)
+                                .saveSpinner(spinner);
+                            context.router.replaceAll([
+                              const SpinnerListRoute(),
+                            ]);
+                        }
+                      : () async {
+                          await showDialog(
+                            context: context,
+                            builder: (context) =>
+                                SaveSpinnerDialog(spinner: spinner),
+                          );
+                        },
+                  child: const Text('Save spinner'),
                 ),
             ],
           ),

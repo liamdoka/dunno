@@ -6,7 +6,7 @@ class AppRouter extends RootStackRouter {
   static const defaultTransitionDuration = Duration(milliseconds: 200);
 
   @override
-  RouteType get defaultRouteType => RouteType.adaptive();
+  RouteType get defaultRouteType => const RouteType.adaptive();
 
   RouteType get slideBottom => RouteType.custom(
     transitionsBuilder: TransitionsBuilders.slideBottom,
@@ -24,7 +24,7 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
     AutoRoute(
       page: HomeRoute.page,
-      path: "/",
+      path: '/',
       children: [
         AutoRoute(page: SpinnerListRoute.page),
         AutoRoute(page: QuickSpinRoute.page),

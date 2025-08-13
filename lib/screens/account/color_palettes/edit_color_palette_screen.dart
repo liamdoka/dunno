@@ -10,9 +10,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
 class EditColorPaletteScreen extends ConsumerStatefulWidget {
-  final String id;
 
-  const EditColorPaletteScreen({super.key, this.id = ""});
+  const EditColorPaletteScreen({super.key, this.id = ''});
+  final String id;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -30,8 +30,8 @@ class _EditColorPaletteScreen extends ConsumerState<EditColorPaletteScreen> {
     super.initState();
 
     editProvider = colorPaletteEditProvider(widget.id);
-    final initialState = ref.read(editProvider);
 
+    final initialState = ref.read(editProvider);
     titleController = TextEditingController(text: initialState.title);
 
     final hex = (initialState.colors.lastOrNull?.toColor() ?? wheelColor).hex;
@@ -45,25 +45,24 @@ class _EditColorPaletteScreen extends ConsumerState<EditColorPaletteScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return DunnoScaffold(
+  Widget build(BuildContext context) => DunnoScaffold(
       appBar: AppBar(
-        leading: BackButton(),
+        leading: const BackButton(),
         centerTitle: true,
         forceMaterialTransparency: true,
         title: Text(
-          widget.id.isEmpty ? "Create Color Palette" : "Edit Color Palette",
+          widget.id.isEmpty ? 'Create Color Palette' : 'Edit Color Palette',
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: TextButton(
               onPressed: () {
                 ref.read(editProvider.notifier).clearColors();
                 titleController.clear();
               },
               child: Text(
-                "Reset",
+                'Reset',
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
             ),
@@ -71,22 +70,22 @@ class _EditColorPaletteScreen extends ConsumerState<EditColorPaletteScreen> {
         ],
       ),
       child: Column(
-        spacing: 16.0,
+        spacing: 16,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: SingleChildScrollView(
               child: Column(
-                spacing: 16.0,
+                spacing: 16,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   TextField(
                     controller: titleController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: defaultBorderRadius,
                       ),
-                      hintText: "Title",
+                      hintText: 'Title',
                     ),
                     onChanged: ref.read(editProvider.notifier).setTitle,
                   ),
@@ -97,11 +96,11 @@ class _EditColorPaletteScreen extends ConsumerState<EditColorPaletteScreen> {
                       //
                       TextField(
                         controller: colorHexController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: defaultBorderRadius,
                           ),
-                          hintText: "New color",
+                          hintText: 'New color',
                           prefixIcon: Icon(Icons.tag),
                         ),
                         onChanged: (value) {
@@ -138,5 +137,4 @@ class _EditColorPaletteScreen extends ConsumerState<EditColorPaletteScreen> {
         ],
       ),
     );
-  }
 }

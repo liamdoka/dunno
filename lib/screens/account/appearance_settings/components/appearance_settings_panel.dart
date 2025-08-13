@@ -2,25 +2,23 @@ import 'package:dunno/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
 class AppearanceSettingsPanel extends StatelessWidget {
+
+  const AppearanceSettingsPanel({
+    required this.title, super.key,
+    this.children,
+  });
   final String title;
   final List<Widget>? children;
 
-  const AppearanceSettingsPanel({
-    super.key,
-    this.children,
-    required this.title,
-  });
-
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12.0),
+  Widget build(BuildContext context) => Container(
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         borderRadius: defaultBorderRadius,
         color: Theme.of(context).colorScheme.primaryContainer,
       ),
       child: Column(
-        spacing: 12.0,
+        spacing: 12,
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -29,5 +27,4 @@ class AppearanceSettingsPanel extends StatelessWidget {
         ],
       ),
     );
-  }
 }

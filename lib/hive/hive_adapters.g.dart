@@ -118,10 +118,10 @@ class ColorPaletteModelAdapter extends TypeAdapter<ColorPaletteModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ColorPaletteModel(
-      id: fields[8] as String?,
-      stats: fields[10] as DunnoStatsModel?,
       title: fields[6] as String,
       colors: (fields[7] as List).cast<SimpleColor>(),
+      id: fields[8] as String?,
+      stats: fields[10] as DunnoStatsModel?,
       isFavorite: fields[9] == null ? false : fields[9] as bool,
     );
   }

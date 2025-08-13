@@ -12,16 +12,16 @@ part 'spinner_edit_provider.g.dart';
 
 @riverpod
 class SpinnerEdit extends _$SpinnerEdit {
-  final box = Hive.box<SpinnerModel>(HiveBox.spinners.name);
+  final Box<SpinnerModel> _box = Hive.box<SpinnerModel>(HiveBox.spinners.name);
 
   @override
   SpinnerModel build(String id) {
     // begin by providing only the stored spinner.
-    final stream = box.watch(key: id).listen((_) {
+    final stream = _box.watch(key: id).listen((_) {
       state =
-          box.get(id) ??
+          _box.get(id) ??
           SpinnerModel(
-            title: "Untitled Spinner",
+            title: 'Untitled Spinner',
             color: Colors.red.toSimpleColor(),
             segments: [],
           );
@@ -29,21 +29,21 @@ class SpinnerEdit extends _$SpinnerEdit {
 
     ref.onDispose(stream.cancel);
 
-    return box.get(id) ??
+    return _box.get(id) ??
         SpinnerModel(
-          title: "Untitled Spinner",
+          title: 'Untitled Spinner',
           color: Colors.red.toSimpleColor(),
           segments: [],
         );
   }
 
   void toggleFavorite() {
-    state = state.copyWith(isFavorite: !(state.isFavorite));
+    state = state.copyWith(isFavorite: !state.isFavorite);
   }
 
   void setTitle(String title) {
     state = state.copyWith(
-      title: title.isNotEmpty ? title : "Untitled Spinner",
+      title: title.isNotEmpty ? title : 'Untitled Spinner',
     );
   }
 
@@ -80,7 +80,7 @@ class SpinnerEdit extends _$SpinnerEdit {
     if (index < 0 || index >= state.segments.length) return;
     final segment = state.segments[index];
 
-    var newList = List<SpinnerSegmentModel>.from(state.segments);
+    final newList = List<SpinnerSegmentModel>.from(state.segments);
     newList[index] = segment.copyWith(weight: segment.weight + 1);
 
     state = state.copyWith(segments: newList);
@@ -92,14 +92,14 @@ class SpinnerEdit extends _$SpinnerEdit {
     final segment = state.segments[index];
     if (segment.weight == 1) return deleteSegment(index);
 
-    var newList = List<SpinnerSegmentModel>.from(state.segments);
+    final newList = List<SpinnerSegmentModel>.from(state.segments);
     newList[index] = segment.copyWith(weight: segment.weight - 1);
 
     state = state.copyWith(segments: newList);
   }
 
   /// Save the changes made to the spinner
-  void save() {
+  Future<void> save() async {
     // map colors for real
     final colorPalette = ref.read(userPreferencesProvider).defaultColorPalette;
     final newSegments = List<SpinnerSegmentModel>.from(
@@ -116,7 +116,7 @@ class SpinnerEdit extends _$SpinnerEdit {
         lastEditTime: DateTime.now().millisecondsSinceEpoch
     );
 
-    box.put(state.id, state.copyWith(
+    await _box.put(state.id, state.copyWith(
         segments: newSegments,
         stats: newStats
     ));

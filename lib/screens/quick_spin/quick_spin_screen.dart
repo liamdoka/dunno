@@ -7,10 +7,9 @@ import 'package:dunno/models/simple_color_model.dart';
 import 'package:dunno/models/spinner_model.dart';
 import 'package:dunno/models/spinner_segment_model.dart';
 import 'package:dunno/router.gr.dart';
+import 'package:dunno/screens/quick_spin/components/segment_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'components/segment_list_tile.dart';
 
 @RoutePage()
 class QuickSpinScreen extends ConsumerStatefulWidget {
@@ -56,28 +55,27 @@ class _QuickSpinScreenState extends ConsumerState<QuickSpinScreen> {
     final palette = ref.watch(userPreferencesProvider).defaultColorPalette;
 
     return Container(
-      clipBehavior: Clip.none,
-      padding: const EdgeInsets.all(24.0),
+      padding: const EdgeInsets.all(24),
       child: Column(
-        spacing: 12.0,
+        spacing: 12,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            "Quick Spin",
+            'Quick Spin',
             style: Theme.of(context).textTheme.titleMedium,
           ),
           Row(
-            spacing: 8.0,
+            spacing: 8,
             children: [
               Expanded(
                 child: TextField(
                     focusNode: focusNode,
                     textInputAction: TextInputAction.newline,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                           borderRadius: defaultBorderRadius,
                         ),
-                        hintText: "New segment",
+                        hintText: 'New segment',
                         suffixIcon: Container(
                           margin: const EdgeInsets.only(right: 3),
                           child: IconButton(
@@ -89,7 +87,7 @@ class _QuickSpinScreenState extends ConsumerState<QuickSpinScreen> {
                                 ),
                               ),
                               onPressed: addSegment,
-                              icon: Icon(Icons.add)),
+                              icon: const Icon(Icons.add)),
                         )
                     ),
                     controller: textController,
@@ -98,11 +96,9 @@ class _QuickSpinScreenState extends ConsumerState<QuickSpinScreen> {
               ),
             ],
           ),
-          segments.isEmpty
-              ? Expanded(
-            child: Center(child: Text("Add spinner segments above")),
-          )
-              : Expanded(
+          if (segments.isEmpty) const Expanded(
+            child: Center(child: Text('Add spinner segments above')),
+          ) else Expanded(
             child: DunnoScrollView(
               autoScroll: true,
               overlayHeight: 16,
@@ -115,8 +111,8 @@ class _QuickSpinScreenState extends ConsumerState<QuickSpinScreen> {
                   onDismiss: () =>
                       setState(() {
                         final newSegments =
-                        List<SpinnerSegmentModel>.from(segments);
-                        newSegments.removeAt(index);
+                        List<SpinnerSegmentModel>.from(segments)
+                        ..removeAt(index);
                         segments = newSegments;
                       }),
                 ),
@@ -130,7 +126,7 @@ class _QuickSpinScreenState extends ConsumerState<QuickSpinScreen> {
                 ? null
                 : () {
               final spinner = SpinnerModel(
-                title: "Quick Spin",
+                title: 'Quick Spin',
                 color: SimpleColor.red,
                 segments: segments
                     .mapIndexed(
@@ -142,9 +138,9 @@ class _QuickSpinScreenState extends ConsumerState<QuickSpinScreen> {
               );
               context.router.push(SpinnerRoute(spinner: spinner));
             },
-            label: Text("Go"),
+            label: const Text('Go'),
             iconAlignment: IconAlignment.end,
-            icon: Icon(Icons.arrow_right_alt_rounded),
+            icon: const Icon(Icons.arrow_right_alt_rounded),
           ),
         ],
       ),

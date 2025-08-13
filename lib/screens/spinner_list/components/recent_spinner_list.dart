@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:dunno/data/spinner_list_provider.dart';
 import 'package:dunno/data/user_preferences_provider.dart';
 import 'package:dunno/router.gr.dart';
-import './spinner_tile.dart';
+import 'package:dunno/screens/spinner_list/components/spinner_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,23 +19,21 @@ class RecentSpinnerList extends ConsumerWidget {
     final palette = ref.watch(userPreferencesProvider).defaultColorPalette;
 
     return Column(
-      spacing: 16.0,
+      spacing: 16,
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(
           children: [
-            Text("Recent Spinners",
+            Text('Recent Spinners',
                 style: Theme.of(context).textTheme.titleMedium
             ),
           ],
         ),
 
-        recentSpinners.isEmpty
-            ? Text("No recent spinners")
-            : Column(
+        if (recentSpinners.isEmpty) const Text('No recent spinners') else Column(
           mainAxisSize: MainAxisSize.min,
-          spacing: 8.0,
+          spacing: 8,
           children: recentSpinners.mapIndexed((index, spinner) => SpinnerTile(
               key: ValueKey(spinner.id),
               spinner: spinner,
@@ -53,10 +51,10 @@ class RecentSpinnerList extends ConsumerWidget {
 
         if (totalSpinnerCount > recentSpinners.length)
           TextButton.icon(
-              onPressed: () => context.router.push(AllSpinnersRoute()),
-              label: Text("All spinners"),
+              onPressed: () => context.router.push(const AllSpinnersRoute()),
+              label: const Text('All spinners'),
               iconAlignment: IconAlignment.end,
-              icon: Icon(Icons.arrow_right_alt_rounded)
+              icon: const Icon(Icons.arrow_right_alt_rounded)
           )
       ],
     );

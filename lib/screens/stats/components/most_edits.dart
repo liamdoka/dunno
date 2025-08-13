@@ -17,38 +17,39 @@ class MostEditsList extends ConsumerWidget {
     final spinners = ref.watch(mostEditsProvider);
 
     return AppearanceSettingsPanel(
-      title: "Most Edits",
+      title: 'Most Edits',
       children: spinners
-          .mapIndexed((index, spinner) => EditCountTile(index: index, spinner: spinner))
+          .mapIndexed(
+            (index, spinner) => EditCountTile(index: index, spinner: spinner),
+          )
           .toList(),
     );
   }
 }
 
 class EditCountTile extends StatelessWidget {
+  const EditCountTile({required this.spinner, required this.index, super.key});
+
   final SpinnerModel spinner;
   final int index;
 
-  const EditCountTile({super.key, required this.spinner, required this.index});
-
   @override
-  Widget build(BuildContext context) {
-    return Material(
-      borderRadius: insetBorderRadius,
-      clipBehavior: Clip.hardEdge,
-      child: ListTile(
-        title: Text(spinner.title,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.bold
-          ),
-        ),
-        leading: index == 0
-            ? Icon(Icons.workspace_premium_rounded, color: Colors.amber.shade600,)
-            : Text((index + 1).toOrdinal()),
-        tileColor: Theme.of(context).colorScheme.onPrimary,
-        trailing: Text("${spinner.stats.editCount} edits"),
-        onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
+  Widget build(BuildContext context) => Material(
+    borderRadius: insetBorderRadius,
+    clipBehavior: Clip.hardEdge,
+    child: ListTile(
+      title: Text(
+        spinner.title,
+        style: Theme.of(
+          context,
+        ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
       ),
-    );
-  }
+      leading: index == 0
+          ? Icon(Icons.workspace_premium_rounded, color: Colors.amber.shade600)
+          : Text((index + 1).toOrdinal()),
+      tileColor: Theme.of(context).colorScheme.onPrimary,
+      trailing: Text('${spinner.stats.editCount} edits'),
+      onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
+    ),
+  );
 }
