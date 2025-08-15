@@ -1,9 +1,9 @@
 import 'dart:math';
 
 extension RandomRange on Random {
-  double nextDoubleRange(double min, double max) => nextDouble() * (max - min) + min;
+  double nextDoubleRange(double min, double max) =>
+      nextDouble() * (max - min) + min;
 }
-
 
 extension OrdinalInt on int {
   String toOrdinal() {

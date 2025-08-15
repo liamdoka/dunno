@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 class AppearanceSettingsScreen extends StatelessWidget {
-
   AppearanceSettingsScreen({super.key});
   final emitterKey = GlobalKey<ConfettiEmitterState>();
 
@@ -36,9 +35,9 @@ class AppearanceSettingsScreen extends StatelessWidget {
 
                   const DisplayPanel(),
                   ConfettiPanel(
-                      emitterKey: emitterKey,
-                      emitterOffset: emitterOffset
-                  )
+                    emitterKey: emitterKey,
+                    emitterOffset: emitterOffset,
+                  ),
                 ],
               ),
             ),

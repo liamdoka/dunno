@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UserStatsWidget extends ConsumerWidget {
-
   const UserStatsWidget({required this.emitterKey, super.key});
   final GlobalKey<ConfettiEmitterState> emitterKey;
 
@@ -16,63 +15,76 @@ class UserStatsWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final stats = ref.watch(userStatsProvider);
     final emitterOffset = Offset(
-        (MediaQuery.of(context).size.width - 24) / 2,
-        0
+      (MediaQuery.of(context).size.width - 24) / 2,
+      0,
     );
 
-    return AppearanceSettingsPanel(title: 'Your totals',
+    return AppearanceSettingsPanel(
+      title: 'Your totals',
       children: [
         Row(
           spacing: 8,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             UserStatsTile(title: 'spins', value: stats.totalSpins.toReadable()),
-            UserStatsTile(title: 'spinners', value: stats.spinnersCreatedCount.toReadable()),
             UserStatsTile(
-                title: 'confetti bits',
-                value: stats.confettiCount.toReadable(),
-                onTap: () {
-                  final confetti = ref.read(userPreferencesProvider).defaultConfetti;
-                  emitterKey.currentState?.emitBurst(confetti, position: emitterOffset);
-                },
+              title: 'spinners',
+              value: stats.spinnersCreatedCount.toReadable(),
+            ),
+            UserStatsTile(
+              title: 'confetti bits',
+              value: stats.confettiCount.toReadable(),
+              onTap: () {
+                final confetti = ref
+                    .read(userPreferencesProvider)
+                    .defaultConfetti;
+                emitterKey.currentState?.emitBurst(
+                  confetti,
+                  position: emitterOffset,
+                );
+              },
             ),
           ],
-        )
+        ),
       ],
     );
   }
 }
 
 class UserStatsTile extends StatelessWidget {
-
-  const UserStatsTile({required this.title, required this.value, super.key, this.onTap});
+  const UserStatsTile({
+    required this.title,
+    required this.value,
+    super.key,
+    this.onTap,
+  });
   final String title;
   final String value;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) => Flexible(
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: Material(
+    child: AspectRatio(
+      aspectRatio: 1,
+      child: Material(
+        borderRadius: insetBorderRadius,
+        color: Theme.of(context).colorScheme.onPrimary,
+        elevation: onTap == null ? 0 : 1,
+        child: InkWell(
           borderRadius: insetBorderRadius,
-          color: Theme.of(context).colorScheme.onPrimary,
-          elevation: onTap == null ? 0 : 1,
-          child: InkWell(
-            borderRadius: insetBorderRadius,
-            onTap: onTap,
-            child: Center(
-              child: Column(
-                spacing: 8,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(value, style: Theme.of(context).textTheme.titleLarge),
-                  Text(title, style: Theme.of(context).textTheme.labelLarge),
-                ],
-              ),
+          onTap: onTap,
+          child: Center(
+            child: Column(
+              spacing: 8,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(value, style: Theme.of(context).textTheme.titleLarge),
+                Text(title, style: Theme.of(context).textTheme.labelLarge),
+              ],
             ),
           ),
         ),
       ),
-    );
+    ),
+  );
 }

@@ -10,12 +10,11 @@ sealed class SpinnerSegmentModel with _$SpinnerSegmentModel {
     required String title,
     @Default(SimpleColor.green) SimpleColor color,
     @Default(1) int weight,
-    @Default(0) int winCount
+    @Default(0) int winCount,
   }) = _SpinnerSegmentModel;
 
   factory SpinnerSegmentModel.fromJson(Map<String, dynamic> json) =>
       _$SpinnerSegmentModelFromJson(json);
 }
-
 
 // TODO(liamdoka): Add "wins" for segments

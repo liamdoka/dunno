@@ -52,9 +52,7 @@ class SpinnerEdit extends _$SpinnerEdit {
   }
 
   void setConfetti(String? confetti) {
-    state = state.copyWith(
-      confetti: confetti
-    );
+    state = state.copyWith(confetti: confetti);
   }
 
   /// Removes ALL segments from the list.
@@ -104,22 +102,21 @@ class SpinnerEdit extends _$SpinnerEdit {
     final colorPalette = ref.read(userPreferencesProvider).defaultColorPalette;
     final newSegments = List<SpinnerSegmentModel>.from(
       state.segments.mapIndexed(
-        (index, segment) => segment.copyWith(
-            color: colorPalette.forIndexSimple(index)
-        ),
+        (index, segment) =>
+            segment.copyWith(color: colorPalette.forIndexSimple(index)),
       ),
     );
 
     // log edit
     final newStats = state.stats.copyWith(
-        editCount: state.stats.editCount + 1,
-        lastEditTime: DateTime.now().millisecondsSinceEpoch
+      editCount: state.stats.editCount + 1,
+      lastEditTime: DateTime.now().millisecondsSinceEpoch,
     );
 
-    await _box.put(state.id, state.copyWith(
-        segments: newSegments,
-        stats: newStats
-    ));
+    await _box.put(
+      state.id,
+      state.copyWith(segments: newSegments, stats: newStats),
+    );
     ref.invalidateSelf();
   }
 }

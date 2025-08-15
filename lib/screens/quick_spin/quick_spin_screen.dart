@@ -31,7 +31,6 @@ class _QuickSpinScreenState extends ConsumerState<QuickSpinScreen> {
     super.dispose();
   }
 
-
   void addSegment() {
     final value = textController.text;
     if (value.isEmpty) return;
@@ -49,7 +48,6 @@ class _QuickSpinScreenState extends ConsumerState<QuickSpinScreen> {
     focusNode.requestFocus();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final palette = ref.watch(userPreferencesProvider).defaultColorPalette;
@@ -60,84 +58,84 @@ class _QuickSpinScreenState extends ConsumerState<QuickSpinScreen> {
         spacing: 12,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Quick Spin',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
+          Text('Quick Spin', style: Theme.of(context).textTheme.titleMedium),
           Row(
             spacing: 8,
             children: [
               Expanded(
                 child: TextField(
-                    focusNode: focusNode,
-                    textInputAction: TextInputAction.newline,
-                    decoration: InputDecoration(
-                        border: const OutlineInputBorder(
-                          borderRadius: defaultBorderRadius,
-                        ),
-                        hintText: 'New segment',
-                        suffixIcon: Container(
-                          margin: const EdgeInsets.only(right: 3),
-                          child: IconButton(
-                              style: ButtonStyle(
-                                shape: WidgetStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8)
-                                    )
-                                ),
-                              ),
-                              onPressed: addSegment,
-                              icon: const Icon(Icons.add)),
-                        )
+                  focusNode: focusNode,
+                  textInputAction: TextInputAction.newline,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(
+                      borderRadius: defaultBorderRadius,
                     ),
-                    controller: textController,
-                    onEditingComplete: addSegment
+                    hintText: 'New segment',
+                    suffixIcon: Container(
+                      margin: const EdgeInsets.only(right: 3),
+                      child: IconButton(
+                        style: ButtonStyle(
+                          shape: WidgetStatePropertyAll(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                        onPressed: addSegment,
+                        icon: const Icon(Icons.add),
+                      ),
+                    ),
+                  ),
+                  controller: textController,
+                  onEditingComplete: addSegment,
                 ),
               ),
             ],
           ),
-          if (segments.isEmpty) const Expanded(
-            child: Center(child: Text('Add spinner segments above')),
-          ) else Expanded(
-            child: DunnoScrollView(
-              autoScroll: true,
-              overlayHeight: 16,
-              children: segments
-                  .mapIndexed(
-                    (index, segment) => SegmentListTile(
-                  key: ObjectKey(segment),
-                  color: palette.forIndex(index),
-                  segment: segment,
-                  onDismiss: () =>
-                      setState(() {
-                        final newSegments =
-                        List<SpinnerSegmentModel>.from(segments)
-                        ..removeAt(index);
-                        segments = newSegments;
-                      }),
-                ),
-              )
-              .toList(),
+          if (segments.isEmpty)
+            const Expanded(
+              child: Center(child: Text('Add spinner segments above')),
+            )
+          else
+            Expanded(
+              child: DunnoScrollView(
+                autoScroll: true,
+                overlayHeight: 16,
+                children: segments
+                    .mapIndexed(
+                      (index, segment) => SegmentListTile(
+                        key: ObjectKey(segment),
+                        color: palette.forIndex(index),
+                        segment: segment,
+                        onDismiss: () => setState(() {
+                          final newSegments = List<SpinnerSegmentModel>.from(
+                            segments,
+                          )..removeAt(index);
+                          segments = newSegments;
+                        }),
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
-          ),
 
           FilledButton.icon(
             onPressed: segments.length < 2
                 ? null
                 : () {
-              final spinner = SpinnerModel(
-                title: 'Quick Spin',
-                color: SimpleColor.red,
-                segments: segments
-                    .mapIndexed(
-                      (index, segment) => segment.copyWith(
-                    color: palette.forIndexSimple(index),
-                  ),
-                )
-                    .toList(),
-              );
-              context.router.push(SpinnerRoute(spinner: spinner));
-            },
+                    final spinner = SpinnerModel(
+                      title: 'Quick Spin',
+                      color: SimpleColor.red,
+                      segments: segments
+                          .mapIndexed(
+                            (index, segment) => segment.copyWith(
+                              color: palette.forIndexSimple(index),
+                            ),
+                          )
+                          .toList(),
+                    );
+                    context.router.push(SpinnerRoute(spinner: spinner));
+                  },
             label: const Text('Go'),
             iconAlignment: IconAlignment.end,
             icon: const Icon(Icons.arrow_right_alt_rounded),

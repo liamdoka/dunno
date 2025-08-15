@@ -19,34 +19,36 @@ class MostSpinsList extends ConsumerWidget {
     return AppearanceSettingsPanel(
       title: 'Most Spun',
       children: spinners
-          .mapIndexed((index, spinner) => SpinCountTile(index: index, spinner: spinner))
+          .mapIndexed(
+            (index, spinner) => SpinCountTile(index: index, spinner: spinner),
+          )
           .toList(),
     );
   }
 }
 
 class SpinCountTile extends StatelessWidget {
-
   const SpinCountTile({required this.spinner, required this.index, super.key});
   final SpinnerModel spinner;
   final int index;
 
   @override
   Widget build(BuildContext context) => Material(
-      borderRadius: insetBorderRadius,
-      clipBehavior: Clip.hardEdge,
-      child: ListTile(
-        leading: index == 0
-            ? Icon(Icons.workspace_premium_rounded, color: Colors.amber.shade600,)
-            : Text((index + 1).toOrdinal()),
-        title: Text(spinner.title,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.bold
-          ),
-        ),
-        tileColor: Theme.of(context).colorScheme.onPrimary,
-        trailing: Text('${spinner.stats.spinCount} spins'),
-        onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
+    borderRadius: insetBorderRadius,
+    clipBehavior: Clip.hardEdge,
+    child: ListTile(
+      leading: index == 0
+          ? Icon(Icons.workspace_premium_rounded, color: Colors.amber.shade600)
+          : Text((index + 1).toOrdinal()),
+      title: Text(
+        spinner.title,
+        style: Theme.of(
+          context,
+        ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
       ),
-    );
+      tileColor: Theme.of(context).colorScheme.onPrimary,
+      trailing: Text('${spinner.stats.spinCount} spins'),
+      onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
+    ),
+  );
 }

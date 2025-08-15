@@ -1,9 +1,4 @@
-
 // TODO: consolidate text styles
-abstract class AppTextStyles {
+abstract class AppTextStyles {}
 
-}
-
-abstract class AppBoxStyles {
-
-}
+abstract class AppBoxStyles {}

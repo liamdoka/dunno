@@ -1,5 +1,3 @@
-
-
 import 'package:dunno/components/animation/confetti_emitter.dart';
 import 'package:dunno/constants/numbers.dart';
 import 'package:dunno/constants/sizes.dart';
@@ -11,8 +9,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ConfettiPanel extends ConsumerStatefulWidget {
-
-  const ConfettiPanel({required this.emitterKey, required this.emitterOffset, super.key});
+  const ConfettiPanel({
+    required this.emitterKey,
+    required this.emitterOffset,
+    super.key,
+  });
   final GlobalKey<ConfettiEmitterState> emitterKey;
   final Offset emitterOffset;
 
@@ -53,17 +54,14 @@ class _ConfettiPanelState extends ConsumerState<ConfettiPanel> {
               child: TextField(
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Theme.of(
-                    context,
-                  ).colorScheme.surfaceContainerLow,
+                  fillColor: Theme.of(context).colorScheme.surfaceContainerLow,
                   border: const OutlineInputBorder(
                     borderRadius: defaultBorderRadius,
                   ),
                 ),
                 controller: confettiController,
                 maxLength: AppNumbers.maxConfettiStringLength,
-                maxLengthEnforcement:
-                MaxLengthEnforcement.enforced,
+                maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 onChanged: ref
                     .read(userPreferencesProvider.notifier)
                     .setDefaultConfetti,
@@ -95,10 +93,7 @@ class _ConfettiPanelState extends ConsumerState<ConfettiPanel> {
           spacing: 12,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Amount',
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
+            Text('Amount', style: Theme.of(context).textTheme.labelLarge),
             Row(
               children: [
                 Expanded(
@@ -113,9 +108,8 @@ class _ConfettiPanelState extends ConsumerState<ConfettiPanel> {
                     onSelectionChanged: (values) {
                       final value = values.firstOrNull;
                       if (value != null) {
-                        ref.read(
-                          userPreferencesProvider.notifier,
-                        )
+                        ref
+                            .read(userPreferencesProvider.notifier)
                             .setConfettiAmount(value);
                       }
                     },

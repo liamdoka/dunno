@@ -7,7 +7,6 @@ part 'dunno_stats_model.g.dart';
 
 @freezed
 sealed class DunnoStatsModel with _$DunnoStatsModel {
-
   factory DunnoStatsModel({
     int? createdTime,
     int? lastEditTime,
@@ -18,13 +17,14 @@ sealed class DunnoStatsModel with _$DunnoStatsModel {
   }) = _DunnoStatsModel;
 
   // Generate, in 'non-constant fashion', the createdTime
-  DunnoStatsModel._({ int? createdTime }) :
-        createdTime = createdTime ?? DateTime.now().millisecondsSinceEpoch;
+  DunnoStatsModel._({int? createdTime})
+    : createdTime = createdTime ?? DateTime.now().millisecondsSinceEpoch;
 
   factory DunnoStatsModel.fromJson(Map<String, dynamic> json) =>
       _$DunnoStatsModelFromJson(json);
 
-  @override final int createdTime;
+  @override
+  final int createdTime;
 
   /// The last time the parent was interacted with.
   int get lastTime =>

@@ -92,7 +92,7 @@ class _AllSpinnersScreenState extends ConsumerState<AllSpinnersScreen> {
                       ),
                     ],
                   ),
-                  onDismiss: (direction) => ref
+                  onDismiss: (_) => ref
                       .read(spinnerListProvider.notifier)
                       .deleteSpinner(spinner.id),
                   onTap: () =>

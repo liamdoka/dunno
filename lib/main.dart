@@ -26,7 +26,6 @@ void main() async {
 }
 
 class MyApp extends ConsumerWidget {
-
   MyApp({super.key});
 
   final _appRouter = AppRouter();
@@ -36,18 +35,18 @@ class MyApp extends ConsumerWidget {
     final preferences = ref.watch(userPreferencesProvider);
 
     final lightTheme = ThemeData.from(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: preferences.appTint.toColor()
-        ),
-        useMaterial3: true
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: preferences.appTint.toColor(),
+      ),
+      useMaterial3: true,
     );
 
     final darkTheme = ThemeData.from(
-        colorScheme: ColorScheme.fromSeed(
-          brightness: Brightness.dark,
-          seedColor: preferences.appTint.toColor(),
-        ),
-        useMaterial3: true
+      colorScheme: ColorScheme.fromSeed(
+        brightness: Brightness.dark,
+        seedColor: preferences.appTint.toColor(),
+      ),
+      useMaterial3: true,
     );
 
     return MaterialApp.router(

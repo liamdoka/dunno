@@ -1,5 +1,3 @@
-
-
 import 'dart:math' as math;
 
 import 'package:dunno/constants/numbers.dart';
@@ -11,7 +9,6 @@ import 'package:flutter/physics.dart';
 import 'package:flutter/scheduler.dart';
 
 class Spinner extends StatefulWidget {
-
   const Spinner({required this.segments, super.key, this.onComplete});
   final List<SpinnerSegmentModel> segments;
   final VoidCallback? onComplete;
@@ -54,7 +51,12 @@ class _SpinnerState extends State<Spinner> with SingleTickerProviderStateMixin {
 
     final velocity = 32 + (rand.nextDouble() * 32);
 
-    simulation = FrictionSimulation(0.5, angle, velocity, constantDeceleration: 0.025);
+    simulation = FrictionSimulation(
+      0.5,
+      angle,
+      velocity,
+      constantDeceleration: 0.025,
+    );
     isSpinning = true;
     ticker.start();
   }
@@ -66,53 +68,55 @@ class _SpinnerState extends State<Spinner> with SingleTickerProviderStateMixin {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    return Column(
-      spacing: 24,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Stack(
-          alignment: Alignment.center,
+  Widget build(BuildContext context) => Column(
+    spacing: 24,
+    children: [
+      Flexible(
+        child: Stack(
+          alignment: Alignment.topCenter,
           children: [
-            Transform.rotate(
-              angle: angle,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(double.infinity),
-                child: CustomPaint(
-                  size: Size.square(screenWidth),
-                  painter: SpinnerPainter(segments: widget.segments),
-                ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final size = math.min(
+                    constraints.maxHeight,
+                    constraints.maxWidth,
+                  );
+                  return Transform.rotate(
+                    angle: angle,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(double.infinity),
+                      child: CustomPaint(
+                        size: Size.square(size),
+                        painter: SpinnerPainter(segments: widget.segments),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
             Positioned(
-              top: -4,
+              top: 0,
               child: Transform.scale(
                 scaleY: 2,
                 child: Icon(
                   Icons.arrow_drop_down_rounded,
                   size: AppNumbers.listTileHeight,
                   color: Theme.of(context).colorScheme.error,
-                  shadows: const [
-                    Shadow(
-                      offset: Offset(0, 1),
-                      blurRadius: 1,
-                    ),
-                  ],
+                  shadows: const [Shadow(offset: Offset(0, 1), blurRadius: 1)],
                 ),
               ),
             ),
           ],
         ),
-        FilledButton(onPressed: spin, child: const Text('Spin!')),
-      ],
-    );
-  }
+      ),
+      FilledButton(onPressed: spin, child: const Text('Spin!')),
+    ],
+  );
 }
 
 class SpinnerPainter extends CustomPainter {
-
   const SpinnerPainter({required this.segments});
   final List<SpinnerSegmentModel> segments;
 

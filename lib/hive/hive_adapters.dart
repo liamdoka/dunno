@@ -21,10 +21,4 @@ import 'package:hive_ce/hive.dart';
 ])
 part 'hive_adapters.g.dart';
 
-enum HiveBox {
-  spinners,
-  colorPalettes,
-  userPreferences,
-  userStats,
-  misc,
-}
+enum HiveBox { spinners, colorPalettes, userPreferences, userStats, misc }

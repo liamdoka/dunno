@@ -8,12 +8,12 @@ class DunnoConstraints extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ColoredBox(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: dunnoMaxWidth),
-          child: child,
-        ),
+    color: Theme.of(context).scaffoldBackgroundColor,
+    child: Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: dunnoMaxWidth),
+        child: child,
       ),
-    );
+    ),
+  );
 }

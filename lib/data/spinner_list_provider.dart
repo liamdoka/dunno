@@ -14,53 +14,57 @@ part 'spinner_list_provider.g.dart';
 /// Returns the last four spinners interacted with.
 @riverpod
 List<SpinnerModel> recentSpinners(Ref ref) {
-  final spinners = ref.watch(spinnerListProvider)
+  final spinners = ref
+      .watch(spinnerListProvider)
       .where((spinner) => spinner.isNotDeleted)
       .toList();
 
   return spinners
-      .sorted((a,b) => b.stats.lastTime.compareTo(a.stats.lastTime))
+      .sorted((a, b) => b.stats.lastTime.compareTo(a.stats.lastTime))
       .sublist(0, min(4, spinners.length));
 }
 
 /// Returns a list spinners that have been `favorited`.
 @riverpod
-List<SpinnerModel> favoriteSpinners(Ref ref) => ref.watch(spinnerListProvider)
-      .where((spinner) => spinner.isFavorite && spinner.isNotDeleted)
-      .toList(growable: false);
+List<SpinnerModel> favoriteSpinners(Ref ref) => ref
+    .watch(spinnerListProvider)
+    .where((spinner) => spinner.isFavorite && spinner.isNotDeleted)
+    .toList(growable: false);
 
 /// Returns a list of deleted spinners.
 @riverpod
-List<SpinnerModel> deletedSpinners(Ref ref) => ref.watch(spinnerListProvider)
-      .where((spinner) => spinner.isDeleted)
-      .toList(growable: false);
+List<SpinnerModel> deletedSpinners(Ref ref) => ref
+    .watch(spinnerListProvider)
+    .where((spinner) => spinner.isDeleted)
+    .toList(growable: false);
 
 /// Returns a list of all spinners (that aren't deleted).
 @riverpod
-List<SpinnerModel> allSpinners(Ref ref) => ref.watch(spinnerListProvider)
-      .where((spinner) => spinner.isNotDeleted)
-      .toList(growable: false);
+List<SpinnerModel> allSpinners(Ref ref) => ref
+    .watch(spinnerListProvider)
+    .where((spinner) => spinner.isNotDeleted)
+    .toList(growable: false);
 
 /// Returns a list of spinners with the highest spin count.
 @riverpod
 List<SpinnerModel> mostSpins(Ref ref) {
   final spinners = ref.watch(allSpinnersProvider);
   return spinners
-      .sorted((a,b) => b.stats.spinCount.compareTo(a.stats.spinCount))
+      .sorted((a, b) => b.stats.spinCount.compareTo(a.stats.spinCount))
       .sublist(0, min(3, spinners.length));
 }
 
 /// Returns a list of spinners with the highest edit count.
 @riverpod
 List<SpinnerModel> mostEdits(Ref ref) {
-  final spinners = ref.watch(allSpinnersProvider)
+  final spinners = ref
+      .watch(allSpinnersProvider)
       .where((spinner) => spinner.stats.editCount > 0);
 
   return spinners
-      .sorted((a,b) => b.stats.editCount.compareTo(a.stats.editCount))
+      .sorted((a, b) => b.stats.editCount.compareTo(a.stats.editCount))
       .sublist(0, min(3, spinners.length));
 }
-
 
 @riverpod
 class SpinnerList extends _$SpinnerList {
@@ -83,14 +87,17 @@ class SpinnerList extends _$SpinnerList {
       ref.read(userStatsProvider.notifier).logSpinnerCreated();
     }
 
-    _box.put(spinner.id, spinner.copyWith(
-      // have to do this because it maintains shallow copies of the screen state.
-      segments: List.from(spinner.segments),
-      stats: spinner.stats.copyWith(
+    _box.put(
+      spinner.id,
+      spinner.copyWith(
+        // have to do this because it maintains shallow copies of the screen state.
+        segments: List.from(spinner.segments),
+        stats: spinner.stats.copyWith(
           deletedTime: null,
-          lastEditTime: DateTime.now().millisecondsSinceEpoch
+          lastEditTime: DateTime.now().millisecondsSinceEpoch,
+        ),
       ),
-    ));
+    );
   }
 
   /// Removes the spinner from device storage.
@@ -116,9 +123,12 @@ class SpinnerList extends _$SpinnerList {
     // track the stats for the user.
     ref.read(userStatsProvider.notifier).logSpinnerDeleted();
 
-    _box.put(spinner.id, spinner.copyWith.stats!(
-      deletedTime: DateTime.now().millisecondsSinceEpoch
-    ));
+    _box.put(
+      spinner.id,
+      spinner.copyWith.stats!(
+        deletedTime: DateTime.now().millisecondsSinceEpoch,
+      ),
+    );
   }
 
   /// Toggles the `isFavorite` status
@@ -127,9 +137,7 @@ class SpinnerList extends _$SpinnerList {
 
     if (spinner == null) return;
 
-    _box.put(spinner.id, spinner.copyWith(
-        isFavorite: !spinner.isFavorite
-    ));
+    _box.put(spinner.id, spinner.copyWith(isFavorite: !spinner.isFavorite));
   }
 
   /// Update the stats for spinning.
@@ -144,7 +152,7 @@ class SpinnerList extends _$SpinnerList {
 
     final updatedSpinner = spinner.copyWith.stats!(
       lastSpinTime: DateTime.now().millisecondsSinceEpoch,
-      spinCount: spinner.stats.spinCount + 1
+      spinCount: spinner.stats.spinCount + 1,
     );
 
     _box.put(spinner.id, updatedSpinner);

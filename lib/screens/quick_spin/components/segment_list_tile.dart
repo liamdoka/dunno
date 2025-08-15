@@ -1,4 +1,3 @@
-
 import 'package:dunno/components/animation/grow_animation.dart';
 import 'package:dunno/constants/numbers.dart';
 import 'package:dunno/constants/sizes.dart';
@@ -7,9 +6,10 @@ import 'package:dunno/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class SegmentListTile extends StatefulWidget {
-
   const SegmentListTile({
-    required this.segment, required this.color, super.key,
+    required this.segment,
+    required this.color,
+    super.key,
     this.onDismiss,
     this.onTapIncrease,
     this.onTapDecrease,
@@ -25,7 +25,6 @@ class SegmentListTile extends StatefulWidget {
 }
 
 class _SegmentListTileState extends State<SegmentListTile> {
-
   late final Key key = widget.key ?? ObjectKey(widget.segment);
   static const colorTransitionDuration = Duration(milliseconds: 500);
   static const appearTransitionDuration = Duration(milliseconds: 200);
@@ -61,11 +60,13 @@ class _SegmentListTileState extends State<SegmentListTile> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(widget.segment.title,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: textColor
-                  )),
+              child: Text(
+                widget.segment.title,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: textColor,
+                ),
+              ),
             ),
 
             if (widget.onTapIncrease != null && widget.onTapDecrease != null)
@@ -74,30 +75,30 @@ class _SegmentListTileState extends State<SegmentListTile> {
                 children: [
                   IconButton(
                     onPressed: widget.onTapDecrease,
-                    icon: Icon(widget.segment.weight > 1
-                        ? Icons.remove_circle
-                        : Icons.delete_rounded,
-                        color: textColor
+                    icon: Icon(
+                      widget.segment.weight > 1
+                          ? Icons.remove_circle
+                          : Icons.delete_rounded,
+                      color: textColor,
                     ),
                   ),
-                  Text(widget.segment.weight.toString(),
+                  Text(
+                    widget.segment.weight.toString(),
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: textColor,
-                        fontWeight: FontWeight.bold
+                      color: textColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   IconButton(
                     onPressed: widget.onTapIncrease,
-                    icon: Icon(Icons.add_circle, color: textColor,),
-                  )
+                    icon: Icon(Icons.add_circle, color: textColor),
+                  ),
                 ],
               )
             else
               IconButton(
                 onPressed: widget.onDismiss,
-                icon: Icon(Icons.remove,
-                    color: textColor
-                ),
+                icon: Icon(Icons.remove, color: textColor),
               ),
           ],
         ),

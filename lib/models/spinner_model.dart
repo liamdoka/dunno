@@ -1,4 +1,3 @@
-
 import 'package:dunno/models/dunno_stats_model.dart';
 import 'package:dunno/models/simple_color_model.dart';
 import 'package:dunno/models/spinner_segment_model.dart';
@@ -12,7 +11,6 @@ const uuid = Uuid();
 
 @freezed
 sealed class SpinnerModel with _$SpinnerModel {
-
   factory SpinnerModel({
     required String title,
     required SimpleColor color,
@@ -23,21 +21,22 @@ sealed class SpinnerModel with _$SpinnerModel {
     DunnoStatsModel? stats,
     String? paletteId,
     @Default(false) bool isFavorite,
-    @Default([]) List<String> tags
+    @Default([]) List<String> tags,
   }) = _SpinnerModel;
 
   // Generate the `id` and `stats` properties when first instantiated
-  SpinnerModel._({ String? id, DunnoStatsModel? stats }) :
-        id = id ?? uuid.v4(),
-        stats = stats ?? DunnoStatsModel();
+  SpinnerModel._({String? id, DunnoStatsModel? stats})
+    : id = id ?? uuid.v4(),
+      stats = stats ?? DunnoStatsModel();
 
   factory SpinnerModel.fromJson(Map<String, dynamic> json) =>
       _$SpinnerModelFromJson(json);
 
-  @override final String id;
-  @override final DunnoStatsModel stats;
+  @override
+  final String id;
+  @override
+  final DunnoStatsModel stats;
 
   bool get isDeleted => stats.deletedTime != null;
   bool get isNotDeleted => stats.deletedTime == null;
 }
-

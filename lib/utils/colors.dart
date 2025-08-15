@@ -4,18 +4,15 @@ import 'package:dunno/models/simple_color_model.dart';
 
 /// Convert Dart [Color] to and from a serializable format.
 extension SimplerColor on Color {
-  static Color fromSimpleColor(SimpleColor color) => Color.fromRGBO(color.r, color.g, color.b, 1);
+  static Color fromSimpleColor(SimpleColor color) =>
+      Color.fromRGBO(color.r, color.g, color.b, 1);
 
-  SimpleColor toSimpleColor() => SimpleColor(
-        (r * 255).floor(),
-        (g * 255).floor(),
-        (b * 255).floor()
-    );
+  SimpleColor toSimpleColor() =>
+      SimpleColor((r * 255).floor(), (g * 255).floor(), (b * 255).floor());
 
   /// Supposedly computationally expensive, we'll see about that.
   bool get isBright => computeLuminance() > 0.35;
 }
-
 
 extension HexColor on Color {
   /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
@@ -27,7 +24,8 @@ extension HexColor on Color {
   }
 
   /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is `true`).
-  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
+  String toHex({bool leadingHashSign = true}) =>
+      '${leadingHashSign ? '#' : ''}'
       '${(255 * a).toInt().toRadixString(16).padLeft(2, '0')}'
       '${(255 * r).toInt().toRadixString(16).padLeft(2, '0')}'
       '${(255 * g).toInt().toRadixString(16).padLeft(2, '0')}'

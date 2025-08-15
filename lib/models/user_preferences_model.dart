@@ -13,7 +13,6 @@ const uuid = Uuid();
 
 @freezed
 sealed class UserPreferencesModel with _$UserPreferencesModel {
-
   factory UserPreferencesModel({
     String? id,
     @Default(ThemeMode.system) ThemeMode appTheme,
@@ -23,17 +22,18 @@ sealed class UserPreferencesModel with _$UserPreferencesModel {
     ColorPaletteModel? defaultColorPalette,
   }) = _UserPreferencesModel;
 
-  UserPreferencesModel._({ String? id, ColorPaletteModel? defaultColorPalette }):
-      id = id ?? uuid.v4(),
+  UserPreferencesModel._({String? id, ColorPaletteModel? defaultColorPalette})
+    : id = id ?? uuid.v4(),
       defaultColorPalette = defaultColorPalette ?? DunnoColorPalettes.material;
 
   factory UserPreferencesModel.fromJson(Map<String, dynamic> json) =>
       _$UserPreferencesModelFromJson(json);
 
-  @override final String id;
-  @override final ColorPaletteModel defaultColorPalette;
+  @override
+  final String id;
+  @override
+  final ColorPaletteModel defaultColorPalette;
 }
-
 
 enum ConfettiAmount {
   low(10, 20),

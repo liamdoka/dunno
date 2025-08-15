@@ -9,4 +9,3 @@ abstract class AppSpacing {
 
 const defaultBorderRadius = BorderRadius.all(Radius.circular(AppSpacing.sm));
 const insetBorderRadius = BorderRadius.all(Radius.circular(AppSpacing.xs));
-

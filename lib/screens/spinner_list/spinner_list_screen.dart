@@ -19,29 +19,29 @@ class SpinnerListScreen extends ConsumerWidget {
       child: Stack(
         children: [
           Positioned(
-              bottom: 0,
-              right: 0,
-              child: FloatingActionButton.extended(
-                  elevation: 2,
-                  onPressed: () => context.router.push(EditSpinnerRoute()),
-                  icon: const Icon(Icons.add),
-                  label: const Text('New Spinner')
-              )
+            bottom: 0,
+            right: 0,
+            child: FloatingActionButton.extended(
+              elevation: 2,
+              onPressed: () => context.router.push(EditSpinnerRoute()),
+              icon: const Icon(Icons.add),
+              label: const Text('New Spinner'),
+            ),
           ),
-          if (allSpinners.isEmpty) const Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Center(child: Text('Create a spinner and check back later!')),
-              SizedBox.shrink()
-            ],
-          ) else const Column(
-            spacing: 48,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RecentSpinnerList(),
-              FavoriteSpinnerList()
-            ],
-          )
+          if (allSpinners.isEmpty)
+            const Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Center(child: Text('Create a spinner and check back later!')),
+                SizedBox.shrink(),
+              ],
+            )
+          else
+            const Column(
+              spacing: 48,
+              mainAxisSize: MainAxisSize.min,
+              children: [RecentSpinnerList(), FavoriteSpinnerList()],
+            ),
         ],
       ),
     );

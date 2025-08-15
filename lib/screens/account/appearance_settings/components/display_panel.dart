@@ -58,9 +58,11 @@ class DisplayPanel extends ConsumerWidget {
 }
 
 class AppThemeTintButton extends StatelessWidget {
-
   const AppThemeTintButton({
-    required this.onTap, required this.color, required this.isSelected, super.key,
+    required this.onTap,
+    required this.color,
+    required this.isSelected,
+    super.key,
   });
   final VoidCallback onTap;
   final Color color;
@@ -68,21 +70,21 @@ class AppThemeTintButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => InkWell(
-      onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.all(4),
-        height: 32,
-        width: 32,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: isSelected
-                ? Theme.of(context).colorScheme.onSurface
-                : Theme.of(context).colorScheme.onPrimary,
-            width: 2,
-          ),
-          borderRadius: defaultBorderRadius,
-          color: color,
+    onTap: onTap,
+    child: Container(
+      margin: const EdgeInsets.all(4),
+      height: 32,
+      width: 32,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: isSelected
+              ? Theme.of(context).colorScheme.onSurface
+              : Theme.of(context).colorScheme.onPrimary,
+          width: 2,
         ),
+        borderRadius: defaultBorderRadius,
+        color: color,
       ),
-    );
+    ),
+  );
 }

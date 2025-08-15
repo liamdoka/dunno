@@ -53,17 +53,7 @@ class _SaveSpinnerDialogState extends ConsumerState<SaveSpinnerDialog> {
                   hintText: 'Quick Spin',
                 ),
               ),
-              FilledButton(
-                onPressed: () {
-                  final newSpinner = widget.spinner.copyWith(
-                    title: textController.text,
-                  );
-                  ref.read(spinnerListProvider.notifier)
-                      .saveSpinner(newSpinner);
-                  context.router.replaceAll([const SpinnerListRoute()]);
-                },
-                child: const Text('Save'),
-              ),
+              FilledButton(onPressed: onSavePressed, child: const Text('Save')),
             ],
           ),
         ),
@@ -71,4 +61,10 @@ class _SaveSpinnerDialogState extends ConsumerState<SaveSpinnerDialog> {
       ],
     ),
   );
+
+  void onSavePressed() {
+    final newSpinner = widget.spinner.copyWith(title: textController.text);
+    ref.read(spinnerListProvider.notifier).saveSpinner(newSpinner);
+    context.router.replaceAll([const SpinnerListRoute()]);
+  }
 }

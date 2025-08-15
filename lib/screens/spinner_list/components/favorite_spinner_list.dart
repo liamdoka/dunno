@@ -1,4 +1,3 @@
-
 import 'package:auto_route/auto_route.dart';
 import 'package:dunno/data/spinner_list_provider.dart';
 import 'package:dunno/data/user_preferences_provider.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FavoriteSpinnerList extends ConsumerWidget {
-
   const FavoriteSpinnerList({super.key});
 
   @override
@@ -22,18 +20,22 @@ class FavoriteSpinnerList extends ConsumerWidget {
       children: [
         Row(
           children: [
-            Text('Favorite Spinners',
-                style: Theme.of(context).textTheme.titleMedium
+            Text(
+              'Favorite Spinners',
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ],
         ),
-        if (favoriteSpinners.isEmpty) const Center(
+        if (favoriteSpinners.isEmpty)
+          const Center(
             child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 32),
-                child: Text('No favorite spinners...')
-            )
-        ) else Flexible(
-          child: ListView.builder(
+              padding: EdgeInsets.symmetric(vertical: 32),
+              child: Text('No favorite spinners...'),
+            ),
+          )
+        else
+          Flexible(
+            child: ListView.builder(
               shrinkWrap: true,
               itemCount: favoriteSpinners.length,
               itemBuilder: (context, index) {
@@ -41,20 +43,23 @@ class FavoriteSpinnerList extends ConsumerWidget {
                 return Container(
                   margin: const EdgeInsets.symmetric(vertical: 4),
                   child: SpinnerTile(
-                      spinner: spinner,
-                      color: palette.forIndex(index),
-                      dismissBackground: const Row(
-                        children: [Icon(Icons.star_border_rounded, color: Colors.amber,)],
-                      ),
-                      onDismiss: (direction) => ref
-                          .read(spinnerListProvider.notifier)
-                          .toggleFavorite(spinner.id),
-                      onTap: () => context.router.push(SpinnerRoute(spinner: spinner)),
+                    spinner: spinner,
+                    color: palette.forIndex(index),
+                    dismissBackground: const Row(
+                      children: [
+                        Icon(Icons.star_border_rounded, color: Colors.amber),
+                      ],
+                    ),
+                    onDismiss: (direction) => ref
+                        .read(spinnerListProvider.notifier)
+                        .toggleFavorite(spinner.id),
+                    onTap: () =>
+                        context.router.push(SpinnerRoute(spinner: spinner)),
                   ),
                 );
-              }
+              },
+            ),
           ),
-        ),
       ],
     );
   }

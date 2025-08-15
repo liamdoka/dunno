@@ -96,7 +96,7 @@ class ColorPaletteTile extends StatelessWidget {
         child: Stack(
           alignment: Alignment.centerLeft,
           children: [
-            // TODO(liamdoka): Default indicator, Title, EditButton,
+            // TODO(liamdoka): EditButton,
             Row(children: palette.colors.map(_buildSegment).toList()),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),

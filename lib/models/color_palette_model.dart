@@ -15,9 +15,10 @@ const uuid = Uuid();
 
 @freezed
 sealed class ColorPaletteModel with _$ColorPaletteModel {
-
   factory ColorPaletteModel({
-    required String title, required List<SimpleColor> colors, String? id,
+    required String title,
+    required List<SimpleColor> colors,
+    String? id,
     DunnoStatsModel? stats,
     @Default(false) bool isFavorite,
   }) = _ColorPaletteModel;
@@ -45,9 +46,9 @@ sealed class ColorPaletteModel with _$ColorPaletteModel {
     List<Color> colors, {
     String title = 'Untitled palette',
   }) => ColorPaletteModel(
-      title: title,
-      colors: List.from(colors.map(SimpleColor.fromColor)),
-    );
+    title: title,
+    colors: List.from(colors.map(SimpleColor.fromColor)),
+  );
 
   /// Return the color for the segment based on its index.
   Color forIndex(int index) => colors[index % colors.length].toColor();

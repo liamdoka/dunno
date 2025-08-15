@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class GrowAnimation extends StatelessWidget {
@@ -13,18 +12,19 @@ class GrowAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => AnimatedBuilder(
-      animation: animation,
-      builder: (context, child) => Transform.scale(
-          scale: animation.value,
-          child: child,
-        ),
-      child: child,
-    );
+    animation: animation,
+    builder: (context, child) =>
+        Transform.scale(scale: animation.value, child: child),
+    child: child,
+  );
 }
 
-
 class GrowAppearAnimation extends StatefulWidget {
-  const GrowAppearAnimation({required this.child, required this.duration, super.key});
+  const GrowAppearAnimation({
+    required this.child,
+    required this.duration,
+    super.key,
+  });
   final Widget child;
   final Duration duration;
 
@@ -32,7 +32,8 @@ class GrowAppearAnimation extends StatefulWidget {
   State<GrowAppearAnimation> createState() => _GrowAppearAnimationState();
 }
 
-class _GrowAppearAnimationState extends State<GrowAppearAnimation> with SingleTickerProviderStateMixin {
+class _GrowAppearAnimationState extends State<GrowAppearAnimation>
+    with SingleTickerProviderStateMixin {
   late final AnimationController controller;
   late Animation<double> animation;
 
@@ -52,8 +53,6 @@ class _GrowAppearAnimationState extends State<GrowAppearAnimation> with SingleTi
   }
 
   @override
-  Widget build(BuildContext context) => GrowAnimation(
-        animation: animation,
-        child: widget.child
-    );
+  Widget build(BuildContext context) =>
+      GrowAnimation(animation: animation, child: widget.child);
 }

@@ -14,7 +14,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
 class EditSpinnerScreen extends ConsumerStatefulWidget {
-
   const EditSpinnerScreen({super.key, this.id = ''});
   final String id;
 
@@ -247,35 +246,37 @@ class _EditSpinnerScreenState extends ConsumerState<EditSpinnerScreen> {
   }
 
   Widget buildAdvancedOptions(String confettiHint) => Column(
-      children: [
-        Row(
-          textBaseline: TextBaseline.alphabetic,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          spacing: 24,
-          children: [
-            Text(
-              'Confetti for the winner',
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            Expanded(
-              child: TextField(
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(borderRadius: defaultBorderRadius),
-                  hintText: confettiHint,
-                  hintStyle: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.5),
-                  ),
+    children: [
+      Row(
+        textBaseline: TextBaseline.alphabetic,
+        crossAxisAlignment: CrossAxisAlignment.baseline,
+        spacing: 24,
+        children: [
+          Text(
+            'Confetti for the winner',
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(
+                  borderRadius: defaultBorderRadius,
                 ),
-                controller: confettiController,
-                maxLength: AppNumbers.maxConfettiStringLength,
-                maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                onChanged: ref.read(editProvider.notifier).setConfetti,
+                hintText: confettiHint,
+                hintStyle: TextStyle(
+                  color: Colors.white.withValues(alpha: 0.5),
+                ),
               ),
+              controller: confettiController,
+              maxLength: AppNumbers.maxConfettiStringLength,
+              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+              onChanged: ref.read(editProvider.notifier).setConfetti,
             ),
-          ],
-        ),
-      ],
-    );
+          ),
+        ],
+      ),
+    ],
+  );
 }
